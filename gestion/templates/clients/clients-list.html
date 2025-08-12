@@ -1,0 +1,87 @@
+{% load i18n %}
+
+{%comment%} PC VERSION {%endcomment%}
+<div class="d-none d-lg-block"> 
+    {% for item in items %}
+        <div class="row list-item-cl pt-2 pb-2 m-0 {%if item.inactive%}inactive{%endif%}" id="row_{{item.id}}">
+            <div class="col-2 text-center">
+                {% if item.qr %}<img src="{{item.qr.url}}" alt="qr" width="100"/>{% endif %}
+            </div>
+            <div class="col-10">
+                <div class="row">
+                    <div class="col-4"><strong><i class='fas fa-user orange'></i> 
+                        {% trans "Nombre" %}<br /></strong> {{ item.name|default:"---" }}</div>
+                    <div class="col-4"><strong><i class='fas fa-envelope orange'></i> 
+                        {% trans "Correo electrónico" %}<br /></strong> {{ item.email|default:"" }}</div>
+                    <div class="col-2"><strong><i class='fas fa-phone orange'></i> 
+                        {% trans "Teléfono" %}<br /></strong> {{ item.phone|default:"" }}</div>
+                    <div class="col-2"><strong><i class='fas fa-code orange'></i> 
+                        {% trans "Código" %}<br /></strong> {{ item.code|default:"" }}</div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-12"><strong><i class='fas fa-map-marker orange'></i> 
+                        {% trans "Dirección" %}<br /></strong> {{ item.address|default:"" }}</div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-9"><strong><i class='fas fa-comments orange'></i> 
+                        {% trans "Observaciones" %}<br /></strong> {{ item.observations|default:"" }}</div>
+                    <div class="col-3 text-right"> 
+                        <a class="btn btn-xs" href="{% url "clients-print-qr" item.id %}" title="{% trans 'Imprimir' %}" 
+                            target="_blank"> <i class="fas fa-print"></i></a> 
+                        <a class="btn btn-xs" href="{% url "clients-assistances" item.id %}" title="{% trans 'Asistencias' %}"> 
+                            <i class="fa fa-medkit"></i></a> 
+                        <a class="btn btn-xs ark" data-url="{% url "clients-form" %}" data-target-modal="common-modal" 
+                            data-obj_id="{{item.id}}" title="{% trans 'Editar' %}"><i class="fas fa-edit"></i></a> 
+                        <a class="btn btn-xs ark" data-url="{% url "clients-remove" %}" data-target="client-list" 
+                            data-obj_id="{{item.id}}" title="{% trans 'Borrar' %}" 
+                            data-confirm="{% trans "Are you sure to remove this element?" %}"><i class="fas fa-trash"></i></a> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+
+{%comment%} MOBILE VERSION {%endcomment%}
+
+<div class="d-lg-none"> 
+    {% for item in items %}
+        <div class="list-item-cl pt-2 pb-2" id="row_{{item.id}}">
+            <div class="row pb-2 m-0">
+                <div class="col-3 text-center p-0" tyle="border:1px solid red">
+                    {% if item.qr %}<img src="{{item.qr.url}}" alt="qr" width="100%"/>{% endif %}
+                </div>
+                <div class="col-9 mt-2">
+                    <strong><i class='fas fa-user orange'></i> {% trans "Nombre" %}<br /></strong> {{ item.name|default:"---" }}<br />
+                    <strong><i class='fas fa-phone orange'></i> {% trans "Teléfono" %}<br /></strong> {{ item.phone|default:"" }}
+                </div>
+            </div>
+            
+            <div class="row m-0">
+                <div class="col-12"><strong><i class='fas fa-envelope orange'></i> 
+                    {% trans "Correo electrónico" %}<br /></strong>{{ item.email|default:"" }}</div>
+                <div class="col-12 mt-2"><strong><i class='fas fa-map-marker orange'></i> 
+                    {% trans "Dirección" %}<br /></strong> {{ item.address|default:"" }}</div>
+             </div>
+             <div class="row m-0 mt-2">
+                <div class="col-3">
+                    <a class="btn btn-outline-info w-100" href="{% url "clients-print-qr" item.id %}" title="{% trans 'Imprimir' %}" 
+                        target="_blank"> <i class="fas fa-print"></i></a> </div>
+                <div class="col-3">
+                    <a class="btn btn-outline-warning w-100" href="{% url "clients-assistances" item.id %}" 
+                        title="{% trans 'Asistencias' %}"> <i class="fa fa-medkit"></i></a> </div>
+                <div class="col-3">
+                    <button type="button" class="btn btn-primary-outline ark w-100" data-url="{% url "clients-form" %}" 
+                        data-target-modal="common-modal" data-obj_id="{{item.id}}" title="{% trans 'Editar' %}">
+                        <i class="fas fa-edit"></i></button></div>
+                <div class="col-3">
+                    <button type="button" class="btn btn-outline-danger ark w-100" data-url="{% url "clients-remove" %}" 
+                        data-target="client-list" data-obj_id="{{item.id}}" title="{% trans 'Borrar' %}" 
+                        data-confirm="{% trans "Are you sure to remove this element?" %}"><i class="fas fa-trash"></i></button></div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load i18n static gestion_tags%}
+
+{% block central_content %}
+    <div class="content">
+        {%comment%}
+        <div class="row">
+            <div class="col-10"> <h1>{% trans "Cliente" %}: {{obj.name}}</h1></div>
+            <div class="col-2"> 
+                <button class="btn btn-sm new" type="button" href="{% url "clients" %}"><i class="fa fa-arrow-left"></i> {% trans "volver" %}</button></div>
+        </div>
+        {%endcomment%}
+
+        {%comment%} MOBILE PC {%endcomment%}
+        <div class="d-none d-lg-block"> 
+            <div class="toolbar-content p-3">
+                <h2 class="pathway b-right">
+                    {%trans 'Cliente'%}: <span class="badge badge-secondary"> {{obj.name}}</span></h2>
+                    <a class="btn btn-sm new" href="{%url 'clients'%}"><i class="fa fa-arrow-left"></i> {% trans 'Volver' %}</a>
+                {%comment%}
+                    <button type="button" class="btn btn-sm ark new" data-url="{%url "clients"%}" data-target-modal="common-modal"> 
+                        <i class="fa fa-arrow-left"></i> {% trans 'Volver' %}</button> 
+                {%endcomment%}
+            </div>
+
+            <div id="item-list" class="ml-list">
+                    <div class="row main-th py-3 m-0">
+                        <div class="col-6"> {% trans 'Trabajador/a' %} </div>
+                        <div class="col-3"> {% trans 'Hora entrada' %} </div>
+                        <div class="col-3"> {% trans 'Hora salida' %} </div>
+                    </div>
+
+                    {% for item in obj.assistances.all %}
+                        <div class="row list-item pt-2 pb-2 m-0" id="row_{{item.id}}">
+                            <div class="col-6">{{item.employee.name}}</div>
+                            <div class="col-3"> <span class="badge bg-success-outline datetime"> {{item.ini_date|local_time|date:"d-m-Y H:i"}}</span></div>
+                            <div class="col-3">
+                                {%if item.finish%}<span class="badge bg-danger-outline datetime">{{item.end_date|local_time|date:"d-m-Y H:i"}}</span>{%endif%}
+                            </div>
+                        </div>
+                    {% endfor %}
+            </div>
+        </div>
+        {%comment%} MOBILE PC {%endcomment%}
+
+        {%comment%} MOBILE VERSION {%endcomment%}
+        <div class="d-lg-none"> 
+            <div class="toolbar-content p-3 m-0">
+                <h2 class="pathway b-right">
+                    <span class="badge badge-secondary">{{obj.name}}</span></h2>
+                    <a class="btn btn-sm new" href="{%url 'clients'%}"><i class="fa fa-arrow-left"></i> {% trans 'Volver' %}</a>
+                    {%comment%}
+                     <button type="button" class="btn btn-sm ark new" data-url="{%url "clients"%}" data-target-modal="common-modal"> 
+                    <i class="fa fa-arrow-left"></i> {% trans 'Volver' %}</button> 
+                    {%endcomment%}
+             </div>
+
+                {% for item in obj.assistances.all %}
+                    <div class="row list-item-cl pt-2 pb-2 m-0" id="row_{{item.id}}">
+                        <div class="col-12"> <small><i class="fas fa-user orange"></i> {% trans 'Trabajador/a' %}</small> <br/> 
+                            <strong>{{item.employee.name}}</strong></div>
+                        <div class="col-6 mt-2"> <small>{% trans 'Hora entrada' %}</small> <br />
+                            <span class="badge bg-success-outline datetime">{{item.ini_date|local_time|date:"d-m-Y H:i"}}</span> </div>
+                        <div class="col-6 mt-2"> <small>{% trans 'Hora salida' %}</small> <br />
+                            <span class="badge bg-danger-outline datetime">{{item.end_date|local_time|date:"d-m-Y H:i"}}</span> </div>
+                    </div>
+                {% endfor %}
+        </div>
+        {%comment%} MOBILE VERSION {%endcomment%}
+
+    </div>
+    {% include "common-modal.html" %}
+{% endblock central_content %}

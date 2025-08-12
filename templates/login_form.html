@@ -1,0 +1,16 @@
+{% load i18n %}
+
+
+{% if messages %}
+    {% for mesg in messages %}
+	    <div  style="margin-bottom: -1.5em;"> <div class="alert alert-danger"><i class="fas fa-times"></i> {{ mesg }} </div> </div>
+	{% endfor %}
+{% endif %}
+
+<form action="{% url 'auth_login' %}" method="post" class="form login-form">
+	{% csrf_token %}
+	<input type="hidden" name="next" value="{% url 'index' %}" />
+	<input type="text" value="" name="username" id="id_username" class="form-control" placeholder="{% trans "Username" %}"> <br/>
+	<input type="password" value="" name="password" class="form-control" id="id_password" placeholder="{% trans "Password" %}"> <br/>
+	<button type="submit" class="btn btn-primary btn-block mt-2"> {% trans "Iniciar Sesión" %} </button>
+</form>

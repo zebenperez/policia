@@ -1,0 +1,50 @@
+{% load i18n static %}
+
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta name="description" content="{% trans "Asistencia Canaria"%}">
+        <meta name="author" content="{% trans "" %}">
+
+        <link rel="stylesheet" href="{% static "css/login.css"%}" type="text/css"/>
+
+        <!-- Bootstrap core CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+        <!-- Font awesome -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+        <!-- JQuery -->
+        <script src="https://code.jquery.com/jquery-3.5.1.js" ></script>
+
+        <title>{% trans "Asistencia Canaria"%}</title>
+    </head>
+    <body>
+        <div class="login-container">
+            <div class="login-left">
+                <div class="features-container">
+                    <h4 class="apptitle">{% trans "Asistencia Canaria" %}</h4>
+		    {% blocktrans %} <br />
+                        <p>Servicios orientados a cubrir tus necesidades indivisuales/familiares en el ámbito sociosanitario<p>
+                    {% endblocktrans %}
+                </div>
+               <div><img src="{% static '/images/bg-login.png'%}" width="100%"/></div>
+               <div class="login-left-bottom p-5 text-center">ASISTENCIA CANARIA</div>
+            </div>
+            <div class="login-right">
+		    <div class="logo text-center"><a href="https://www.asm.es" target="_blank"><img src="{% static '/images/logo-asistencia-canaria.jpg'%}" width="200"/></a></div>
+                {% block login-right %}
+                    <div class="form-container toggle-container mt-5" id="login-form">
+                        <h4 class="title text-center">{% trans "Inicia Sesión" %}
+                        {% include "login_form.html" %}
+                    </div>
+                {% endblock %}
+            </div>
+        </div>
+    </body>
+</html>

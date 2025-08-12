@@ -1,0 +1,20 @@
+{% load i18n static %}
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <title>Asistencia Canaria</title>
+
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}" >
+    </head>
+    <body>
+         <div class="row qr-print">
+            <div class="col-12"> Asistencia Canaria <div> 
+            <div class="col-12"> {% if obj.qr %}<img src="{{obj.qr.url}}" alt="qr"/>{% endif %} </div> 
+            <div class="col-12"> {{obj.name}} </div> 
+         </div>
+         <script> window.print(); </script>
+    </body>
+</html>

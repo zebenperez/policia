@@ -1,0 +1,58 @@
+{% extends "pwa-base.html" %}
+{% load static i18n pwa_tags %}
+
+{% block content%}
+    {%comment%}
+    <div class="col-2 tiny p-2"><strong>Bienvenid@</strong></div>
+    <div class="col-8 text-center"> <strong>{{user.employee.name}} </strong> </div>
+    <div class="col-2 text-center">
+        <strong><a class="btn btn-light btn-sm powericon" href="{% url 'pwa-logout' %}"><i class="fas fa-power-off"></i></a></strong>
+    </div>
+    {%endcomment%}
+    <div class="col-12 p-2 mt-3">
+        <div class="text-start my-2">
+            {% if obj == None %}
+                <a class="btn btn-success asm w-100 py-3" href="{%url 'pwa-qr-scan'%}">Entrar con QR</a>
+                <br/><br/><br/>
+                {% comment %}
+                <form method="post" action="{% url "pwa-code-read" %}" id="frmQrScan">
+                    {% csrf_token %}
+                    <div class="text-center"><h3 class="code">O introduce el código:</h3></div>
+                    <div class="text-center">
+                        <input type="text" class="form-control btn asm w-50" id="code" name="code" placeholder="Código..."/>
+                    </div>
+                    <br/>
+                    <div class="text-center">
+                        <input type="submit" class="btn btn-secondary asm w-50" value="Entrar con Código" />
+                    </div>
+                </form>
+                {% endcomment %}
+            {% else %}
+                <p class="info text-center p-2">{%trans "Actualmente se encuentra con el/la usuario/a: "%}</p>
+                <p class="name text-center py-5">{{obj.client.name}}</p>
+                <p class="date text-center"><i class="fa fa-clock-o"></i> {%trans "Inicio: "%} {{obj.ini_date|local_time|date:"d-m-Y H:i"}}</span></p>
+                <p class="date text-center"> {%trans "Observaciones: "%} {{obj.client.observations}}</p>
+                <a class="btn btn-danger asm w-100 py-3" href="{%url 'pwa-qr-scan-finish'%}">Salir </a>
+                {#<a class="btn btn-danger asm w-100" href="{%url 'pwa-qr-finish' obj.id%}"><h3>Salir</h3> </a>#}
+
+                <br/><br/><br/>
+                {% comment %}
+                <form method="post" action="{% url "pwa-code-finish" %}" id="frmQrScan">
+                    {% csrf_token %}
+                    <div class="text-center"><h3>Código:</h3></div>
+                    <input type="text" class="form-control" id="code" name="code" placeholder="Código..."/>
+                    <br/>
+                    <input type="submit" class="btn btn-danger asm w-100" value="Salir con Código" />
+                </form>
+                {% endcomment %}
+
+            {% endif %}
+        </div>
+            {%comment%}
+            <div class="col-6 text-start my-2">
+                <a class="btn btn-light asm w-100" href="{#{%url 'pwa-driver-incidents'%}#}"><h3>Incidencias</h3>  
+                    <img class="" src="{% static 'images/operations.png' %}" width=""></a>
+            </div>
+            {%endcomment%}
+    </div>
+{% endblock %}

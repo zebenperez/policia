@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+
+{% block central_content %}
+    <div class="row toolbar-search p-2 m-0">{% include "clients/clients-search.html" %}</div>
+        {%comment%}
+        <div class="col-lg-11 col-11 b-search">
+            <input type="text" class="autosearch form-control form-control-dark w-100 py-2" name="s-name" id="s-name" 
+               placeholder="{%trans 'Nombre'%}" data-url="{% url "clients-search" %}" data-target="client-list" data-related="s-name"/>
+        </div>
+        <div class="col-lg-1 col-1"><i class="fas fa-search"></i></div>
+        {%endcomment%}
+    {#</div>#}
+    <div class="content mt-4">
+        <div class="toolbar-content p-3">
+	        <h2 class="pathway b-right">
+                {%trans 'Clientes'%} <span id="items-counter" class="badge badge-secondary">{{items|length}}</span></h2>
+            <a class="btn btn-sm new" href="{% url "clients-print-all-qr" %}" title="{% trans 'Imprimir' %}" target="_blank"> 
+                <i class="fas fa-print"></i> {% trans "Imprimir QRs" %}</a> 
+            <button type="button" class="btn btn-sm ark new" data-url="{%url "clients-form"%}" data-target-modal="common-modal"> 
+                <i class="fas fa-plus"></i> {% trans 'Nuevo Cliente' %}</button> 
+        </div>
+        <div id="client-list" class="ml-list">{% include "clients/clients-list.html" %}</div>
+    </div>
+    {% include "common-modal.html" %}
+{% endblock central_content %}

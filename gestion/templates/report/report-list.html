@@ -1,0 +1,53 @@
+{% load i18n gestion_tags %}
+
+{%comment%} PC VERSION {%endcomment%}
+
+<div class="d-none d-lg-block"> 
+    <div class="row py-3 m-0">
+        <div class="col-3"></div>
+        <div class="col-3"></div>
+        <div class="col-2"></div>
+        <div class="col-2"><strong>Total</strong></div>
+        <div class="col-1"><strong>{{ duration }} min</strong></div>
+        <div class="col-1"></div>
+    </div>
+
+    <div class="row main-th py-3 m-0">
+        <div class="col-3"> {% trans 'Client' %} </div>
+        <div class="col-3"> {% trans 'Empleado' %} </div>
+        <div class="col-2"> {% trans 'Fecha de inicio' %} </div>
+        <div class="col-2"> {% trans 'Fecha de fin' %} </div>
+        <div class="col-1"> {% trans 'Duración del servicio' %} </div>
+        <div class="col-1"> {% trans 'Finalizada' %} </div>
+    </div>
+
+    {% for item in items %}
+        <div class="row list-item pt-2 pb-2 m-0 {%if item.email == ""%}alert alert-warning{%endif%}" id="row_{{item.id}}">
+            <div class="col-3">{{ item.client.name|default:"---" }}</div>
+            <div class="col-3">{{ item.employee.name|default:"---" }}</div>
+            <div class="col-2 datetime">{{ item.ini_date|local_time|date:"Y-m-d H:i" }}</div>
+            <div class="col-2 datetime">{{ item.end_date|local_time|date:"Y-m-d H:i" }}</div>
+            <div class="col-1">{{ item.duration }} min</div>
+            <div class="col-1">{%if item.finish%}<i class="fas fa-check"></i>{%else%}<i class="fas fa-times"></i>{%endif%}</div>
+        </div>
+    {% endfor %}
+</div>
+
+{%comment%} MOBILE VERSION {%endcomment%}
+
+<div class="d-lg-none"> 
+    {% for item in items %}
+        <div class="row list-item-cl pt-2 pb-2 m-0" id="row_{{item.id}}">
+            <div class="col-12"> <small><i class="fas fa-user orange"></i> {% trans 'Cliente' %}</small>
+                <br /><strong>{{ item.client.name|default:"---" }}</strong></div>
+            <div class="col-12 mt-2"> <small><i class="fas fa-user orange"></i> {% trans 'Empleado' %}</small>
+                <br /><strong>{{ item.employee.name|default:"" }}</strong></div>
+            <div class="col-5 mt-2"> <small><i class="fas fa-clock orange"></i> {% trans 'Fecha de inicio' %}</small>
+                <br /><strong class="datetime">{{ item.ini_date|local_time|date:"Y-m-d H:i" }}</strong></div>
+            <div class="col-5 mt-2"> <small><i class="fas fa-clock orange"></i> {% trans 'Fecha de fin' %}</small>
+                <br /><strong class="datetime">{{ item.end_date|local_time|date:"Y-m-d H:i" }}</strong></div>
+            <div class="col-2 mt-2"> <small><i class="fas fa-clock orange"></i> {% trans 'Finalizada' %}</small>
+                <br/><strong>{%if item.finish%}<i class="fas fa-check"></i>{%else%}<i class="fas fa-times"></i>{%endif%}</strong></div>
+        </div>
+    {% endfor %}
+</div>

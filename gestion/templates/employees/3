@@ -1,0 +1,15 @@
+{% load i18n %}
+
+
+<form method="POST" action="{% url "employees-import" %}" id="form-rooms-import" enctype="multipart/form-data">
+    {%csrf_token%}
+    <div class="row justify-center">
+        <div class="col-6">
+            <div class="greybox-sm p-1"> {% trans "Fichero" %} <input type="file" class="form-control imp" id="file" name="file"/> </div>
+        </div>
+        <div class="col-2">
+            <div class="greybox-sm p-1"> <input type="submit" class="btn btn-sm save" value="{%trans "Importar"%}"/> </div>
+        </div>
+    </div>
+</form>
+

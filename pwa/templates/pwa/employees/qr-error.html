@@ -1,0 +1,12 @@
+{% extends "pwa-base.html" %}
+{% load static %}
+
+{% block content%}
+    <div class="col-12 p-2 mt-2">
+        <div class="text-center my-2">
+            <p class="name text-center py-5">¡Vaya!<br /> Parece que este QR/Código no se corresponde con ningún cliente registrado</p>
+            <a class="btn btn-warning asm w-50" href="{% url "pwa-employee" %}"><strong>Volver</strong></a>
+        </div>
+    </div>
+
+{% endblock %}

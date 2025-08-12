@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+
+{% block central_content %}
+    <div class="row toolbar-search p-2 m-0">{% include "assistances-search.html" %} </div>
+    <div class="content mt-3">
+        <div class="toolbar-content p-3 row">
+            <div class="col-10">
+	            <h2 class="pathway b-right">
+                    {%trans 'Asistencias'%} <span id="items-counter" class="badge badge-secondary">{{items|length}}</span></h2>
+            </div>
+            <div class="col-2"> <button type="button" class="btn btn-sm ark new w-100" data-url="{%url "assistances-form"%}" 
+                data-target-modal="common-modal"> <i class="fas fa-plus"></i> {% trans 'Nueva Asistencia' %}</button></div>
+        </div>
+        <div id="item-list" class="ml-list">{% include "assistances-list.html" %}</div>
+    </div>
+    {% include "common-modal.html" %}
+{% endblock central_content %}

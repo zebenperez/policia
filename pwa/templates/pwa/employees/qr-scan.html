@@ -1,0 +1,43 @@
+{% extends "pwa-base.html" %}
+{% load static %}
+
+{% block content%}
+    <script src="{% static "js/html5-qrcode.min.js" %}"></script>
+    <div id="reader" class="reader"></div>
+    <form method="post" action="{% url "pwa-qr-read" %}" id="frmQrScan">
+        {% csrf_token %}
+        <input type="hidden" id="qr_value" name="qr_value" />
+    </form>
+
+    <script>
+        {%comment%}
+        //var html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 });
+       /*var html5QrcodeScanner = new Html5QrcodeScanner(
+            "reader", 
+            { 
+                fps: 10, 
+                qrbox: 250, 
+                videoConstraints: { facingMode: { exact: "environment" }, }, 
+            }
+        );*/
+        //html5QrcodeScanner.render(onScanSuccess);
+        //html5Qrcode.start({ facingMode: { exact: "environment"} }, {fps: 10, qrbox: 250}, onScanSuccess);
+        {%endcomment%}
+
+        const html5QrCode = new Html5Qrcode(/* element id */ "reader");
+        function onScanSuccess(decodedText, decodedResult) {
+            //console.log(`Scan result: ${decodedText}`, decodedResult);
+            {#//html5QrcodeScanner.clear();#}
+            html5QrCode.stop();
+            $("#qr_value").val(decodedText);
+            $("#frmQrScan").submit();
+        }
+        Html5Qrcode.getCameras().then(devices => {
+            if (devices && devices.length) {
+                //console.log(devices);
+                var cameraId = devices[devices.length-1].id;
+                html5QrCode.start(cameraId, { fps: 10, qrbox: { width: 250, height: 250 } }, onScanSuccess);
+            }
+        }).catch(err => { console.log(err); });
+    </script>
+{% endblock %}

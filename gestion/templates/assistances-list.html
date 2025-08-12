@@ -1,0 +1,79 @@
+{% load i18n gestion_tags %}
+
+{%comment%} PC VERSION {%endcomment%}
+
+<div class="d-none d-lg-block"> 
+    <div class="row main-th py-3 m-0">
+        <div class="col-2"> {% trans 'Trabajador/a' %} </div>
+        <div class="col-2"> {% trans 'Hora entrada' %} </div>
+        <div class="col-2"> {% trans 'Hora salida' %} </div>
+        <div class="col-2"> {% trans 'Usuario' %} </div>
+        <div class="col-3"> {% trans 'Dirección' %} </div>
+        <div class="col-1"></div>
+    </div>
+
+    {% for item in item_list %}
+        <div class="row list-item pt-2 pb-2 m-0" id="row_{{item.id}}">
+            <div class="col-2">{{item.employee.name}}</div>
+            <div class="col-2">
+                <span class="badge bg-success-outline datetime">{{item.ini_date|local_time|date:"d-m-Y H:i"}}</span></div>
+            <div class="col-2">
+                {% if item.finish %}
+                    <span class="badge bg-danger-outline datetime">{{item.end_date|local_time|date:"d-m-Y H:i"}}</span>
+                {% endif %}
+            </div>
+            <div class="col-2">{{item.client.name}}</div>
+            <div class="col-3">{{item.client.address}}</div>
+            <div class="col-1 text-right">
+                <a class="btn btn-xs ark" data-url="{% url "assistances-form" %}" data-target-modal="common-modal" 
+                    data-obj_id="{{item.id}}" title="{% trans 'Editar' %}"><i class="fas fa-edit"></i></a> 
+                <a class="btn btn-xs ark" data-url="{% url "assistances-remove" %}" data-target="item-list" data-obj_id="{{item.id}}" 
+                    title="{% trans 'Borrar' %}" data-confirm="{% trans "Are you sure to remove this element?" %}">
+                    <i class="fas fa-trash"></i></a> 
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+
+{%comment%} MOBILE VERSION {%endcomment%}
+
+<div class="d-lg-none"> 
+    {% for item in item_list %}
+    <div class="row list-item-cl pt-2 pb-2 m-0" id="row_{{item.id}}">
+        <div class="col-6"> <small><i class="fas fa-user orange"></i> {% trans 'Trabajador/a' %}</small> 
+            <br /> <strong>{{item.employee.name}}</strong></div>
+        <div class="col-6"> <small><i class="fas fa-user orange"></i> {% trans 'Usuario' %} </small> 
+            <br /> <strong>{{item.client.name}}</strong> </div>
+        <div class="col-6 mt-2"> <small>{% trans 'Hora entrada' %}</small> <br />
+            <span class="badge bg-success-outline datetime" >{{item.ini_date|local_time|date:"d-m-Y H:i"}}</span> </div>
+        <div class="col-6 mt-2"> <small>{% trans 'Hora salida' %}</small> <br />
+            <span class="badge bg-danger-outline datetime" >{{item.end_date|local_time|date:"d-m-Y H:i"}}</span>
+        </div>
+        <div class="col-12 mt-2"> <small><i class="fas fa-map-marker orange"></i> {% trans 'Dirección' %}</small> 
+            <br /><strong>{{item.client.address}}</strong> </div>
+    </div>
+    {% endfor %}
+
+     {%comment%}
+        <div class="row main-th py-3 m-0">
+            <div class="col-3"> {% trans 'Trabajador/a' %} </div>
+            <div class="col-2"> {% trans 'Hora entrada' %} </div>
+            <div class="col-2"> {% trans 'Hora salida' %} </div>
+            <div class="col-2"> {% trans 'Usuario' %} </div>
+            <div class="col-3"> {% trans 'Dirección' %} </div>
+        </div>
+        {% for item in item_list %}
+            <div class="row list-item pt-2 pb-2 m-0" id="row_{{item.id}}">
+                <div class="col-3">{{item.employee.name}}</div>
+                <div class="col-2">
+                    <span class="badge bg-success datetime" style="color:white !important">{{item.ini_date|local_time|date:"d-m-Y H:i"}}</span></div>
+                <div class="col-2"><span class="badge bg-danger datetime" style="color:white !important">{{item.end_date|local_time|date:"d-m-Y H:i"}}</span></div>
+                <div class="col-2">{{item.client.name}}</div>
+                <div class="col-3">{{item.client.address}}</div>
+            </div>
+        {% endfor %}
+     {%endcomment%}
+</div>
+
+

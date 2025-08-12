@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+
+{% block central_content %}
+    <div class="row toolbar-search p-2 m-0">{% include "report/report-search.html" %} </div>
+    <div class="content mt-3">
+        {%comment%} PC VERSION {%endcomment%}
+        <div class="d-none d-lg-block"> 
+            <div class="row toolbar-content py-3 m-0">
+                <div class="col-6"><h2 class="pathway b-right">
+                    {%trans 'Asistencias'%} <span id="items-counter" class="badge badge-secondary">{{items|length}}</span></h2></div>
+                <div class="col-6 text-end"> <a class="btn btn-xs exp w-100" href="{% url "report-export" %}" 
+                    title="{% trans 'Exportar a CSV' %}" target="_blank"><i class="fas fa-file-csv"></i> {% trans "Exportar" %}</a>
+                </div>
+            </div>
+        </div>
+
+
+        {%comment%} MOBILE VERSION {%endcomment%}
+        <div class="d-lg-none"> 
+            <div class="toolbar-content p-3 m-0">
+                <h2 class="pathway b-right"> <i class="fas fa-users orange"></i>
+                    <span id="items-counter" class="badge badge-secondary">{{items|length}}</span></h2>
+                {%comment%}
+                <a class="btn btn-xs exp" href="{% url "employees-export" %}" title="{% trans 'Exportar a CSV' %}" target="_blank"> 
+                    <i class="fas fa-file-csv"></i> {% trans "Exportar" %}</a>
+                {%endcomment%}
+            </div>
+        </div>
+
+        <div id="emp-list" class="ml-list">{% include "report/report-list.html" %}</div>
+    </div>
+    {% include "common-modal.html" %}
+{% endblock central_content %}
