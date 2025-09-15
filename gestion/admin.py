@@ -2,7 +2,9 @@ from django.contrib import admin
 from .models import *
 
 
-admin.site.register(Assistance)
+admin.site.register(Employee)
+admin.site.register(Report)
+admin.site.register(Station)
 
 #class FacilityTypeAdmin(admin.ModelAdmin):
 #    list_display = ('code', 'name', 'order', 'operation_time', 'dashboard')

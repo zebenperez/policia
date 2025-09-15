@@ -1,18 +1,18 @@
 {% load i18n gestion_tags %}
 
-<form class="form m-0" method="GET" action="{% url "assistances-search" %}" id="form-search">
+<form class="form m-0" method="GET" action="{% url "employees-search" %}" id="form-search">
     {%csrf_token%}
     <div class="row">
         <div class="col-lg-5 col-6">
             <div class="row"> 
-                <div class="col-lg-4 col-4 py-2 text-end d-none d-lg-block"> <span>{% trans "Buscar otra fecha:" %}</span> </div>
+                <div class="col-lg-4 col-4 py-2 text-end d-none d-lg-block"> <span>{% trans "Buscar por fecha:" %}</span> </div>
                 <div class="col-lg-4 col-6 p-0">
-                    <input type="date" class="autosearch form-control form-control-dark w-100 py-2" name="s_idate" id="s_idate" 
-                        value="{{request.session.s_idate}}"/>
+                    <input type="date" class="autosearch form-control form-control-dark w-100 py-2"
+                        name="s_emp_idate" id="s_emp_idate" value="{{request.session.s_emp_idate}}"/>
                 </div>
                 <div class="col-lg-4 col-6 p-0">
-                    <input type="date" class="autosearch form-control form-control-dark w-100 py-2" name="s_edate" id="s_edate" 
-                        value="{{request.session.s_edate}}"/>
+                    <input type="date" class="autosearch form-control form-control-dark w-100 py-2" 
+                        name="s_emp_edate" id="s_emp_edate" value="{{request.session.s_emp_edate}}"/>
                 </div>
             </div>
         </div>
@@ -20,13 +20,13 @@
             <div class="row">
                 <div class="col-lg-5 col-5 py-2 text-end d-none d-lg-block"> <span>{% trans "Buscar trabajador/a:" %}</span> </div>
                 <div class="col-lg-7 col-12">
-                    <input type="text" class="autosearch form-control form-control-dark w-100 py-2" name="s_name" id="s_name" 
-                        placeholder="Nombre trabajador/a" value="{{request.session.s_name}}"/>
+                    <input type="text" class="form-control form-control-dark w-100 py-2" 
+                        name="s_emp_name" id="s_emp_name" placeholder="Nombre trabajador/a" value="{{request.session.s_emp_name}}"/>
                 </div>
             </div>
         </div>
         <div class="col-lg-1 col-1 p-0">
-            <button class="btn btn-default saveform w-100" data-form="form-search" data-target="item-list">
+            <button class="btn btn-default saveform w-100" data-form="form-search" data-target="emp-list">
                 <i class="fas fa-search"></i> </button>
         </div>
     </div>

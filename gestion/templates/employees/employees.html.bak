@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+
+{% block central_content %}
+    <div class="row toolbar-search p-2 m-0">{% include "employees/employees-search.html" %} </div>
+        {%comment%}
+        <div class="col-lg-11 col-11 b-search">
+            <input type="text" class="autosearch form-control form-control-dark w-100 py-2" name="s-name" id="s-name" 
+               placeholder="{%trans 'Nombre'%}" data-url="{% url "employees-search" %}" data-target="emp-list" data-related="s-name"/>
+        </div>
+        <div class="col-lg-1 col-1"><i class="fas fa-search"></i></div>
+        {%endcomment%}
+    {#</div>#}
+    <div class="content mt-3">
+        
+        {%comment%} PC VERSION {%endcomment%}
+
+        <div class="d-none d-lg-block"> 
+            <div class="row toolbar-content py-3 m-0">
+                <div class="col-lg-2"><h2 class="pathway b-right">
+                    {%trans 'Empleados'%} <span id="items-counter" class="badge badge-secondary">{{items|length}}</span></h2></div>
+                <div class="col-lg-2 offset-lg-4"> <a class="btn btn-xs exp w-100" href="{% url "employees-export" %}" 
+                    title="{% trans 'Exportar a CSV' %}" target="_blank"><i class="fas fa-file-csv"></i> {% trans "Exportar" %}</a>
+                </div>
+                <div class="col-lg-2"> <button type="button" class="btn btn-sm new w-100" onclick="$('#div-import').toggle()">
+                    <i class="fas fa-file-import"></i> {% trans 'Importar Empleados' %}</button></div>
+                <div class="col-lg-2"> <button type="button" class="btn btn-sm ark new w-100" data-url="{%url "employees-form"%}" 
+                    data-target-modal="common-modal"> <i class="fas fa-plus"></i> {% trans 'Nuevo Empleado' %}</button></div>
+            </div>
+        </div>
+
+
+        {%comment%} MOBILE VERSION {%endcomment%}
+        <div class="d-lg-none"> 
+            <div class="toolbar-content p-3 m-0">
+                <h2 class="pathway b-right">
+                    <i class="fas fa-users orange"></i><span id="items-counter" class="badge badge-secondary">{{items|length}}</span></h2>
+                <a class="btn btn-xs exp" href="{% url "employees-export" %}" title="{% trans 'Exportar a CSV' %}" target="_blank"> 
+                    <i class="fas fa-file-csv"></i> {% trans "Exportar" %}</a>
+                <button type="button" class="btn btn-sm new" onclick="$('#div-import').toggle()"> 
+                    <i class="fas fa-file-import"></i> {% trans 'Importar' %}</button> 
+                <button type="button" class="btn btn-sm ark new" data-url="{%url "employees-form"%}" data-target-modal="common-modal"> 
+                    <i class="fas fa-plus"></i> {% trans 'Nuevo' %}</button> 
+            </div>
+        </div>
+
+        <div id="div-import" class="hide">
+            {% include "employees/employees-import.html" %}
+            <br/>
+        </div>
+        <div id="emp-list" class="ml-list">{% include "employees/employees-list.html" %}</div>
+    </div>
+    {% include "common-modal.html" %}
+{% endblock central_content %}

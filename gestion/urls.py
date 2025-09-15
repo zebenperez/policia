@@ -3,13 +3,15 @@ from . import views, auto_views
 
 urlpatterns = [ 
     path('home', views.index, name='index'),
-    path('assistances/list', views.assistances_list, name='assistances-list'),
-    path('assistances/search', views.assistances_search, name='assistances-search'),
-    path('assistances/form', views.assistances_form, name='assistances-form'),
-    path('assistances/form-save', views.assistances_form_save, name='assistances-form-save'),
-    path('assistances/remove', views.assistances_remove, name='assistances-remove'),
-    path('assistances/client/<int:client_id>/', views.assistances_client, name='assistances-client'),
 
+    #---------------------- REPORTS -----------------------
+    path('reports', views.reports, name='reports'),
+    path('reports/list', views.reports_list, name='reports-list'),
+    path('reports/search', views.reports_search, name='reports-search'),
+    path('reports/form', views.reports_form, name='reports-form'),
+    path('reports/remove', views.reports_remove, name='reports-remove'),
+    path('reports/print/<int:obj_id>', views.reports_print, name='reports-print'),
+ 
     #---------------------- EMPLOYEES -----------------------
     path('employees', views.employees, name='employees'),
     path('employees/list', views.employees_list, name='employees-list'),
@@ -20,21 +22,8 @@ urlpatterns = [
     path('employees/export', views.employees_export, name='employees-export'),
     path('employees/import', views.employees_import, name='employees-import'),
 
-    #------------------------- CLIENTS -----------------------
-    path('clients', views.clients, name='clients'),
-    path('clients/list', views.clients_list, name='clients-list'),
-    path('clients/search', views.clients_search, name='clients-search'),
-    path('clients/form', views.clients_form, name='clients-form'),
-    path('clients/remove', views.clients_remove, name='clients-remove'),
-    path('clients/print-all-qr', views.clients_print_all_qr, name='clients-print-all-qr'),
-    path('clients/print-qr/<int:obj_id>', views.clients_print_qr, name='clients-print-qr'),
-    path('clients/assistances/<int:obj_id>', views.clients_assistances, name='clients-assistances'),
-
-    #---------------------- ASSISTANCES -----------------------
-    path('report', views.report, name='report'),
-    path('report/list', views.report_list, name='report-list'),
-    path('report/search', views.report_search, name='report-search'),
-    path('report/export', views.report_export, name='report-export'),
+    #------------------------- SPEECH TO TEXT -----------------------
+    path('set-audio-report', views.set_audio_report, name='set-audio-report'),
 
     #---------------------- AUTO -----------------------
     path('autosave_field/', auto_views.autosave_field, name='autosave_field'),

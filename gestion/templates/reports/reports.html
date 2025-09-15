@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+
+{% block central_content %}
+
+    <div class="top-inner-content">
+        <h2 class="mb-4">Listado de Denuncias</h2>
+
+        <!-- Selector de perfil (solo visible para administradores) -->
+        <div class="mb-4" id="profileSwitcher">
+            <select id="userProfileSelect" class="profile-selector w-100 p-2.5">
+                <option value="admin" selected>Vista de Administrador</option>
+                <option value="agent">Vista de Agente</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row toolbar-search">{% include "reports/reports-search.html" %} </div>
+      <div class="content">
+   
+       {%comment%} PC VERSION {%endcomment%}
+
+        <div class="d-none d-lg-block"> 
+            <div class="row toolbar-content py-3 m-0">
+                <div class="col-lg-2"><h2 class="pathway">
+                    {%trans 'Denuncias'%} <span id="items-counter" class="badge badge-secondary">{{items|length}}</span></h2></div>
+                {%comment%}
+                <div class="col-lg-2 offset-lg-4 text-end">
+                    <a class="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+                        href="{% url "employees-export" %}" title="{% trans 'Exportar a CSV' %}" target="_blank">
+                        <i class="fas fa-file-csv"></i> {% trans "Exportar" %}</a>
+                </div>
+                <div class="col-lg-2">
+                    <button type="button" 
+                        class="new px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50" 
+                        onclick="$('#div-import').toggle()"> <i class="fas fa-file-import"></i> {% trans 'Importar Agentes' %}</button>
+                </div>
+		        <div class="col-lg-2">
+                    <button type="button" class="ark new w-100 px-3 py-1 border border-gray-300 rounded-md text-sm font-medium 
+                        text-gray-700 bg-white hover:bg-gray-50" data-url="{%url "employees-form"%}" data-target-modal="common-modal"> 
+                        <i class="fas fa-plus"></i> {% trans 'Nuevo Agente' %}</button>
+                </div>
+                {%endcomment%}
+            </div>
+        </div>
+
+        {%comment%} MOBILE VERSION {%endcomment%}
+        <div class="d-lg-none"> 
+            <div class="toolbar-content p-3 m-0">
+                <h2 class="pathway">
+                    <i class="fas fa-users orange"></i><span id="items-counter" class="badge badge-secondary">{{items|length}}</span>
+                </h2>
+                {%comment%}
+                <a class="btn btn-xs exp" href="{% url "employees-export" %}" title="{% trans 'Exportar a CSV' %}" target="_blank"> 
+                    <i class="fas fa-file-csv"></i> {% trans "Exportar" %}</a>
+                <button type="button" class="btn btn-sm new" onclick="$('#div-import').toggle()"> 
+                    <i class="fas fa-file-import"></i> {% trans 'Importar' %}</button> 
+                <button type="button" class="btn btn-sm ark new" data-url="{%url "employees-form"%}" data-target-modal="common-modal"> 
+                    <i class="fas fa-plus"></i> {% trans 'Nuevo' %}</button> 
+                {%endcomment%}
+            </div>
+        </div>
+
+        <div id="reports-list" class="ml-list">{% include "reports/reports-list.html" %}</div>
+    </div>
+    {% include "common-modal.html" %}
+{% endblock central_content %}

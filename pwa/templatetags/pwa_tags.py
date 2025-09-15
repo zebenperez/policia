@@ -1,5 +1,5 @@
 from django import template
-from asm.commons import show_exc
+from policia.commons import show_exc
 import datetime
 
 register = template.Library()

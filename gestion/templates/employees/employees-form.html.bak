@@ -2,7 +2,7 @@
 
 
 <div class="row modal-head m-0">
-    <div class="col-11">{% trans 'Agente' %} </div>
+    <div class="col-11"><i class="fa fa-medkit orange"></i>&nbsp; {% trans 'Empleados' %} </div>
     <div class="col-1">
         <div class="d-flex justify-content-end"> 
             <button type="button" class="btn btn-lg" data-bs-dismiss="modal" title="{% trans "Close" %}">

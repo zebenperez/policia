@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render
-from asm.commons import get_or_none_str, set_obj_field, show_exc
+from policia.commons import get_or_none_str, set_obj_field, show_exc
 
 #import logging
 #logger = logging.getLogger(__name__)

@@ -43,8 +43,11 @@ def current(context, url, **kwargs):
 
 @register.simple_tag()
 def get_worked_time(emp, ini_date, end_date):
-    hours, minutes = emp.worked_time(ini_date, end_date)
-    return "{} horas y {} minutos".format(hours, minutes)
+    #hours, minutes = emp.worked_time(ini_date, end_date)
+    hours=0
+    minutes=0
+
+    return "{0} horas y {0} minutos".format(hours, minutes)
 
 @register.filter
 def local_time(mydate):

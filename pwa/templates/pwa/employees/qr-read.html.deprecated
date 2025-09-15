@@ -1,6 +1,0 @@
-{% extends "pwa-base.html" %}
-{% load static %}
-
-{% block content%}
-   -->  {{value}}
-{% endblock %}

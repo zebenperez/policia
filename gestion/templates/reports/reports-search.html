@@ -1,0 +1,36 @@
+{% load i18n gestion_tags %}
+<form class="form" method="GET" action="{% url "reports-search" %}" id="form-search">
+    {%csrf_token%}
+
+<div class="search-area p-4">
+	<div class="search-grid grid-cols-1 md:grid-cols-4 gap-4">
+		<div>
+			<label for="dateFilter" class="mb-1">Fecha</label>
+			<input type="date" class="autosearch form-control w-100 p-2.5"
+				name="s_rep_idate" id="s_rep_idate" value="{{request.session.s_rep_idate}}"/>
+		</div>
+		
+		<div>
+			<label for="typeFilter" class="mb-1">Tipos</label>
+                        <select id="typeFilter" class="w-100 p-2.5">
+                           <option value="">Todos</option>
+                           <option value="ruido">Ruido</option>
+                           <option value="vandalismo">Vandalismo</option>
+                           <option value="trafico">Tráfico</option>
+                           <option value="otros">Otros</option>
+                        </select>  
+		</div>
+
+		<div>
+			<label for="typeFilter" class="mb-1">Atendida por</label>
+			<input type="text" class="form-control w-100 p-2.5" name="s_rep_name" id="s_rep_name" 
+				placeholder="Nombre agente" value="{{request.session.s_rep_name}}"/>
+		</div>
+
+		<div class="flex justify-end">
+			<button class="btn-primary saveform py-2 px-4" data-form="form-search" data-target="emp-list"> Aplicar filtros</button>
+		</div>
+	</div>
+</div>
+</form>
+

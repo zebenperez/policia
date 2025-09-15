@@ -5,9 +5,13 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.models import User
 from datetime import datetime
 
-from asm.decorators import group_required_pwa
-from asm.commons import user_in_group, get_or_none, get_param
-from gestion.models import Employee, Client, Assistance
+from policia.decorators import group_required_pwa
+from policia.commons import user_in_group, get_or_none, get_param
+from gestion.models import Employee, Report
+
+import subprocess
+import threading
+import requests
 
 
 @group_required_pwa("employees")
@@ -48,87 +52,39 @@ def pin_logout(request):
 '''
 @group_required_pwa("employees")
 def employee_home(request):
-    assistance = Assistance.objects.filter(employee=request.user.employee, finish=False).first()
-    return render(request, "pwa/employees/home.html", {"obj": assistance})
+    return render(request, "pwa/employees/home.html", {})
 
-@group_required_pwa("employees")
-def employee_qr_scan(request):
-    return render(request, "pwa/employees/qr-scan.html")
-
-@group_required_pwa("employees")
-def employee_qr_scan_finish(request):
-    return render(request, "pwa/employees/qr-scan-finish.html")
-
-@group_required_pwa("employees")
-def employee_qr_read(request):
-    try:
-        qr_val = request.POST["qr_value"].split("/")
-        client = get_or_none(Client, qr_val[6])
-        obj = Assistance.objects.create(client=client, employee=request.user.employee, ini_date=datetime.now())
-        #assistance = Assistance.objects.filter(client = client).order_by("-ini_date").first()
-        #if assistance == None or assistance.finish == True:
-        #    Assistance.objects.create(client=client, employee=request.user.employee)
-        #else:
-        #    assistance.finish = True
-        #    assistance.save()
-        if client.observations != "":
-            return render(request, "pwa/employees/client-obs.html", {"client": client})
-        return redirect("pwa-home")
-        #return render(request, "pwa/employees/qr-read.html", {"value": qr_val})
-    except Exception as e:
-        return render(request, "pwa/employees/qr-error.html", {})
-        #return HttpResponse("Error: QR no válido ({})".format(e))
-
-@group_required_pwa("employees")
-#def employee_qr_finish(request, obj_id):
-def employee_qr_finish(request):
-    try:
-        qr_val = request.POST["qr_value"].split("/")
-        client = get_or_none(Client, qr_val[6])
-        obj = Assistance.objects.filter(client=client, employee=request.user.employee, finish=False).order_by("-ini_date").first()
-        #obj = get_or_none(Assistance, obj_id)
-        obj.end_date = datetime.now() 
-        obj.finish = True
+#def transcribe_audio(file, obj_id):
+def transcribe_audio(audio_file, obj):
+    #model = whisper.load_model("base")
+    #result = model.transcribe(audio_file, language="es")
+    #obj.text = result
+    #obj.save()
+    #subprocess.run(["python3", "/var/www/django/policia/transcribir.py", file, str(obj_id)])
+    response = requests.post('http://localhost:8001/transcribir', files={'audio': audio_file})
+    if response.status_code == 200:
+        #print(response.json())
+        obj.text = response.json()['texto']
         obj.save()
-        return redirect("pwa-home")
-    except Exception as e:
-        return render(request, "pwa/employees/qr-error.html", {})
-     
-@group_required_pwa("employees")
-def employee_code_read(request):
-    try:
-        code = get_param(request.POST, "code")
-        if code == "":
-            return render(request, "pwa/employees/qr-error.html", {})
-
-        client = get_or_none(Client, code, "code")
-        if client == None:
-            return render(request, "pwa/employees/qr-error.html", {})
-
-        obj = Assistance.objects.create(client=client, employee=request.user.employee, ini_date=datetime.now())
-        if client.observations != "":
-            return render(request, "pwa/employees/client-obs.html", {"client": client})
-        return redirect("pwa-home")
-    except Exception as e:
-        print(e)
-        return render(request, "pwa/employees/qr-error.html", {})
+        return ""
+        #return response.json()['texto']
+    else:
+        raise Exception(f"Error en microservicio: {response.text}")
 
 @group_required_pwa("employees")
-def employee_code_finish(request):
-    try:
-        code = get_param(request.POST, "code")
-        if code == "":
-            return render(request, "pwa/employees/qr-error.html", {})
+def employee_audio_save(request):
+    #concept = get_param(request.POST, "concept")
+    concept = ""
+    audio = None
+    if "audio" in request.FILES and request.FILES["audio"] != "":
+        audio = request.FILES["audio"]
+        concept = "Esperando traducción de audio..."
+    if concept != "" or audio != None:
+        report = Report.objects.create(text=concept, audio=audio, employee=request.user.employee)
+        if "audio" in request.FILES and request.FILES["audio"] != "":
+            t = threading.Thread(target=transcribe_audio, args=[report.audio, report], daemon=True)
+            #t = threading.Thread(target=transcribe_audio, args=[report.audio.url, report.id], daemon=True)
+            t.start()
+    return render(request, "pwa/employees/audio_sended.html", {})
+    #return redirect(reverse('pwa-employee'))
 
-        client = get_or_none(Client, code, "code")
-        if client == None:
-            return render(request, "pwa/employees/qr-error.html", {})
-
-        obj = Assistance.objects.filter(client=client, employee=request.user.employee, finish=False).order_by("-ini_date").first()
-        obj.end_date = datetime.now() 
-        obj.finish = True
-        obj.save()
-        return redirect("pwa-home")
-    except Exception as e:
-        return render(request, "pwa/employees/qr-error.html", {})
- 

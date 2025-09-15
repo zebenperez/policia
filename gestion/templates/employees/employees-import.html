@@ -5,8 +5,9 @@
     {%csrf_token%}
     <div class="row justify-center m-0 medium">
         <div class="col-lg-1 col-1 offset-lg-5 greybox-sm tex-center pt-2 text-end d-none d-lg-block"> {% trans "Fichero" %}: </div>
-        <div class="col-lg-3 col-9 pt-1 mt-1 select-file"><input type="file" class="form-control imp" id="file" name="file"/></div>
-        <div class="col-lg-1 col-3 greybox-sm p-1 text-center"><input type="submit" class="btn btn-sm save import" value="{%trans "Importar"%}"/></div>
+	<div class="col-lg-3 col-9 pt-2 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
+		<input type="file" class="form-control imp" id="file" name="file"/></div>
+        <div class="col-lg-1 col-3 greybox-sm p-1 text-center"><input type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors" value="{%trans "Importar"%}"/></div>
     </div>
 </form>
 

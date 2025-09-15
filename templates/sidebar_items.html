@@ -5,42 +5,46 @@
 {% if user|in_group:"admins" %}
 
 {%comment%} PC VERSION {%endcomment%}
-<div class="d-none d-lg-block" tyle="border:1px solid blue">
-    <div class="row menu m-0">
-        <div class="col-3 text-center nav-item {%current 'home'%}"><a class="nav-link" aria-current="page" href="{% url 'index' %}">
-            <i class='fas fa-home'></i><span class="px-3">{%trans 'Inicio'%}</span></a></div>
-        <div class="col-3 text-center nav-item {%current 'employees'%}">
-            <a class="nav-link" aria-current="page" href="{% url 'employees' %}">
-            <i class='fa fa-medkit'></i><span class="px-3">{%trans 'Empleados'%}</span></a></div>
-        <div class="col-3 text-center nav-item {%current 'clients'%}"><a class="nav-link" aria-current="page" href="{%url 'clients'%}">
-            <i class='fas fa-users'></i><span class="px-3">{%trans 'Clientes'%}</span></a></div>
-        <div class="col-3 text-center nav-item {%current 'report'%}"><a class="nav-link" aria-current="page" 
-            href="{%url 'report'%}"> <i class='fas fa-users'></i><span class="px-3">{%trans 'Informes'%}</span></a></div>
+    <div class="menu-items p-4 d-none d-lg-block">
+	<a class="{%current 'reports'%}" aria-current="page" href="{% url 'index' %}">{%trans 'Denuncias'%}</a>
+	<a class="{%current 'employees'%}" aria-current="page" href="{% url 'employees' %}">{%trans 'Agentes'%}</a>
+	<a class="{%current 'otros'%}" aria-current="page" href="#">{%trans 'Otros'%}</a>
+	{%comment%}
+	    <a class="{%current 'reports'%} menu-item py-4 px-6 font-medium text-gray-600 hover:text-blue-600 hover:border-b-2 
+            hover:border-blue-600" aria-current="page" href="{% url 'index' %}">{%trans 'Denuncias'%}</a>
+
+	    <a class="{%current 'employees'%} menu-item py-4 px-6 font-medium text-blue-600 border-b-2 border-blue-600" 
+            aria-current="page" href="{% url 'employees' %}">{%trans 'Agentes'%}</a>
+
+	    <a class="{%current 'otros'%} menu-item py-4 px-6 font-medium text-gray-600 hover:text-blue-600 hover:border-b-2 
+            hover:border-blue-600" aria-current="page" href="#">{%trans 'Otros'%}</a>
+	{%endcomment%}
     </div>
-</div>
 
 {%comment%} MOBILE VERSION {%endcomment%}
-<div class="d-lg-none" tyle="border:1px solid red"> 
-    <div class="row menu mv m-0">
-        <div class="col-3 text-center nav-item nav-tabs {%current 'home'%} p-1">
-            <a class="nav-link" aria-current="page" href="{% url 'index' %}">
-            <i class='fas fa-home'></i><br />{%trans 'Inicio'%}</a></div>
-	<div class="col-1 sep text-center">|</div>
-        <div class="col-4 text-center nav-item nav-tabs {%current 'employees'%} p-1">
-            <a class="nav-link" aria-current="page" href="{% url 'employees' %}">
-            <i class='fa fa-medkit'></i><br />{%trans 'Empleados'%}</a></div>
-	<div class="col-1 sep text-center">|</div>
-        <div class="col-3 text-center nav-item nav-tabs {%current 'clients'%} p-1">
-            <a class="nav-link" aria-current="page" href="{% url 'clients' %}">
-            <i class='fas fa-users'></i><br />{%trans 'Clientes'%}</a></div>
-    </div>
-</div>
+    <div class="menu-items p-4 d-lg-none">
+	<a class="" aria-current="page" href="#">{%trans 'Denuncias'%}</a>
+	<a class="active" aria-current="page" href="#">{%trans 'Agentes'%}</a>
+	<a class="" aria-current="page" href="#">{%trans 'Otros'%}</a>
+	{%comment%}
+        <a class="text-center menu-item py-2 px-6 font-medium text-blue-600 border-b-2 border-blue-600 {%current 'home'%} p-1" 
+            aria-current="page" href="{% url 'index' %}">{%trans 'Denuncias'%}</a>
 
-{%comment%}
-{% elif user|in_group:"professionals" %}
-    <div class="nav-item"> <a class="nav-link {% current 'tests-instances-professional' %}" href="{% url 'tests-to-fill-professional' %}">
-        <i class='fas fa-eye'></i>{% trans 'Mostrar tests' %}</a> </div>
-{%endcomment%}
+	    <a class="text-center menu-item py-2 px-6 font-medium text-gray-600 hover:text-blue-600 hover:border-b-2 hover:border-blue-600
+            {%current 'employees'%} p-1" aria-current="page" href="{% url 'employees' %}">{%trans 'Agentes'%}</a>
+
+	    <a class="{%current 'otros'%} menu-item py-2 px-6 font-medium text-gray-600 hover:text-blue-600 hover:border-b-2 
+            hover:border-blue-600" aria-current="page" href="#">{%trans 'Otros'%}</a>
+
+	{%endcomment%}
+    </div>
+
+
+	{%comment%}
+	{% elif user|in_group:"professionals" %}
+	    <div class="nav-item"> <a class="nav-link {% current 'tests-instances-professional' %}" href="{% url 'tests-to-fill-professional' %}">
+		<i class='fas fa-eye'></i>{% trans 'Mostrar tests' %}</a> </div>
+	{%endcomment%}
 
 {% else %}
     <div class="nav-item"> <a class="nav-link {% current '' %}" href="{% url 'auth_login'  %}"> 

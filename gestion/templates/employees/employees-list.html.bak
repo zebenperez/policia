@@ -1,0 +1,99 @@
+{% load i18n gestion_tags %}
+
+{%comment%} PC VERSION {%endcomment%}
+
+<div class="d-none d-lg-block"> 
+    <div class="row main-th py-3 m-0">
+        <div class="col-2"> {% trans 'Nombre' %} </div>
+        <div class="col-2"> {% trans 'Teléfono' %} </div>
+        <div class="col-2"> {% trans 'Email' %} </div>
+        <div class="col-1"> {% trans 'PIN' %} </div>
+        <div class="col-1"> {% trans 'DNI' %} </div>
+        <div class="col-2"> {% trans 'Tiempo trabajado' %} </div>
+        <div class="col-2"></div>
+    </div>
+
+    {% for item in items %}
+        <div class="row list-item pt-2 pb-2 m-0 {%if item.email == ""%}alert alert-warning{%endif%}" id="row_{{item.id}}">
+            <div class="col-2">{{ item.name|default:"---" }}</div>
+            <div class="col-2">{{ item.phone|default:"" }}</div>
+            <div class="col-2">
+                {% if item.email != "" %}{{ item.email }}{% else %}
+                    <span class="text-danger">{%trans "Debe rellenar el correo electrónico para poder realizar los servicios"%}</span>
+                {% endif %}
+            </div>
+            <div class="col-1">{{ item.pin|default:"" }}</div>
+            <div class="col-1">{{ item.dni|default:"" }}</div>
+            {#<div class="col-2"> {{request.session.s_emp_idate}} {{request.session.s_emp_edate}}</div>#}
+            <div class="col-2">{% get_worked_time item request.session.s_emp_idate request.session.s_emp_edate %}</div>
+            <div class="col-2 text-right">
+                <a class="btn btn-xs ark" data-url="{%url "employees-form"%}" data-target-modal="common-modal" 
+                    data-obj_id="{{item.id}}" title="{% trans 'Editar' %}"><i class="fas fa-edit"></i></a> 
+                <a class="btn btn-xs ark" data-url="{% url "employees-remove" %}" data-target="emp-list" data-obj_id="{{item.id}}" 
+                    title="{% trans 'Borrar' %}" data-confirm="{% trans "Are you sure to remove this element?" %}">
+                    <i class="fas fa-trash"></i></a> 
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{%comment%} MOBILE VERSION {%endcomment%}
+
+<div class="d-lg-none"> 
+    {% for item in items %}
+    <div class="row list-item-cl pt-2 pb-2 m-0" id="row_{{item.id}}">
+        <div class="col-12"> <small><i class="fas fa-user orange"></i> {% trans 'Nombre' %}</small><br /><strong>{{ item.name|default:"---" }}</strong></div>
+        <div class="col-12 mt-2"> <small><i class="fas fa-envelope orange"></i> {% trans 'Email' %}</small><br /><strong>{{ item.email|default:"" }}</strong></div>
+        <div class="col-5 mt-2"> <small><i class="fas fa-phone orange"></i> {% trans 'Teléfono' %}</small><br /><strong>{{ item.phone|default:"" }}</strong></div>
+        <div class="col-5 offset-2 mt-2"> <small><i class="fas fa-keyboard orange"></i> {% trans 'PIN' %}</small><br /><strong>{{ item.pin|default:"" }}</strong></div>
+        <div class="col-5 mt-2">
+            <button type="button" class="btn btn-primary-outline ark w-100" data-url="{% url "employees-form" %}" data-target-modal="common-modal" 
+                data-obj_id="{{item.id}}" title="{% trans 'Editar' %}"><small>Editar</small></button></div>
+        <div class="col-5 offset-2 mt-2">
+            <button type="button" class="btn btn-outline-danger ark w-100" data-url="{% url "employees-remove" %}" data-target="emp-list" data-obj_id="{{item.id}}" 
+            title="{% trans 'Borrar' %}" data-confirm="{% trans "Are you sure to remove this element?" %}"><small>Borrar</small></button></div>
+    </div>
+    {% endfor %}
+
+    {%comment%}
+        <div class="row list-item pt-2 pb-2 m-0" id="row_{{item.id}}">
+            <div class="col-3">{{ item.name|default:"---" }}</div>
+            <div class="col-2">{{ item.phone|default:"" }}</div>
+            <div class="col-3">{{ item.email|default:"" }}</div>
+            <div class="col-2">{{ item.pin|default:"" }}</div>
+            <div class="col-2 text-right">
+                <a class="btn btn-xs ark" data-url="{% url "employees-form" %}" data-target-modal="common-modal" data-obj_id="{{item.id}}" 
+                    title="{% trans 'Editar' %}"><i class="fas fa-edit"></i></a> 
+                <a class="btn btn-xs ark" data-url="{% url "employees-remove" %}" data-target="emp-list" data-obj_id="{{item.id}}" 
+                    title="{% trans 'Borrar' %}" data-confirm="{% trans "Are you sure to remove this element?" %}"><i class="fas fa-trash"></i></a> 
+            </div>
+        </div>
+
+
+    <div class="row main-th py-3 m-0">
+        <div class="col-3"> {% trans 'Nombre' %} </div>
+        <div class="col-2"> {% trans 'Teléfono' %} </div>
+        <div class="col-3"> {% trans 'Email' %} </div>
+        <div class="col-2"> {% trans 'PIN' %} </div>
+        <div class="col-2"></div>
+    </div>
+
+    {% for item in items %}
+        <div class="row list-item pt-2 pb-2 m-0" id="row_{{item.id}}">
+            <div class="col-3">{{ item.name|default:"---" }}</div>
+            <div class="col-2">{{ item.phone|default:"" }}</div>
+            <div class="col-3">{{ item.email|default:"" }}</div>
+            <div class="col-2">{{ item.pin|default:"" }}</div>
+            <div class="col-2 text-right">
+                <a class="btn btn-xs ark" data-url="{% url "employees-form" %}" data-target-modal="common-modal" data-obj_id="{{item.id}}" 
+                    title="{% trans 'Editar' %}"><i class="fas fa-edit"></i></a> 
+                <a class="btn btn-xs ark" data-url="{% url "employees-remove" %}" data-target="emp-list" data-obj_id="{{item.id}}" 
+                    title="{% trans 'Borrar' %}" data-confirm="{% trans "Are you sure to remove this element?" %}"><i class="fas fa-trash"></i></a> 
+            </div>
+        </div>
+    {% endfor %}
+    {%endcomment%}
+
+</div>
+
+

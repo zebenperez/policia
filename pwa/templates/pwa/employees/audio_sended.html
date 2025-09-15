@@ -1,0 +1,9 @@
+{% extends "pwa-base.html" %}
+{% load i18n pwa_tags %}
+
+{% block content%}
+    <div class="alert alert-success">Su audio se está procesando, en unos segundos estará disponible.</div>
+    <div class="text-center w-100 mt-4">
+        <a href="{% url "pwa-employee" %}" class="btn btn-success">Volver</a>
+    </div>
+{% endblock %}
