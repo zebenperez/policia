@@ -1,0 +1,31 @@
+{% load i18n %}
+
+
+<div class="row modal-head m-0">
+    <div class="col-11">{% trans 'Agente' %} </div>
+    <div class="col-1">
+        <div class="d-flex justify-content-end"> 
+            <button type="button" class="btn btn-lg" data-bs-dismiss="modal" title="{% trans "Close" %}">
+            <i class="fas fa-times"></i></button> </div>
+    </div>
+</div>
+
+<div id="div-notification"></div>
+
+<div class="row justify-center">
+    {% for item in obj.audios.all %}
+    <div class="col-12">
+        <div class="greybox-sm p-1"> {% trans "Texto" %}
+            <textarea class="form-control autosave" id="text" name="text" value="{{item.text|default:""}}" 
+                data-model-name="gestion.reportaudio" data-obj-id="{{item.id}}" data-url="{%url "autosave_field"%}" 
+                data-target="div-notification" placeholder="Texto...">{{item.text|default:""}}</textarea><span id="text__msg"></span>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="d-flex justify-content-end p-2">
+    <button type="button" class="btn btn-primary ark" data-bs-dismiss="modal" data-url="{% url "reports-list" %}"
+        data-target="emp-list">{% trans "Guardar" %}</button>
+</div>
+

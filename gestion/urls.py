@@ -10,6 +10,7 @@ urlpatterns = [
     path('reports/search', views.reports_search, name='reports-search'),
     path('reports/form', views.reports_form, name='reports-form'),
     path('reports/remove', views.reports_remove, name='reports-remove'),
+    path('reports/audios', views.reports_audios, name='reports-audios'),
     path('reports/print/<int:obj_id>', views.reports_print, name='reports-print'),
  
     #---------------------- EMPLOYEES -----------------------

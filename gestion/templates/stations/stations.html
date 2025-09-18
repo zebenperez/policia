@@ -7,12 +7,14 @@
         <h2 class="mb-4">Listado de Comisarías</h2>
 
         <!-- Selector de perfil (solo visible para administradores) -->
+        {% comment %}
         <div class="mb-4" id="profileSwitcher">
             <select id="userProfileSelect" class="profile-selector w-100 p-2.5">
                 <option value="admin" selected>Vista de Administrador</option>
                 <option value="agent">Vista de Agente</option>
             </select>
         </div>
+        {% endcomment %}
     </div>
 
    <div class="row toolbar-search">{% include "employees/employees-search.html" %} </div>

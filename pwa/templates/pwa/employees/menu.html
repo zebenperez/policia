@@ -1,0 +1,14 @@
+{% load i18n static gestion_tags %}
+
+<div class="row pwa-footer m-0" tyle="border:1px solid red;">
+    <div class="col-4 nav-item tab text-center pt-3 {% current 'home' %}">
+        <a class="nav-link" href="{% url "pwa-employee" %}"> <i class='fas fa-microphone'></i><br>Grabar audio</a>
+    </div>
+    <div class="col-4 nav-item text-center pt-3 {% current 'report' %}">
+        <a class="nav-link" href="{% url "pwa-employee-reports" %}"> <i class="fa fa-file-audio-o"></i><br>Expedientes</a>
+    </div>
+    <div class="col-4 nav-item tab text-center pt-3">
+        <a class="nav-link" href="#"> <i class='fas fa-comment'></i><br>IA</a>
+    </div>
+</div>
+

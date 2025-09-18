@@ -5,9 +5,10 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.models import User
 from datetime import datetime
 
+from policia.settings import IA_SPEECH_TO_TEXT_URL
 from policia.decorators import group_required_pwa
 from policia.commons import user_in_group, get_or_none, get_param
-from gestion.models import Employee, Report
+from gestion.models import Employee, Report, ReportAudio
 
 import subprocess
 import threading
@@ -54,14 +55,23 @@ def pin_logout(request):
 def employee_home(request):
     return render(request, "pwa/employees/home.html", {})
 
+@group_required_pwa("employees")
+def employee_reports(request):
+    item_list = Report.objects.filter(employee=request.user.employee)
+    return render(request, "pwa/employees/reports.html", {"item_list": item_list})
+
+@group_required_pwa("employees")
+def employee_report(request, obj_id):
+    try:
+        report = Report.objects.get(pk=obj_id)
+        return render(request, "pwa/employees/report.html", {"report": report})
+    except Exception as e:
+        print(f"Error: {e}")
+
 #def transcribe_audio(file, obj_id):
 def transcribe_audio(audio_file, obj):
-    #model = whisper.load_model("base")
-    #result = model.transcribe(audio_file, language="es")
-    #obj.text = result
-    #obj.save()
-    #subprocess.run(["python3", "/var/www/django/policia/transcribir.py", file, str(obj_id)])
-    response = requests.post('http://localhost:8001/transcribir', files={'audio': audio_file})
+    #response = requests.post('http://localhost:8001/transcribir', files={'audio': audio_file})
+    response = requests.post(IA_SPEECH_TO_TEXT_URL, files={'audio': audio_file})
     if response.status_code == 200:
         #print(response.json())
         obj.text = response.json()['texto']
@@ -74,15 +84,19 @@ def transcribe_audio(audio_file, obj):
 @group_required_pwa("employees")
 def employee_audio_save(request):
     #concept = get_param(request.POST, "concept")
+    rep = get_param(request.POST, "report")
     concept = ""
     audio = None
     if "audio" in request.FILES and request.FILES["audio"] != "":
         audio = request.FILES["audio"]
         concept = "Esperando traducción de audio..."
     if concept != "" or audio != None:
-        report = Report.objects.create(text=concept, audio=audio, employee=request.user.employee)
+        report = get_or_none(Report, rep)
+        if report == None:
+            report = Report.objects.create(employee=request.user.employee)
+        report_audio = ReportAudio.objects.create(text=concept, audio=audio, report=report)
         if "audio" in request.FILES and request.FILES["audio"] != "":
-            t = threading.Thread(target=transcribe_audio, args=[report.audio, report], daemon=True)
+            t = threading.Thread(target=transcribe_audio, args=[report_audio.audio, report_audio], daemon=True)
             #t = threading.Thread(target=transcribe_audio, args=[report.audio.url, report.id], daemon=True)
             t.start()
     return render(request, "pwa/employees/audio_sended.html", {})

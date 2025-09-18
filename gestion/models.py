@@ -60,8 +60,8 @@ def upload_audio(instance, filename):
 
 class Report(models.Model):
     date = models.DateTimeField(default=datetime.datetime.now(), null=True, verbose_name=_('Fecha'), blank=True)
-    text = models.TextField(verbose_name = _('Texto transcrito'), default="")
-    audio = models.FileField(upload_to=upload_audio, blank=True, verbose_name="Audio", help_text="Select file to upload")
+    #text = models.TextField(verbose_name = _('Texto transcrito'), default="")
+    #audio = models.FileField(upload_to=upload_audio, blank=True, verbose_name="Audio", help_text="Select file to upload")
     employee = models.ForeignKey(Employee,verbose_name=_('Empleado'),on_delete=models.SET_NULL,null=True,related_name="reports")
 
     #def __str__(self):
@@ -71,9 +71,25 @@ class Report(models.Model):
     def code(self):
         return "EXP-{}-{}".format(datetime.datetime.now().year, str(self.id).zfill(6))
 
+    @property
+    def text(self):
+        text = ""
+        for t in self.audios.all():
+            text += f"{t.text}\r"
+        return text 
+
     class Meta:
         verbose_name = _('Report')
         verbose_name_plural = _('Reports')
         ordering = ["-date"]
+
+class ReportAudio(models.Model):
+    text = models.TextField(verbose_name = _('Texto transcrito'), default="")
+    audio = models.FileField(upload_to=upload_audio, blank=True, verbose_name="Audio", help_text="Select file to upload")
+    report = models.ForeignKey(Report, verbose_name=_('Informe'), on_delete=models.SET_NULL, null=True, related_name="audios")
+
+    class Meta:
+        verbose_name = _('Report Audio')
+        verbose_name_plural = _('Reports Audios')
 
 

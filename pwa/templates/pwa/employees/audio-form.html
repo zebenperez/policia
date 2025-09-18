@@ -1,0 +1,11 @@
+{% load static i18n pwa_tags %}
+
+<form method="post" action="{% url "pwa-employee-audio-save" %}" id="frmService" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="hidden" id="report" name="report" value="{{report.id}}" />
+    <i class="fas fa-microphone orange"></i> <strong>{% trans "Audio" %}</strong><br />
+    <input type="file" id="audio" name="audio" accept="audio/*" capture="user" />
+    <br/> <br/>
+    <button type="submit" class="btn-primary w-100 py-3" value="{% trans "Enviar" %}">{% trans "Enviar" %}</button>
+</form>
+
