@@ -7,9 +7,10 @@ from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
 import os, csv, requests
 
+from policia.settings import IA_SERVICES_URL
 from policia.decorators import group_required
 from policia.commons import get_float, get_int, get_or_none, get_param, get_session, set_session, show_exc, generate_qr, csv_export
-from .models import Employee, Report, Station
+from .models import Employee, Report, ReportAudio, Station
 #from .report_lib import get_complainant_datas
 
 ACCESS_PATH="{}/gestion/assistances/client/".format(settings.MAIN_URL)
@@ -55,27 +56,37 @@ def reports_form(request):
     #    obj = Report.objects.create()
     return render(request, "reports/reports-form.html", {'obj': obj})
 
-
 @group_required("admins",)
 def reports_remove(request):
     obj = get_or_none(Report, request.GET["obj_id"]) if "obj_id" in request.GET else None
     if obj != None:
-        obj.audio.delete(save=True)
+        for audio in obj.audios.all():
+            audio.audio.delete(save=True)
         obj.delete()
     return render(request, "reports/reports-list.html", {"items": get_reports(request)})
+
+@group_required("admins",)
+def reports_audios(request):
+    obj_id = get_param(request.GET, "obj_id")
+    obj = get_or_none(Report, obj_id)
+    return render(request, "reports/reports-audios.html", {'obj': obj})
 
 @group_required("admins",)
 def reports_print(request, obj_id):
     obj = get_or_none(Report, obj_id)
     #datas = get_complainant_datas(obj.text)
-    response = requests.post('http://localhost:8001/get_datas', params={'texto': obj.text})
+    #response = requests.post('http://localhost:8001/get_datas', params={'texto': obj.text})
     datas = ""
-    if response.status_code == 200:
-        print(response.json())
-        datas = response.json()
-        #return response.json()['texto']
-    else:
-        raise Exception(f"Error en microservicio: {response.text}")
+    audio = obj.audios.all().first()
+    if audio != None:
+        response = requests.post(IA_SERVICES_URL, params={'texto': audio.text})
+        datas = ""
+        if response.status_code == 200:
+            #print(response.json())
+            datas = response.json()
+            #return response.json()['texto']
+        else:
+            raise Exception(f"Error en microservicio: {response.text}")
 
     print(datas)
     return render(request, "reports/print.html", {"obj": obj, "datas": datas})

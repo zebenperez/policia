@@ -8,7 +8,8 @@
     <div class="menu-items p-4 d-none d-lg-block">
 	<a class="{%current 'reports'%}" aria-current="page" href="{% url 'index' %}">{%trans 'Denuncias'%}</a>
 	<a class="{%current 'employees'%}" aria-current="page" href="{% url 'employees' %}">{%trans 'Agentes'%}</a>
-	<a class="{%current 'otros'%}" aria-current="page" href="#">{%trans 'Otros'%}</a>
+    {#<a class="{%current 'stations'%}" aria-current="page" href="{% url 'stations' %}">{%trans 'Comisarías'%}</a>#}
+
 	{%comment%}
 	    <a class="{%current 'reports'%} menu-item py-4 px-6 font-medium text-gray-600 hover:text-blue-600 hover:border-b-2 
             hover:border-blue-600" aria-current="page" href="{% url 'index' %}">{%trans 'Denuncias'%}</a>
@@ -23,9 +24,10 @@
 
 {%comment%} MOBILE VERSION {%endcomment%}
     <div class="menu-items p-4 d-lg-none">
-	<a class="" aria-current="page" href="#">{%trans 'Denuncias'%}</a>
-	<a class="active" aria-current="page" href="#">{%trans 'Agentes'%}</a>
-	<a class="" aria-current="page" href="#">{%trans 'Otros'%}</a>
+	<a class="" aria-current="page" href="{% url 'index' %}">{%trans 'Denuncias'%}</a>
+	<a class="active" aria-current="page" href="{% url 'employees' %}">{%trans 'Agentes'%}</a>
+    {#<a class="" aria-current="page" href="{% url 'stations' %}">{%trans 'Comisarias'%}</a>#}
+
 	{%comment%}
         <a class="text-center menu-item py-2 px-6 font-medium text-blue-600 border-b-2 border-blue-600 {%current 'home'%} p-1" 
             aria-current="page" href="{% url 'index' %}">{%trans 'Denuncias'%}</a>
