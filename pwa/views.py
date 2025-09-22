@@ -76,12 +76,15 @@ def employee_report_print(request, obj_id):
     if audio != None:
         response = requests.post(IA_SERVICES_URL, params={'texto': audio.text})
         datas = ""
-        if response.status_code == 200:
-            #print(response.json())
-            datas = response.json()
-            #return response.json()['texto']
-        else:
-            raise Exception(f"Error en microservicio: {response.text}")
+        try:
+            if response.status_code == 200:
+                #print(response.json())
+                datas = response.json()
+                #return response.json()['texto']
+            else:
+                raise Exception(f"Error en microservicio: {response.text}")
+        except Exception as e:
+            print(e)
     print(datas)
     return render(request, "pwa/employees/print.html", {"obj": obj, "datas": datas})
 

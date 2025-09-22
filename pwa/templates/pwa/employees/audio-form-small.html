@@ -7,7 +7,7 @@
         padding: 40px 20px;
         text-align: center;
         transition: all 0.3s ease;
-        margin-bottom: 30px;
+     /*   margin-bottom: 30px;*/
         position: relative;
     }
     
@@ -54,7 +54,6 @@
     
     .browse-btn {
         display: inline-block;
-        padding: 12px 30px;
         background: linear-gradient(to right, #6a11cb, #2575fc);
         color: white;
         border-radius: 50px;
@@ -64,16 +63,14 @@
         box-shadow: 0 5px 15px rgba(106, 17, 203, 0.3);
 
 
-
     border-radius: 50%;
-    height: 200px;
-    width: 200px;
-    line-height: 3.5;
-    font-size: 1.5rem;
-
+    height: 70px;
+    width: 70px;
+    line-height: 1.5;
+    font-size: 1rem;
     }
     .browse-btn i {
-	   font-size: 5rem;
+	   font-size: 1.5rem;
 	   }
     
     .browse-btn:hover {
@@ -110,7 +107,7 @@
     .upload-btn {
         display: block;
         width: 100%;
-        padding: 15px;
+        padding: 5px;
         background: linear-gradient(to right, #6a11cb, #2575fc);
         color: white;
         border: none;
@@ -119,7 +116,7 @@
         font-weight: 600;
         cursor: pointer;
         transition: all 0.3s ease;
-        margin-top: 20px;
+        margin-top: 10px;
         box-shadow: 0 5px 15px rgba(106, 17, 203, 0.3);
     }
     
@@ -141,7 +138,8 @@
         }
         
         .upload-container {
-            padding: 30px 15px;
+            padding: 0px;
+	    border:0;
         }
     }
 </style>
@@ -152,17 +150,12 @@
     <input type="hidden" id="report" name="report" value="{{report.id}}" />
 
 <div class="upload-container" id="upload-container">
-{% comment %}
-    <div class="upload-icon">
-        <i class="fas fa-microphone"></i>
-    </div>
-{% endcomment %}
-     
-    <div class="browse-btn pt-4">  
+    
+    <div class="browse-btn pt-2">  
 	    <i class="fas fa-microphone"></i><br />Grabar 
     </div>
 
-    <div class="file-info text-centere" id="file-info">
+    <div class="file-info" id="file-info">
         <h4><i class="fas fa-file-audio"></i> Información del archivo</h4>
         <span class="file-label">Nombre:</span>
         <span class="file-value" id="file-name">-</span>

@@ -1,11 +1,14 @@
 {% load static i18n pwa_tags %}
 
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modelo de Denuncia Policial - Ejemplo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <style>
         /* Estilos generales */
         * {
@@ -30,7 +33,22 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             overflow: hidden;
         }
-        
+
+       .top-actions  {
+    	    background: #dde8f2;
+	    text-align: end;
+	}
+	.top-actions a {
+            font-weight:600;
+	    text-decoration:none;
+            color: #213a6c;
+            font-size: 0.9rem;
+	}
+	.top-actions i {
+	    font-weight:600;
+            font-size: 1.8rem;
+            color: #213a6c;
+	} 
         /* Encabezado */
         .encabezado {
             background: linear-gradient(135deg, #1a56db 0%, #0e4bbb 100%);
@@ -163,7 +181,9 @@
     </style>
 </head>
 <body>
-    <a href="{% url "pwa-employee-report" obj.id %}">{% trans "Volver" %}</a>
+    <div class="row m-0 py-2 px-0 top-actions">
+       <div class="col-12 text-end"><a href="{% url "pwa-employee-report" obj.id %}"><i class="fa fa-close"></i></div>
+    </div>
     <div class="documento">
         <div class="encabezado">
             <h1>COMISARÍA DE POLICÍA NACIONAL</h1>
