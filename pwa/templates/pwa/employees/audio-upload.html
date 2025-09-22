@@ -1,5 +1,3 @@
-{% load static i18n pwa_tags %}
-
 <style>
     .upload-container {
         border: 2px dashed #d1d1d1;
@@ -134,14 +132,9 @@
     }
 </style>
 
-
-<form method="post" action="{% url "pwa-employee-audio-save" %}" id="frmService" enctype="multipart/form-data">
-    {% csrf_token %}
-    <input type="hidden" id="report" name="report" value="{{report.id}}" />
-
 <div class="upload-container" id="upload-container">
     <div class="upload-icon">
-        <i class="fas fa-microphone"></i>
+        <i class="fas fa-music"></i>
     </div>
     
     <div class="file-info" id="file-info">
@@ -150,14 +143,14 @@
         <span class="file-value" id="file-name">-</span>
     </div>
     
-    <div class="browse-btn">  Grabar </div>
+    <div class="browse-btn"> <i class="fas fa-search"></i> Grabar Audio </div>
     
-    <input type="file" class="audio" id="audio" name="audio" accept="audio/*">
+    <input type="file" class="audio" id="audio" accept="audio/*">
 </div>
-<button type="submit_" class="upload-btn" id="upload-btn" disabled> <i class="fas fa-cloud-upload-alt"></i> Subir Audio </button>
 
 
-</form>
+<button type="submit" class="upload-btn" id="upload-btn" disabled> <i class="fas fa-cloud-upload-alt"></i> Subir Audio </button>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const fileInput = document.getElementById('audio');
@@ -168,6 +161,7 @@
         
         // Evento cuando se selecciona un archivo
         fileInput.addEventListener('change', function() {
+            console.log("-1---");
             if (fileInput.files.length) {
                 handleFileSelection(fileInput.files[0]);
             }

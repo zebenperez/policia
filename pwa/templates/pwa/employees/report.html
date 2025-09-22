@@ -2,13 +2,15 @@
 {% load static i18n pwa_tags %}
 
 {% block content%}
-    <div class="row mt-2"><div class="col-12 text-end"><a href="{% url "pwa-employee" %}">{% trans "Volver" %}</a></div></div>
-    <div class="row mt-4 mb-2">
-        <div class="col-4">{% trans "Expediente" %}</div>
+    <div class="row mt-2 m-0"><div class="col-12 text-end"><a href="{% url "pwa-employee" %}"><i class="fa fa-angle-left"></i></a></div></div>
+    <div class="row mt-4 mb-2 m-0 p-0" 
+		style="order:1px solid blue; -webkit-box-shadow: 0 1px 5px rgba(0,0,0,0.2);
+    border-bottom: 1px solid #dee2e6;">
+        <div class="col-4 label">{% trans "Expediente" %}</div>
         <div class="col-8 text-end">
             <div class="row">
-                <div class="col-12"> {{report.code}} </div>
-                <div class="col-12"><small>{{report.date|date:"d-m-Y H:i"}}</small></div>
+                <div class="col-12 expt-code"> {{report.code}} </div>
+                <div class="col-12 expt-date"><small>{{report.date|date:"d-m-Y H:i"}}</small></div>
             </div>
         </div>
     </div>
@@ -21,6 +23,8 @@
             <br/><hr/><br/>
             <h3>{% trans "Nuevo Audio" %}</h3>
             {% include "pwa/employees/audio-form.html" %}
+            <br/><hr/><br/>
+            <a href="{% url "pwa-employee-report-print" report.id %}" class="btn btn-primary">{% trans "Ver Denuncia" %}</a>
         </div>
     </div>
     {% include "pwa/employees/menu.html" %}

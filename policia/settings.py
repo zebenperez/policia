@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'gestion',
+    'chatbot',
     'pwa',
 ]
 
@@ -138,3 +139,6 @@ try:
 except Exception:
     pass
 
+# Configuración de sesiones (necesario para tracking)
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+SESSION_COOKIE_AGE = 1209600  # 2 semanas

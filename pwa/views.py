@@ -5,7 +5,7 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.models import User
 from datetime import datetime
 
-from policia.settings import IA_SPEECH_TO_TEXT_URL
+from policia.settings import IA_SPEECH_TO_TEXT_URL, IA_SERVICES_URL
 from policia.decorators import group_required_pwa
 from policia.commons import user_in_group, get_or_none, get_param
 from gestion.models import Employee, Report, ReportAudio
@@ -68,6 +68,23 @@ def employee_report(request, obj_id):
     except Exception as e:
         print(f"Error: {e}")
 
+@group_required_pwa("employees")
+def employee_report_print(request, obj_id):
+    obj = get_or_none(Report, obj_id)
+    datas = ""
+    audio = obj.audios.all().first()
+    if audio != None:
+        response = requests.post(IA_SERVICES_URL, params={'texto': audio.text})
+        datas = ""
+        if response.status_code == 200:
+            #print(response.json())
+            datas = response.json()
+            #return response.json()['texto']
+        else:
+            raise Exception(f"Error en microservicio: {response.text}")
+    print(datas)
+    return render(request, "pwa/employees/print.html", {"obj": obj, "datas": datas})
+
 #def transcribe_audio(file, obj_id):
 def transcribe_audio(audio_file, obj):
     #response = requests.post('http://localhost:8001/transcribir', files={'audio': audio_file})
@@ -88,6 +105,7 @@ def employee_audio_save(request):
     concept = ""
     audio = None
     if "audio" in request.FILES and request.FILES["audio"] != "":
+        print("--2--")
         audio = request.FILES["audio"]
         concept = "Esperando traducción de audio..."
     if concept != "" or audio != None:
@@ -102,3 +120,6 @@ def employee_audio_save(request):
     return render(request, "pwa/employees/audio_sended.html", {})
     #return redirect(reverse('pwa-employee'))
 
+@group_required_pwa("employees")
+def employee_chatbot(request):
+    return render(request, 'pwa/employees/chatbot.html')

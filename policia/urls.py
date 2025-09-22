@@ -23,6 +23,7 @@ urlpatterns = [
     path('', RedirectView.as_view(pattern_name='index')),
     path('gestion/', include('gestion.urls')),
     path('pwa/', include('pwa.urls')),
+    path('chatbot/', include('chatbot.urls')),
     path('admin/', admin.site.urls),
 
     path('accounts/login/<slug:chk>/', auth_views.LoginView.as_view(template_name='login.html'), name='auth_login'),

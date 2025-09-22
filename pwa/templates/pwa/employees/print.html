@@ -1,0 +1,333 @@
+{% load static i18n pwa_tags %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modelo de Denuncia Policial - Ejemplo</title>
+    <style>
+        /* Estilos generales */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .documento {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        /* Encabezado */
+        .encabezado {
+            background: linear-gradient(135deg, #1a56db 0%, #0e4bbb 100%);
+            color: white;
+            padding: 25px;
+            text-align: center;
+            border-bottom: 4px solid #dc2626;
+        }
+        
+        .encabezado h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        
+        .encabezado h2 {
+            font-size: 18px;
+            font-weight: normal;
+            opacity: 0.9;
+        }
+        
+        /* Cuerpo del documento */
+        .cuerpo {
+            padding: 30px;
+        }
+        
+        .seccion {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .seccion:last-child {
+            border-bottom: none;
+        }
+        
+        .titulo-seccion {
+            color: #1a56db;
+            font-size: 18px;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e5e7eb;
+            font-weight: bold;
+        }
+        
+        .grupo-datos {
+            margin-bottom: 15px;
+        }
+        
+        .etiqueta {
+            font-weight: bold;
+            color: #4b5563;
+            display: inline-block;
+            min-width: 180px;
+        }
+        
+        .valor {
+            color: #1f2937;
+        }
+        
+        /* Hechos */
+        .hechos {
+            background-color: #f9fafb;
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 4px solid #dc2626;
+            margin: 20px 0;
+            font-style: italic;
+        }
+        
+        /* Firmas */
+        .firmas {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px dashed #d1d5db;
+        }
+        
+        .firma {
+            text-align: center;
+            width: 45%;
+        }
+        
+        .linea-firma {
+            border-top: 1px solid #9ca3af;
+            margin: 40px 0 10px;
+            padding-top: 5px;
+        }
+        
+        /* Sello */
+        .sello {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .sello-circular {
+            display: inline-block;
+            border: 2px solid #dc2626;
+            border-radius: 50%;
+            padding: 15px;
+            color: #dc2626;
+            font-weight: bold;
+        }
+        
+        /* Pie de página */
+        .pie {
+            background-color: #1f2937;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 12px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .firmas {
+                flex-direction: column;
+            }
+            
+            .firma {
+                width: 100%;
+                margin-bottom: 30px;
+            }
+            
+            .etiqueta {
+                min-width: 140px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="{% url "pwa-employee-report" obj.id %}">{% trans "Volver" %}</a>
+    <div class="documento">
+        <div class="encabezado">
+            <h1>COMISARÍA DE POLICÍA NACIONAL</h1>
+            <h2>Denuncia Policial - Modelo Oficial</h2>
+        </div>
+        
+        <div class="cuerpo">
+            <div class="seccion">
+                <div class="titulo-seccion">I. DATOS DE LA DENUNCIA</div>
+                
+                <div class="grupo-datos">
+                    <span class="etiqueta">Número de expediente:</span>
+                    <span class="valor">{{obj.code}}</span>
+                </div>
+                
+                <div class="grupo-datos">
+                    <span class="etiqueta">Fecha de registro:</span>
+                    <span class="valor">{{obj.date|date:"d-m-Y"}}</span>
+                </div>
+                
+                <div class="grupo-datos">
+                    <span class="etiqueta">Hora de registro:</span>
+                    <span class="valor">{{obj.date|date:"H:i"}}</span>
+                </div>
+                
+                <div class="grupo-datos">
+                    <span class="etiqueta">Unidad receptora:</span>
+                    <span class="valor">{{obj.employee.station.name}}</span>
+                </div>
+            </div>
+            
+            <div class="seccion">
+                <div class="titulo-seccion">II. DATOS DEL DENUNCIANTE</div>
+                
+                <div class="grupo-datos">
+                    <span class="etiqueta">Nombre completo:</span>
+                    <span class="valor">{{datas.full_name}}</span>
+                </div>
+                
+                <div class="grupo-datos">
+                    <span class="etiqueta">DNI/NIE:</span>
+                    <span class="valor">{{datas.dni}}</span>
+                </div>
+                
+                <div class="grupo-datos">
+                    <span class="etiqueta">Domicilio:</span>
+                    <span class="valor">Calle Principal, 123, 4ºB - 28001 Madrid</span>
+                </div>
+                
+                <div class="grupo-datos">
+                    <span class="etiqueta">Teléfono de contacto:</span>
+                    <span class="valor">{{datas.phone}}</span>
+                </div>
+                
+                <div class="grupo-datos">
+                    <span class="etiqueta">Correo electrónico:</span>
+                    <span class="valor">{{datas.email}}</span>
+                </div>
+            </div>
+            
+            <div class="seccion">
+                <div class="titulo-seccion">III. DATOS DEL HECHO DENUNCIADO</div>
+                
+                <div class="grupo-datos">
+                    <span class="etiqueta">Fecha de los hechos:</span>
+                    <span class="valor">11 de marzo de 2024</span>
+                </div>
+                
+                <div class="grupo-datos">
+                    <span class="etiqueta">Hora aproximada:</span>
+                    <span class="valor">Entre las 22:15 y 22:30 horas</span>
+                </div>
+                
+                <div class="grupo-datos">
+                    <span class="etiqueta">Lugar de los hechos:</span>
+                    <span class="valor">Calle Secundaria, 45 - 28001 Madrid</span>
+                </div>
+                
+                <div class="grupo-datos">
+                    <span class="etiqueta">Tipo de delito:</span>
+                    <span class="valor">Robo con fuerza en las cosas</span>
+                </div>
+            </div>
+            
+            <div class="seccion">
+                <div class="titulo-seccion">IV. RELATO DE LOS HECHOS</div>
+                <div class="hechos">{{obj.text}} </div>
+            </div>
+            
+            <div class="seccion">
+                <div class="titulo-seccion">V. ELEMENTOS INVOLUCRADOS</div>
+                
+                <div class="grupo-datos">
+                    <span class="etiqueta">Vehículo afectado:</span>
+                    <span class="valor">Seat León, azul oscuro, matrícula ABC 1234</span>
+                </div>
+                
+                <div class="grupo-datos">
+                    <span class="etiqueta">Objetos sustraídos:</span>
+                    <span class="valor">Sistema de navegación GPS integrado, valor 450€</span>
+                </div>
+                
+                <div class="grupo-datos">
+                    <span class="etiqueta">Daños materiales:</span>
+                    <span class="valor">Ventanilla delantera derecha fracturada</span>
+                </div>
+                
+                <div class="grupo-datos">
+                    <span class="etiqueta">Testigos presenciales:</span>
+                    <span class="valor">José López Pérez (DNI 87654321Y)</span>
+                </div>
+            </div>
+            
+            <div class="seccion">
+                <div class="titulo-seccion">VI. TRÁMITES REALIZADOS</div>
+                
+                <div class="grupo-datos">
+                    <span class="etiqueta">Inspección ocular:</span>
+                    <span class="valor">Realizada por unidad patrolera UCP-12</span>
+                </div>
+                
+                <div class="grupo-datos">
+                    <span class="etiqueta">Pruebas recogidas:</span>
+                    <span class="valor">Fotografías del vehículo, posibles huellas</span>
+                </div>
+                
+                <div class="grupo-datos">
+                    <span class="etiqueta">Área informada:</span>
+                    <span class="valor">Jefatura de Grupo de Investigación</span>
+                </div>
+                
+                <div class="grupo-datos">
+                    <span class="etiqueta">Calificación provisional:</span>
+                    <span class="valor">Delito de robo con fuerza en las cosas</span>
+                </div>
+            </div>
+            
+            <div class="sello">
+                <div class="sello-circular">
+                    REGISTRADO<br>12-03-2024
+                </div>
+            </div>
+            
+            <div class="firmas">
+                <div class="firma">
+                    <div>Firma del denunciante</div>
+                    <div class="linea-firma"></div>
+                    <div>Carlos Martínez García</div>
+                    <div>DNI 12345678X</div>
+                </div>
+                
+                <div class="firma">
+                    <div>Firma del agente instructor</div>
+                    <div class="linea-firma"></div>
+                    <div>Oficial Ana Rodríguez Sánchez</div>
+                    <div>Nº Placa 12345</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="pie">
+            Documento oficial - Comisaría de Policía Nacional &copy; 2024
+            <br>Este es un modelo de ejemplo con datos ficticios
+        </div>
+    </div>
+</body>
+</html>

@@ -121,55 +121,7 @@ button.btn-primary {
 
 
 /*********** HEADER *************/
-/*
-.header {
-    background: #ffffff; 
-    color: #ffffff; 
-    font-weight: 600;
-    -webkit-box-shadow: 0 1px 5px rgba(0,0,0,0.2);
-}
 
-img.logo {
-    height:50px; 
-    width:auto;
-}
-
-.status-bar-login { 
-    background: #e35000; 
-    border-radius: 0px 0px 0px 50px;
-    color: #ffffff; 
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-}
-.status-bar { 
-    background: #e35000; 
-    border-radius: 0px 0px 10px 10px;
-    color: #ffffff;
-    font-size: 0.75rem;
-    height: 20px;
-    line-height: 1.8;
-    text-transform: uppercase;
-}
-.status-bar span { 
-    font-size: 0.73rem;
-    line-height: 1.3;
-}
-
-.cabecera {
-    background: #ffffff; 
-}
-.powericon {
-    background: #ffffff;
-    border:none;
-    font-size: 1.5rem;
-}
-.detail-bar { 
-    border-bottom:1px solid #aaa; 
-    color: #ffffff; 
-    background: #e1bee7; 
-}
-*/
 .header.sticky-top {
         background-color: #001538 !important;
 	color: #fff!important;
@@ -376,6 +328,67 @@ p.date {
 
 /*********** END QR *************/
 
+/* Home page */
+.home-pwa {
+    --tw-border-opacity: 1;
+    border-color: rgb(209 213 219 / var(--tw-border-opacity, 1));
+    border-style: dashed;
+    border-width: 2px;
+        border-radius: 1rem;
+
+}
+
+h1.primary {
+    color: #001538;
+    font-weight: 600;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+}
+
+.file-select {
+    position: relative;
+    display: inline-block;
+}
+
+.custom-button {
+    background-color: #5678EF; /* Color de fondo */
+    color: white; /* Color del texto */
+    padding: 8px 15px; /* Espaciado */
+    border-radius: 3px; /* Bordes redondeados */
+    cursor: pointer; /* Indica que es interactivo */
+    display: inline-block; /* Para que ocupe el espacio necesario */
+
+}
+
+/* end Home page */
+
+
+/* Expedientes page */
+
+
+.row.expt-list {
+    border-bottom: 1px solid #ccc;
+	align-items: center;
+}
+
+.expt-code {
+	color: #213a6c;
+	font-weight: 600;
+}
+
+.expt-date {
+	color: #666;
+}
+.row.expt-list i {
+    font-size: 1.5rem;
+}
+
+
+
+
+/* end Expedientes page */
+
+
 
 /*********** END CONTENT *************/
 
@@ -388,6 +401,10 @@ p.date {
     margin: 0 !important;
     -webkit-box-shadow: 0 1px 5px rgba(0,0,0,0.2);
     border-bottom: 1px solid #dee2e6;
+}
+
+.pwa-footer .nav-item.active {
+    background: #dde8f2;
 }
 
 .pwa-footer .nav-item.active .nav-link {
@@ -408,7 +425,6 @@ p.date {
 .pwa-footer i {
    font-size: 1.5rem;
 }
-
 .tab {
     border-left: 1px solid #ccdeed;
 }
