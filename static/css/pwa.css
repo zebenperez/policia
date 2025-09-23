@@ -58,7 +58,7 @@ input#code.form-control.btn.asm.w-50 {
 
 
 /*********** BUTTONS *************/
-
+/*
 .bg-success.asm { 
     background: #3b693a!important;
 }
@@ -88,6 +88,7 @@ input#code.form-control.btn.asm.w-50 {
     border: 1px solid #e35000;
     background: #fdf4ef;
 }
+*/
 
 a.btn-primary,
 button.btn-primary {
@@ -118,11 +119,24 @@ a.btn-primary-outline {
 
 /*********** LOGIN *************/
 
+input.btn-primary {
+	transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+    color: #ffffff;
+    font-weight: 500;
+    --tw-bg-opacity: 1;
+    border-radius: 0.5rem;
+    background: #213a6c !important;
+    border: 1px solid #213a6c !important;
+}
 
-/*
-.login-icon svg {
-	width: 2rem;
-	height: 2rem;
+.w-8 {
+    width: 2rem;
+}
+
+.h-8 {
+    height: 2rem;
 }
 
 /*********** END LOGIN *************/
