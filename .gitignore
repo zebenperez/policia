@@ -209,3 +209,6 @@ __marimo__/
 migrations
 collect_static
 media
+**.sh
+**.bak
+**.deprecated
