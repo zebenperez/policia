@@ -2,8 +2,16 @@ from django.contrib import admin
 from .models import *
 
 
+class ReportAdmin(admin.ModelAdmin):
+    list_display = ('code', 'date', 'employee')
+
+class ReportAudioAdmin(admin.ModelAdmin):
+    list_display = ('report', 'text')
+
+
 admin.site.register(Employee)
-admin.site.register(Report)
+admin.site.register(Report, ReportAdmin)
+admin.site.register(ReportAudio, ReportAudioAdmin)
 admin.site.register(Station)
 
 #class FacilityTypeAdmin(admin.ModelAdmin):

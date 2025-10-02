@@ -43,7 +43,24 @@
 					</div>
 					<h1 class="app-name">Polic-IA</h1>
 				    </div>
-				    
+	
+				    <!-- Menu principal -->
+					<div class="row main-menu w-75">
+					    <div class="col-3 nav-item tab text-center pt-3 {% current 'home' %}">
+						<a class="nav-link" href="{% url "pwa-employee" %}"> <i class='fas fa-microphone'></i><br>Grabar Denuncia</a>
+					    </div>
+					    <div class="col-3 nav-item tab text-center pt-3 {% current 'police' %}">
+						<a class="nav-link" href="{% url "pwa-employee" %}"> <i class='fas fa-microphone'></i><br>Grabar Atestado</a>
+					    </div>
+					    <div class="col-3 nav-item tab text-center pt-3 {% current 'report' %}">
+						<a class="nav-link" href="{% url "pwa-employee-reports" %}"> <i class="fa fa-file-audio-o"></i><br>Expedientes</a>
+					    </div>
+					    <div class="col-3 nav-item tab text-center pt-3 {% current 'chatbot' %}">
+						<a class="nav-link" href="{% url "pwa-employee-chatbot" %}"> <i class='fas fa-comment'></i><br>IA</a>
+					    </div>
+					</div>
+			    
+
 				    <!-- Zona de usuario -->
 				    <div class="user-area mt-1">
 					<div class="dropdown">

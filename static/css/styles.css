@@ -4,6 +4,7 @@
 
 body {
 	background-color: #f5f7fa; 
+	font-family: sans-serif !important;
 	font-size: 0.8rem;
 }
 
@@ -13,6 +14,10 @@ body.loading {
     
 body.loading .overlay{
 	display: block;
+}
+
+.container {
+	width: 100%;
 }
 
 .container.mobile { /* menu en móvil */
@@ -960,6 +965,11 @@ button.btn-primary {
 
 /*** Listados ***/
 
+.list-card {
+	border:1px solid #ced4da !important;
+	border-radius: 0.5rem;
+}
+
 .list-header {
 	--tw-bg-opacity: 1;
 	background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1));
@@ -967,7 +977,8 @@ button.btn-primary {
 .list-header .title-list {
 	text-align: left;
 	--tw-text-opacity: 1;
-	color: rgb(107 114 128 / var(--tw-text-opacity, 1));
+/*	color: rgb(107 114 128 / var(--tw-text-opacity, 1));*/
+	color:#213a6c;
 	letter-spacing: 0.05em;
 	text-transform: uppercase;
 	font-weight: 500;
@@ -975,11 +986,17 @@ button.btn-primary {
 	line-height: 1rem;
 }
 .list-header .line-list {
+	background: #ffffff;
 	--tw-text-opacity: 1;
 	color: rgb(107 114 128 / var(--tw-text-opacity, 1));
 	font-size: 0.875rem;
-	line-height: 1.25rem;
-	white-space: nowrap;
+	line-height: 1.15rem;
+	white-space: pre-wrap;
+}
+
+.text-zone {
+/*	overflow-y: auto;
+	max-height: 300px;*/
 }
 
 /*****************************************************************************/

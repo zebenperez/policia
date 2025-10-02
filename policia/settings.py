@@ -142,3 +142,25 @@ except Exception:
 # Configuración de sesiones (necesario para tracking)
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 SESSION_COOKIE_AGE = 1209600  # 2 semanas
+
+# Para desarrollo, permite CORS si es necesario
+CORS_ALLOW_ALL_ORIGINS = True  # Solo para desarrollo
+
+# O configura CORS específicamente
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+    # Agrega los dominios de tu aplicación Django
+]
+
+# Configuración de seguridad para WebSocket
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = False  # Si usas HTTPS en producción
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+# Configuración WebSocket
+WEBSOCKET_PORT = '8000'
+
+# Configuración para producción
+WEBSOCKET_URL = 'wss://policia.shidix.es/ws/audio'

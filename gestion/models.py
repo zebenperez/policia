@@ -64,8 +64,8 @@ class Report(models.Model):
     #audio = models.FileField(upload_to=upload_audio, blank=True, verbose_name="Audio", help_text="Select file to upload")
     employee = models.ForeignKey(Employee,verbose_name=_('Empleado'),on_delete=models.SET_NULL,null=True,related_name="reports")
 
-    #def __str__(self):
-    #    return self.date
+    def __str__(self):
+        return self.code
 
     @property
     def code(self):

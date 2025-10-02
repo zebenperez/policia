@@ -1,0 +1,38 @@
+{% extends "pwa-base.html" %}
+{% load static %}
+
+{% block content%}
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <h1 class="primary my-4 text-center">Grabar Audio</h1>
+    <div class="my-4 text-center">Está creando un nuevo expediente:</div>
+
+    <!-- Controles -->
+    <div class="row my-6">
+    	<div class="col-lg-2 offset-lg-4 col-6">
+		<button id="btnStartStream" data-url="wss://policia.shidix.es:8001/stream" data-obj_id="{{obj.id}}" data-url_save="{% url "pwa-employee-audio-stream-save" %}"
+		    class="btn btn-play"><i class="fa fa-play"></i>Iniciar</button>
+    	</div>
+    	<div class="col-lg-2 col-6">
+	        <button id="btnStopStream" class="btn btn-stop" disabled><i class="fa fa-stop"></i>Detener</button>
+    	</div>
+    </div>
+
+    <!-- Estado -->
+    <div class="row my-6 mx-0">
+	    <div id="status" class="col-lg-2 offset-lg-5 alert alert-warning-outline text-center mb-6"><i class="fa fa-info-circle"></i> estado: <span id="state" class="state">detenido</span> </div> 
+    </div>
+
+    <!-- Transcripción -->
+    <h2 class="primary text-center">Transcripción</h2>
+    <div class="row transcription my-4">
+    	<div class="col-12 text-center p-4">
+	    <div id="output_start" class="output_start"></div>
+	    <div id="output" class="output_content p-4"></div>
+	    <div id="output_end" class="output_end "></div>
+    	</div>
+    </div>
+
+    {% include "pwa/employees/menu.html" %}
+    <script src="{% static "js/audio-stream.js" %}"></script>
+{% endblock %}

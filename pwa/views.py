@@ -69,6 +69,11 @@ def employee_report(request, obj_id):
         print(f"Error: {e}")
 
 @group_required_pwa("employees")
+def employee_reports_new(request):
+    obj = Report.objects.create(employee=request.user.employee)
+    return redirect(reverse('pwa-employee-audio-stream', kwargs={"obj_id": obj.id}))
+
+@group_required_pwa("employees")
 def employee_report_print(request, obj_id):
     obj = get_or_none(Report, obj_id)
     datas = ""
@@ -126,3 +131,55 @@ def employee_audio_save(request):
 @group_required_pwa("employees")
 def employee_chatbot(request):
     return render(request, 'pwa/employees/chatbot.html')
+
+@group_required_pwa("employees")
+def employee_audio_stream(request, obj_id):
+    obj = get_or_none(Report, obj_id)
+    return render(request, 'pwa/employees/audio-stream.html', {"obj": obj})
+
+@group_required_pwa("employees")
+def employee_audio_stream_save(request):
+    obj = get_or_none(Report, get_param(request.GET, "obj_id"))
+    val = get_param(request.GET, "value")
+    ra = obj.audios.first()
+    if ra == None:
+        ra = ReportAudio.objects.create(report=obj)
+    ra.text = val
+    ra.save()
+    return HttpResponse("")
+
+from django.http import JsonResponse, HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.clickjacking import xframe_options_exempt
+
+def audio_stream_view(request):
+    """Vista principal para el streaming de audio"""
+
+    websocket_url = f"wss://policia.shidix.es:8001/stream"
+
+    context = {
+        'page_title': 'Streaming de Audio a Texto',
+        'ws_url': websocket_url,
+        'is_secure': request.is_secure(),
+    }
+    return render(request, 'pwa/employees/audio-stream.html', context)
+
+@csrf_exempt
+def process_audio_chunk(request):
+    """Endpoint alternativo para procesamiento por HTTP (fallback)"""
+    if request.method == 'POST':
+        try:
+            # Aquí iría la lógica de procesamiento de audio
+            # Por ahora es un placeholder
+            audio_data = request.body
+            # Simular procesamiento
+            return JsonResponse({'text': 'Texto reconocido placeholder', 'status': 'success'})
+        except Exception as e:
+            logger.error(f"Error procesando audio: {e}")
+            return JsonResponse({'error': str(e)}, status=500)
+
+    return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+def health_check(request):
+    """Endpoint de salud para verificar que la vista funciona"""
+    return JsonResponse({'status': 'ok', 'service': 'audio_stream'})

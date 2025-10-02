@@ -2,7 +2,17 @@
 {% load static i18n pwa_tags %}
 
 {% block content%}
-    <h1 class="primary my-4">{% trans "Nuevo Expediente" %}</h1>
-    {% include "pwa/employees/audio-form.html" %}
-    {% include "pwa/employees/menu.html" %}
+	<div class="row">
+		<div class="col-12 text-center">
+			<h1 class="primary my-4">{% trans "Nuevo Expediente" %}</h1>
+		</div>
+		<div class="col-12 text-center" style="margin-top: 200px;">
+			{% include "pwa/employees/reports-new.html" %}
+		</div>
+			{#{% include "pwa/employees/audio-stream.html" %}#}
+			{#{% include "pwa/employees/audio-form.html" %}#}
+		<div class="col-12 text-center">
+			{% include "pwa/employees/menu.html" %}
+		</div>
+	</div>
 {% endblock %}

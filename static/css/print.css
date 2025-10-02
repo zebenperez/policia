@@ -1,0 +1,141 @@
+html {
+	background-color: #dfdfdf;
+}
+
+body {
+	background-color: #ffffff;
+	box-sizing: border-box;
+	font-family: 'Arial', sans-serif;
+	text-align: justify;
+	max-width: 800px;
+	margin: 0 auto;
+	padding: 20px;
+	color: #000000;
+	line-height: 1.4;
+	border-radius: 8px;
+}
+
+.top-actions {
+	text-align:right;
+}
+.top-actions a {
+	color: #0e223a;
+}
+
+.header {
+	/*display: flex;*/
+	align-items: center;
+	margin-bottom: 20px;
+	border-bottom: 2px solid #f2c400;
+	padding-bottom: 15px;
+	display: grid;
+	grid-template-columns: 1fr 3fr;
+
+}
+        
+.logo {
+	width: 80px;
+	height: 80px;
+	margin-right: 20px;
+	flex-shrink: 0;
+}
+        
+.police-name {
+	font-size: 18px;
+	font-weight: bold;
+	text-align: right;
+	text-transform: uppercase;
+	text-decoration: none;
+	color: #153a6e;
+	letter-spacing: 1px;
+}
+        
+.info-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 1fr 1fr;
+	gap: 15px;
+	margin: 50px 0 50px 0 !important;
+	border: 1px solid #374151;
+	padding: 15px;
+}
+        
+.info-item {
+	display: flex;
+	align-items: center;
+}
+        
+.info-label {
+	font-weight: bold;
+	margin-right: 10px;
+	min-width: 80px;
+}
+        
+.info-line {
+	border-bottom: 1px solid #000;
+	flex-grow: 1;
+	height: 20px;
+}
+
+.p-info {
+	color: #333;
+	margin-bottom: 50px;
+}
+
+.section {
+	margin-bottom: 25px;
+}
+        
+.section-title {
+	font-weight: bold;
+	font-size: 1rem;
+	margin-bottom: 8px;
+	text-transform: uppercase;
+	color: #153a6e;
+}
+        
+.section-content {
+	border-bottom: 1px solid #ccc;
+	min-height: 60px;
+	padding: 5px 0;
+}
+        
+.signatures {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 40px;
+}
+        
+.signature-box {
+	text-align: center;
+}
+        
+.signature-line {
+	border-top: 1px solid #000;
+	margin-bottom: 5px;
+	height: 60px;
+}
+        
+.signature-label {
+	font-weight: bold;
+	font-size: 12px;
+	text-transform: uppercase;
+}
+        
+.document-title {
+	text-align: center;
+	font-size: 20px;
+	font-weight: bold;
+	margin: 20px 0 30px 0;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+}
+        
+@media print {
+	body 
+	{
+		margin: 0;
+		padding: 15px;
+	}
+}
+
