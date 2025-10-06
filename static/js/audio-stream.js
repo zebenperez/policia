@@ -29,6 +29,12 @@ function ajaxGet(url, datas)
 };
 
 
+function decodeUnicode(str) {
+    return str.replace(/\\u[\dA-F]{4}/gi,
+        match => String.fromCharCode(parseInt(match.replace(/\\u/g, ''), 16))
+    );
+}
+
 function log(msg, box, obj_id) {
     if (box == "start")
         outputStartEl.textContent += msg + "\n";
@@ -39,16 +45,37 @@ function log(msg, box, obj_id) {
 }
 
 function logText(msg, box, obj_id, url) {
-    if (msg != ""){
-        outputEl.textContent = outputEl.textContent.replace(msg, "");
-        outputEl.textContent += msg;
+
+    console.log(msg)
+    outputEl.textContent += decodeUnicode(msg.replaceAll("\"", "")) + "\n";
+    outputEl.scrollTop = outputEl.scrollHeight;
+    ajaxGet(url, {"obj_id": obj_id, "value":outputEl.textContent});
+    /*if (msg != ""){
+        //outputEl.textContent = outputEl.textContent.replace(msg, "");
+        console.log(msg)
+        outputEl.textContent += " " + msg.replace("\"", "");
         outputEl.scrollTop = outputEl.scrollHeight;
         ajaxGet(url, {"obj_id": obj_id, "value":outputEl.textContent});
     } else {
         if (!outputEl.textContent.endsWith("\n"))
             outputEl.textContent += "\n";
+    }*/
+}
+
+function logTextVosk(msg, box, obj_id, url) {
+    if (msg != ""){
+        //console.log(msg)
+        //outputEl.textContent = outputEl.textContent.replace(msg, "");
+        //console.log(outputEl.textContent);
+        outputEl.textContent = msg + "\n";
+        outputEl.scrollTop = outputEl.scrollHeight;
+        ajaxGet(url, {"obj_id": obj_id, "value":outputEl.textContent});
+    } else {
+        //if (!outputEl.textContent.endsWith("\n"))
+        //    outputEl.textContent += "\n";
     }
 }
+
 
 
 function downsampleBuffer(buffer, inputRate, outputRate) {
@@ -85,15 +112,18 @@ async function startRecording(ws_url, save_url, obj_id) {
         socket = new WebSocket(ws_url);
         socket.binaryType = "arraybuffer";
         //socket.onopen = () => log("[ws] Conectado a " + WS_URL, "start");
-        socket.onopen = () => log("[ws] Conectado a " + ws_url, "start");
-        socket.onmessage = (ev) => logText(ev.data, "", obj_id, save_url);
-        socket.onclose = () => log("[ws] Conexión cerrada", "end");
-        socket.onerror = (e) => log("[ws error] " + e, "end");
+        //socket.onopen = () => log("[ws] Conectado a " + ws_url, "start");
+        
+        //socket.onmessage = (ev) => logText(ev.data, "", obj_id, save_url);
+        socket.onmessage = (ev) => logTextVosk(ev.data, "", obj_id, save_url);
+
+        //socket.onclose = () => log("[ws] Conexión cerrada", "end");
+        //socket.onerror = (e) => log("[ws error] " + e, "end");
 
         stream = await navigator.mediaDevices.getUserMedia({ audio: true });
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         inputSampleRate = audioCtx.sampleRate;
-        log("🎛️ SampleRate de entrada: " + inputSampleRate + " Hz", "start");
+        //log("🎛️ SampleRate de entrada: " + inputSampleRate + " Hz", "start");
 
         const bufferSize = 4096;
         processor = audioCtx.createScriptProcessor(bufferSize, 1, 1);
@@ -116,7 +146,7 @@ async function startRecording(ws_url, save_url, obj_id) {
         $("#btnStopStream").prop("disabled", false);
         stateEl.textContent = "grabando";
         stateEl.className = "font-semibold text-green-600";
-        log("▶️ Grabación iniciada (PCM 16-bit @" + targetSampleRate + " Hz)", "start");
+        //log("▶️ Grabación iniciada (PCM 16-bit @" + targetSampleRate + " Hz)", "start");
     } catch (err) {
         console.error(err);
         log("Error: " + err.message, "end");
@@ -138,7 +168,7 @@ function stopRecording() {
     $("#btnStopStream").prop("disabled", true);
     stateEl.textContent = "detenido";
     stateEl.className = "font-semibold text-gray-700";
-    log("⏹️ Grabación detenida", "end");
+    //log("⏹️ Grabación detenida", "end");
 }
 
 //btnStart.addEventListener("click", startRecording);
@@ -146,6 +176,7 @@ function stopRecording() {
 
 $(document).ready(()=>{
     $("body").on("click", "#btnStartStream", function(e){
+        console.log("--0--");
         let url = $(this).data("url");
         let url_save = $(this).data("url_save");
         let obj_id = $(this).data("obj_id");

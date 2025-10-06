@@ -2,24 +2,24 @@
 {% load static i18n pwa_tags %}
 
 {% block content%}
-    <div class="row m-0 py-2 px-0 top-actions"><div class="col-12 text-end"><a href="{% url "pwa-employee" %}"><i class="fa fa-angle-left"></i></a></div></div>
     
     <div class="row mt-2 mb-2 m-0 p-0 expt-head">
-        <div class="col-4 label"><i class="fa fa-file-audio-o"></i> {% trans "Expediente" %}:</div>
-        <div class="col-8 text-end">
+        <div class="col-2 label"><i class="fa fa-file-audio-o"></i> {% trans "Expediente" %}:</div>
+        <div class="col-8 text-center">
             <div class="row">
                 <div class="col-12 expt-code"> {{report.code}} </div>
                 <div class="col-12 expt-date"><small>{{report.date|date:"d-m-Y H:i"}}</small></div>
             </div>
         </div>
+	<div class="col-2 text-end"><a href="{% url "pwa-employee" %}"><i class="fa fa-angle-left"></i> Volver al listado</a></div>
     </div>
-    <div class="row m-0 mt-1" tyle="border:1px solid blue">
-         <div class="col-6" tyle="border:1px solid red">
+    <div class="row m-0 mt-1">
+         <div class="col-6">
             {% include "pwa/employees/audio-form-small.html" %}
         </div>
          <div class="col-6 view-pdf text-center" >
 		 <a href="{% url "pwa-employee-report-print" report.id %}" class="btn btn-primary-outline pt-2"><i class="fa fa-print"></i><br />{% trans "Ver" %}</a>
-		 <div class="titledown" > Denuncia </div>
+		 <div class="titledown">Denuncia </div>
         </div>
     </div>
             <br/><hr/>
@@ -33,5 +33,4 @@
         </div>
     </div>
 
-    {% include "pwa/employees/menu.html" %}
 {% endblock %}

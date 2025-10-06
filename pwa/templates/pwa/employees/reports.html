@@ -2,20 +2,22 @@
 {% load static i18n pwa_tags %}
 
 {% block content%}
-    <div class="col-12 -2 mt-3">
-        <div class="text-start my-2">
-            {% for item in item_list %}
-                <div class="row expt-list p-2" onclick="window.location.href='{% url "pwa-employee-report" item.id %}'" style="cursor:pointer">
-                    <div class="col-10">
-                        <div class="row">
-                            <div class="col-12 expt-code"> {{item.code}} </div>
-                            <div class="col-12 expt-date"><small>{{item.date|date:"d-m-Y H:i"}}</small></div>
-                        </div>
-                    </div>
-                    <div class="col-2 text-end"><i class="fa fa-chevron-circle-right"></i></div>
-                </div>
-            {% endfor %}
-        </div>
-    </div>
-    {% include "pwa/employees/menu.html" %}
+
+<div class="row m-0">
+	<div class="col-12 text-center">
+		<h1 class="primary my-4">Listado de Expedientes</h1>
+	</div>
+
+	<div class="col-12 -2 mt-3">
+		<div class="text-start my-2">
+			{% for item in item_list %}
+				<div class="row expt-list p-2" onclick="window.location.href='{% url "pwa-employee-report" item.id %}'" style="cursor:pointer">
+					<div class="col-lg-8 expt-code"> {{item.code}} </div>
+					<div class="col-lg-2 expt-date"><small>{{item.date|date:"d-m-Y H:i"}}</small></div>
+					<div class="col-lg-2 text-end"><i class="fa fa-chevron-circle-right"></i></div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+</div>
 {% endblock %}

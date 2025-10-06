@@ -1,21 +1,24 @@
 <style>
     .chatbot-container {
         max-width: 800px;
-        margin: 2rem auto;
-        border: 1px solid #ddd;
-        border-radius: 10px;
+/*        margin: 2rem auto;*/
+/*        border: 1px solid #ddd;*/
+        border-radius: 0.5rem;
         overflow: hidden;
     }
 
     .chat-header {
-        background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-        color: white;
+        /*background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);*/
+	background: #e3d394;
         padding: 1rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
 
+    .chat-header h3 {
+        color: #001538;
+    }
     .status-dot {
         width: 10px;
         height: 10px;
@@ -24,7 +27,7 @@
     }
 
     .chat-messages {
-        height: 400px;
+        height: 500px;
         overflow-y: auto;
         padding: 1rem;
         background: #f8f9fa;
@@ -38,8 +41,8 @@
     }
 
     .user-message {
-        background: #2575fc;
-        color: white;
+        background: #ddd;
+        color: black;
         margin-left: auto;
         border-bottom-right-radius: 5px;
     }

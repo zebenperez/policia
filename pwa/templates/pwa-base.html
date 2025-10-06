@@ -37,27 +37,26 @@
 				    <!-- Logo y nombre de la aplicación -->
 				    <div class="logo-name space-x-3">
 					<div class="app-logo">
-					    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-black-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-					    </svg>
+			                    <img src="{% static "images/logo_IAPol-1.png" %}" alt="" height="50px" />
 					</div>
-					<h1 class="app-name">Polic-IA</h1>
 				    </div>
 	
 				    <!-- Menu principal -->
-					<div class="row main-menu w-75">
-					    <div class="col-3 nav-item tab text-center pt-3 {% current 'home' %}">
+					<div class="row main-menu w-50">
+					    <div class="col-4 nav-item tab text-center pt-3 {% current 'home' %}">
 						<a class="nav-link" href="{% url "pwa-employee" %}"> <i class='fas fa-microphone'></i><br>Grabar Denuncia</a>
 					    </div>
-					    <div class="col-3 nav-item tab text-center pt-3 {% current 'police' %}">
+					    <div class="col-4 nav-item tab text-center pt-3 {% current 'police' %}">
 						<a class="nav-link" href="{% url "pwa-employee" %}"> <i class='fas fa-microphone'></i><br>Grabar Atestado</a>
 					    </div>
-					    <div class="col-3 nav-item tab text-center pt-3 {% current 'report' %}">
+					    <div class="col-4 nav-item tab text-center pt-3 {% current 'report' %}">
 						<a class="nav-link" href="{% url "pwa-employee-reports" %}"> <i class="fa fa-file-audio-o"></i><br>Expedientes</a>
 					    </div>
+					    {% comment %}
 					    <div class="col-3 nav-item tab text-center pt-3 {% current 'chatbot' %}">
 						<a class="nav-link" href="{% url "pwa-employee-chatbot" %}"> <i class='fas fa-comment'></i><br>IA</a>
 					    </div>
+					    {% endcomment %}
 					</div>
 			    
 
