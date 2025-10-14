@@ -1,13 +1,13 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import login, logout
 from django.contrib.auth.models import User
 from datetime import datetime
 
 from policia.settings import IA_SPEECH_TO_TEXT_URL, IA_SERVICES_URL
 from policia.decorators import group_required
-from policia.commons import user_in_group, get_or_none, get_param
+from policia.commons import user_in_group, get_or_none, get_param, show_exc
 from gestion.models import Employee, Report, ReportAudio
 
 import subprocess
@@ -53,16 +53,27 @@ def agents_audio_save(request):
 
 def transcribe_audio(audio_file, obj):
     #response = requests.post('http://localhost:8001/transcribir', files={'audio': audio_file})
-    response = requests.post(IA_SPEECH_TO_TEXT_URL, files={'audio': audio_file})
+    response = requests.post(IA_SPEECH_TO_TEXT_URL, files={'audio': audio_file}, verify=False)
     if response.status_code == 200:
         #print(response.json())
         obj.text = response.json()['texto']
         obj.save()
-        return ""
-        #return response.json()['texto']
+        return JsonResponse({'texto': obj.text, 'status': 'ok'})
     else:
         raise Exception(f"Error en microservicio: {response.text}")
-
+    
+def retranscribe_audio(request):
+    if request.method != "POST":
+        return JsonResponse({'error': 'Método no permitido'}, status=405)
+    obj_id = get_param(request.POST, "obj_id")
+    obj = get_or_none(ReportAudio, obj_id)
+    if obj is None:
+        return JsonResponse({'error': 'Audio no encontrado'}, status=404)
+    try:
+        response = transcribe_audio(obj.audio, obj)
+        return response
+    except Exception as e:
+        return JsonResponse({'error': show_exc(e)}, status=500)
 
 
 

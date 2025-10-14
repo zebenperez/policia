@@ -9,9 +9,6 @@
         <meta name="description" content="{% trans "IA Denuncias"%}">
         <meta name="author" content="{% trans "" %}">
 
-        <link rel="stylesheet" href="{% static "css/style.css"%}" type="text/css"/>
-
-
 	{% block extrahead%} {% endblock extrahead%}
 
         <link rel="manifest" href="{% static 'manifest.json' %}">
@@ -25,7 +22,9 @@
 
         <!-- JQuery -->
         <script src="https://code.jquery.com/jquery-3.5.1.js" ></script>
-	<script src="https://cdn.tailwindcss.com"></script>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<!-- SweetAlert2 -->
+		<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <!-- Shidix -->
         <link rel="stylesheet" href="{% static "css/styles.css" %}" >
@@ -33,6 +32,7 @@
 	<link rel="stylesheet" href="{% static "css/pwa.css" %}" type="text/css" /> 
         <script src="{% static "js/common.js" %}"></script>
         <script src="{% static "js/jquery.countdown360.js" %}"></script>
+		<script src="{% static "js/ui-shidix.js" %}"></script>
 
         <!-- Favicons -->
         <meta name="theme-color" content="#7952b3">

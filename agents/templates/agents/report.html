@@ -40,8 +40,12 @@
         <div class="col-12 p-2 text-start my-2">
             <h1><i class="fas fa-microphone"></i> {% trans "Listado de audios" %}</a></h1>
             {% for item in report.audios.all %}
-                 <div class="row mt-2"> <div class="small-title"><strong>{% trans "Audio:" %} {{forloop.counter}}</strong></div> </div>
-                 <div class="row"> <div class="col-12">{{item.text}}</div> </div>
+                 <div class="row mt-2 small-title"> 
+                    <div class="col-12">
+                        <strong>{% trans "Audio:" %} {{forloop.counter}}</strong> &nbsp;<button class="btn-sm retranscribe-audio" data-id="{{item.id}}" data-url="{% url 'agents-audio-retranscribe' %}"><i class="fas fa-redo"></i></button>
+                    </div>
+                </div>
+                <div class="row"> <div class="col-12">{{item.text}}</div> </div>
             {% endfor %}
         </div>
     </div>
