@@ -211,4 +211,5 @@ collect_static
 media
 **.sh
 **.bak
-**.deprecated
+**.deprecated*
+*.py2
