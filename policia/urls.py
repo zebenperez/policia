@@ -23,6 +23,7 @@ urlpatterns = [
     path('', RedirectView.as_view(pattern_name='index')),
     path('gestion/', include('gestion.urls')),
     path('pwa/', include('pwa.urls')),
+    path('agents/', include('agents.urls')),
     path('chatbot/', include('chatbot.urls')),
     path('admin/', admin.site.urls),
 

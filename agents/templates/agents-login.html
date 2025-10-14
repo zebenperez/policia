@@ -1,0 +1,32 @@
+{% extends "pwa-base-login.html" %}
+{% load static i18n %}
+
+{% block content %}
+	<div class="login-container mb-8">
+		<div class="login-icon my-4">
+		    <img src="{% static "images/logo_IAPol-1.png" %}" alt="" height="50px" />
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+	            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+		</div>
+      	<h2>Acceso al sistema</h2>
+	    <p>Ingrese sus credenciales para continuar</p>
+	</div>
+
+
+    <div class="col-8 offset-2 mt-2 p-2">
+        <form action="{% url 'agents-login' %}" method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-12 tiny">PIN</div>
+                <div class="col-12"> <input class="pin w-100 p-3" type="text" name="pin"> </div>
+                <input type="hidden" value="SZRf2QMpIfZHPEh0ib7YoDlnnDp5HtjDqbAw" name="control_key">
+            </div>
+            <div class="row mt-5">
+                <div class="col-12 mt-5"> <input type="submit" class="btn-primary w-100 py-3" value="Entrar"> </div>
+            </div>
+        </form>
+        {% if msg and msg != "" %} <div class="alert alert-danger text-center">{{msg}}</div> {% endif %}
+    </div>
+{% endblock %}
+

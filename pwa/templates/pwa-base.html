@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1,minimum-scale=1.0, maximum-scale=1.0">
 		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-		<title>Polic-IA</title>
+		<title>IAPol</title>
 
 		<!-- Latest compiled and minified CSS -->
 		<link href='https://fonts.googleapis.com/css?family=Roboto Condensed' rel='stylesheet' type='text/css'>
@@ -94,23 +94,6 @@
 		    </div>
 		</header>
 
-
-		{%comment%}
-
-            <div class="header">
-                <div class="row m-0">
-                    <div class="col-3 text-end py-1"> <img class="logo" src="{% static 'images/logo-asistencia-canaria.png' %}"> </div>
-                    <div class="col-4 offset-2 status-bar text-center"><small id="conn-status">...</small> <i class='fas fa-wifi'></i><br />
-                        <span class="employee-name">{{user.employee.name}} </span> 
-                    </div> 
-                    <div class="col-1 offset-1 pt-3">
-                        <strong><a class="btn btn-light btn-sm powericon" href="{% url 'pwa-logout' %}"><i class="fas fa-power-off"></i></a></strong>
-                    </div>
-                </div>
-
-            </div>
-		
-	    {%endcomment%}
             <div class="row content align-middle m-0" id="div-content">
                 {% block content %} {% endblock %}
             </div>

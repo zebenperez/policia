@@ -1,0 +1,19 @@
+{% load static i18n pwa_tags %}
+
+
+<div class="row m-0 pb-5">
+	<div class="col-12"> <h1 class="primary mt-4 mb-2"><i class="fa fa-file-audio"></i> Listado de Expedientes</h1> </div>
+
+	<div class="col-12 report-list mt-3">
+		<div class="text-start my-2">
+			{% for item in item_list %}
+				<div class="row expt-list p-2" 
+                    onclick="window.location.href='{% url "agents-report" item.id %}'" style="cursor:pointer">
+					<div class="col-lg-8 expt-code"> {{item.code}} </div>
+					<div class="col-lg-2 expt-date"><small>{{item.date|date:"d-m-Y H:i"}}</small></div>
+					<div class="col-lg-2 text-end"><i class="fa fa-chevron-circle-right"></i></div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+</div>

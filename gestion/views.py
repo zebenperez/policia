@@ -16,9 +16,14 @@ from .models import Employee, Report, ReportAudio, Station
 ACCESS_PATH="{}/gestion/assistances/client/".format(settings.MAIN_URL)
 
 
-@group_required("admins",)
+@group_required("admins", "employees")
+@csrf_exempt
 def index(request):
-    return redirect(reports)
+    emp = Employee.objects.filter(user=request.user).first()
+    if emp != None:
+        return redirect("agents-home")
+    else:
+        return redirect(reports)
 
 '''
     REPORTS

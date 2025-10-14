@@ -30,13 +30,14 @@
         <!-- Shidix -->
         <link rel="stylesheet" href="{% static "css/styles.css" %}" >
         <link rel="stylesheet" href="{% static "css/login.css"%}" type="text/css"/>
+	<link rel="stylesheet" href="{% static "css/pwa.css" %}" type="text/css" /> 
         <script src="{% static "js/common.js" %}"></script>
         <script src="{% static "js/jquery.countdown360.js" %}"></script>
 
         <!-- Favicons -->
         <meta name="theme-color" content="#7952b3">
 
-	<title>Polic-IA</title>
+	<title>IAPol</title>
     </head>
 
     <body>
@@ -46,19 +47,14 @@
 
 		<!-- Cabecera -->
 		<header>
-		      <div class="header sticky-top px-3">
+		      <div class="head sticky-top px-3">
 			    <div class="header-container py-2">
 				<div class="header-elements">
-				    <!-- Logo y nombre de la aplicación -->
-				    <div class="logo-name space-x-3">
-					<div class="app-logo">
-					    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-black-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-					    </svg>
-					</div>
-					<h1 class="app-name">Polic-IA</h1>
-				    </div>
-				    
+			        <!-- Logo -->
+				<div class="app-logo">
+					<img src="{% static "images/logo_IAPol-1.png" %}" alt="" height="50px" />
+				</div>
+				   
 				    <!-- Zona de usuario -->
 				    <div class="user-area mt-1">
 					<div class="dropdown">
@@ -100,8 +96,8 @@
                   </div>
             {% endif %}
 
-            <main id="main-content" class="mx-3 py-6">
-                <section id="content-section" class="p-6"> {% block central_content %}{% endblock central_content %} </section>
+            <main id="main-content" class="mx-3">
+                <section id="content-section" class="-6"> {% block central_content %}{% endblock central_content %} </section>
 
                 {%comment%} MOBILE VERSION {%endcomment%}
                 <div class="d-lg-none">{% include "sidebar_items.html" %}</div>

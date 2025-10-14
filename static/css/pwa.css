@@ -125,22 +125,21 @@ a.btn-primary-creation {
 	transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;
 	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 	transition-duration: 150ms;
-	color: #ffffff;
 	font-weight: 500;
 	font-size: 1.5rem;
-	    text-transform:uppercase;
+	text-transform:uppercase;
 	--tw-bg-opacity: 1;
-	 box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+	box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
 	border-radius: 1rem;
-	border: 1px solid #213a6c ;
-	background: #2b4d91 !important;	
-            height: 200px;
-            width: 400px;
-	    display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto;
+	background: #e3d394 !important;	
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	height: 100px;
+	width: 450px;
+	margin: 20px auto;
+	color: #213a6c;
 }
 a.btn-primary-creation:hover {
 	background: #213a6c !important;	
@@ -150,44 +149,78 @@ a.btn-primary-creation:hover {
 	color: #ffffff;
 }
 
-.btn.btn-play {
-            background: #22c55e;
-	    color: #fff;
+.bg-circle {
+	border-radius: 50%;
+	font-size: 1.5rem;
+	text-align: center;
+	text-transform: uppercase;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	width: 70px;
+	height: 70px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	margin: 0 auto;
+	background: white;
+}
+
+.btn.btn-record {
+            background: #96764b;
 }
 .btn.btn-stop {
             background: red;
-	    color: #fff;
 }
 
-.btn.btn-play, .btn.btn-stop {
-            border-radius: 50%;
-	    font-size: 1.5rem;
-	    font-weight: 600;
-            text-align: center;
-	    text-transform:uppercase;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            width: 200px;
-            height: 200px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto;
-	 box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+.btn.btn-play {
+            background: #22c55e;
 }
 
-.btn.btn-play:hover, .btn.btn-stop:hover {
+.btn.btn-upload {
+            background: #2575fc;
+}
+
+.btn.btn-record, 
+.btn.btn-stop,
+.btn.btn-play, 
+.btn.btn-upload {
+	border-radius: 50%;
+	font-size: 1.5rem;
+	font-weight: 600;
+	text-align: center;
+	text-transform:uppercase;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	width: 150px;
+	height: 150px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 0 auto;
+	box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+
+.btn.btn-stop:hover, .btn.btn-play:hover {
 	color: #ffffff;
 }
 
-.btn.btn-primary-creation i, .btn.btn-play i, .btn.btn-stop i {
-	    font-size: 2.5rem;
+.btn-primary-creation i {
+	color: #213a6c;
+	font-size: 2.2rem;
+}
+
+.btn.btn-record i,
+.btn.btn-stop i,
+.btn.btn-play i, 
+.btn.btn-upload i {
+	font-size: 2.5rem;
+	color: #ffffff;
 }
 
 .alert-warning-outline {
     color: #664d03;
-    /* background-color: #fff3cd; */
     border: 1px solid #ffecb5 !important;
 }
 
@@ -421,10 +454,15 @@ a.asm {
     border-radius: 1rem;
 }
 
+.small-title {
+	color: #bf7716;
+}
+
+h1, h1 i, 
 h1.primary {
-    color: #001538;
+    color: #001538 !important;
     font-weight: 600;
-    font-size: 1.25rem;
+    font-size: 1.25rem !important;
     line-height: 1.75rem;
 }
 
@@ -501,6 +539,14 @@ h2.primary {
 
 /*** end STREAMING ***/
 
+.report-list, 
+.audio-list {
+	background-color: rgba(255, 255, 255, 0.95);
+	border-radius: 20px;
+	box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+	font-size: 0.95rem;
+}
+
 
 /*** Expedientes page ***/
 
@@ -522,11 +568,13 @@ h2.primary {
 }
 
 .expt-head { 
+    background: #f1f1f1;
     -webkit-box-shadow: 0 4px 5px rgba(0,0,0,0.2);
     border-bottom: 1px solid #fff;
     border-top:0px !important;
     align-items: center;
-    height: 100px;
+    height: 70px;
+    font-size: 1rem;
 }
 .expt-code {
 	color: #213a6c;
@@ -549,26 +597,25 @@ h2.primary {
 
 /*** VIEW PDF ***/
 
+.view-pdf {
+	border-radius: 0.5rem;
+	background: #fff !important;
+	padding: 0.5rem;	
+
+}
+.view-pdf:hover {
+	border: 1px solid #ccc;
+}
 .view-pdf a {
 	display: inline-block;
-        /*background: linear-gradient(to right, #6a11cb, #2575fc);*/
-        color: white;
-        font-weight: 600;
         cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0 5px 15px rgba(106, 17, 203, 0.3);
-
-    border-radius: 50%;
-    height: 70px;
-    width: 70px;
-    line-height: 1.5;
-    font-size: 1rem;
-    border: 1px solid #213a6c;
-    color: #213a6c;
+	font-size: 1rem;
+	color: #213a6c;
 }
 
 .view-pdf i {
-	font-size: 1.5rem;
+	/*font-size: 1.5rem;*/
+	color: #213a6c;
 }
 
 .titledown {

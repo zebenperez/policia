@@ -1,0 +1,15 @@
+{#{% extends "pwa-base.html" %}#}
+{% extends "base.html" %}
+{% load static i18n agents_tags %}
+
+{% block central_content%}
+	<div class="row m-0">
+        {#<div class="col-12 text-center"> <h1 class="primary my-4">{% trans "Nuevo Expediente" %}</h1> </div>#}
+		<div class="col-12 text-center">
+			<a href="{% url "agents-report-new" %}" class="btn btn-primary-creation"><span class="bg-circle"><i class="fa fa-file-audio"></i></span>&nbsp; Crear nuevo expediente</a>
+		</div>
+		{% include "agents/reports.html" %}
+		{#{% include "pwa/employees/audio-stream.html" %}#}
+		{#{% include "pwa/employees/audio-form.html" %}#}
+	</div>
+{% endblock %}

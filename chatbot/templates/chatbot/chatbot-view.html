@@ -1,23 +1,29 @@
 <style>
     .chatbot-container {
-        max-width: 800px;
-/*        margin: 2rem auto;*/
-/*        border: 1px solid #ddd;*/
+        min-height: 630px;
         border-radius: 0.5rem;
         overflow: hidden;
+        border-radius: 20px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
     }
 
     .chat-header {
-        /*background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);*/
-	background: #e3d394;
+        background: #e3d394;
         padding: 1rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
 
+    .chat-header i {
+        color: #001538;
+        font-size: 0.9rem;
+    }
     .chat-header h3 {
         color: #001538;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        font-weight: 600;
     }
     .status-dot {
         width: 10px;
@@ -78,11 +84,14 @@
         height: 45px;
         cursor: pointer;
     }
+    #sendButton i {
+        color: #ffffff;
+    }
 </style>
 
 <div class="chatbot-container">
     <div class="chat-header">
-        <h3>Asistente Virtual</h3>
+        <h3><i class='fas fa-lightbulb'></i> Asistente Virtual</h3>
         <span class="status-dot"></span>
     </div>
     

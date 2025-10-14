@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static i18n pwa_tags %}
+
+{% block central_content %}
+
+    <div class="row mb-2 p-0 expt-head">
+        <div class="col-1 label"><i class="fa fa-file-audio-o"></i> {% trans "Expediente" %}:</div>
+        <div class="col-7 text-start">
+            <div class="row">
+                <div class="col-12 expt-code"> {{report.code}} </div>
+                <div class="col-12 expt-date"><small>{{report.date|date:"d-m-Y H:i"}}</small></div>
+            </div>
+        </div>
+    
+	     <div class="col-2 view-pdf text-center" >
+		        <a href="{% url "pwa-employee-report-print" report.id %}" target="_blank" lass="btn btn-primary-outline pt-2">
+                <i class="fa fa-print"></i> {% trans "Visualizar denuncia" %}</a>
+        </div>
+	
+	<div class="col-2 text-end"><a href="{% url "agents-home" %}"><i class="fa fa-angle-left"></i> Volver al listado</a></div>
+    </div>
+    {%comment%}  
+    <div class="row m-0 mt-1" style="border: 1px solid red">
+        <div class="col-6 view-pdf text-center" >
+		<a href="{% url "pwa-employee-report-print" report.id %}" target="_blank" class="btn btn-primary-outline pt-2">
+                <i class="fa fa-print"></i><br />{% trans "Ver" %}</a>
+		<div class="titledown">Denuncia </div>
+        </div>
+    </div>
+    {%endcomment%} 
+    <div class="row m-0 mt-3">
+        {#<div class="col-6"> {% include "pwa/employees/audio-form-small.html" %} </div>#}
+        <div class="col-8"> {% include "agents/audio-record.html" %} </div>
+        <div class="col-4"> {% include "chatbot/chatbot-view.html" %}</div>
+
+    </div>
+    <br/>
+
+    <div class="row audio-list mx-3 mt-3">
+        <div class="col-12 p-2 text-start my-2">
+            <h1><i class="fas fa-microphone"></i> {% trans "Listado de audios" %}</a></h1>
+            {% for item in report.audios.all %}
+                 <div class="row mt-2"> <div class="small-title"><strong>{% trans "Audio:" %} {{forloop.counter}}</strong></div> </div>
+                 <div class="row"> <div class="col-12">{{item.text}}</div> </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

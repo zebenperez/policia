@@ -49,7 +49,9 @@
 	{%endcomment%}
 
 {% else %}
+{%comment%}
     <div class="nav-item"> <a class="nav-link {% current '' %}" href="{% url 'auth_login'  %}"> 
         <i class="fas fa-sign-in-alt"></i> {% trans "Log in" %}</a> </div>
+{%endcomment%}
 {% endif %}
 

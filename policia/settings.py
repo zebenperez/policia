@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'gestion',
     'chatbot',
     'pwa',
+    'agents',
 ]
 
 MIDDLEWARE = [
@@ -144,14 +145,14 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 SESSION_COOKIE_AGE = 1209600  # 2 semanas
 
 # Para desarrollo, permite CORS si es necesario
-CORS_ALLOW_ALL_ORIGINS = True  # Solo para desarrollo
+#CORS_ALLOW_ALL_ORIGINS = True  # Solo para desarrollo
 
 # O configura CORS específicamente
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8000",
-    "http://127.0.0.1:8000",
-    # Agrega los dominios de tu aplicación Django
-]
+#CORS_ALLOWED_ORIGINS = [
+#    "http://localhost:8000",
+#    "http://127.0.0.1:8000",
+#    # Agrega los dominios de tu aplicación Django
+#]
 
 # Configuración de seguridad para WebSocket
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

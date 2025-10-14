@@ -91,5 +91,6 @@ class ReportAudio(models.Model):
     class Meta:
         verbose_name = _('Report Audio')
         verbose_name_plural = _('Reports Audios')
+        ordering = ["-id"]
 
 

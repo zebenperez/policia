@@ -23,19 +23,23 @@
 	   </div>
 	   <div class="password-eye">
 		<input type="password" value="" name="password" class="form-control w-100 px-4 py-3" id="id_password" placeholder="{% trans "Password" %}">
+	        {% comment %}
 		<button type="button" id="togglePassword" class="">
 			<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
 				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
 			</svg>
 		</button>
+	        {% endcomment %}
 	   </div>
 	</div>
 	
+	{% comment %}
 	<div class="remember">
 		<input type="checkbox" id="remember" name="remember">
 		<label for="remember" class="ml-2">Recordar mis datos</label>
 	</div>
+	{% endcomment %}
 
-	<button type="submit" class="btn-primary w-100 py-3 px-4"> {% trans "Iniciar Sesión" %} </button>
+	<button type="submit" class="btn-primary w-100 py-3 px-4 mt-5"> {% trans "Iniciar Sesión" %} </button>
 </form>
