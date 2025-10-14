@@ -51,4 +51,12 @@ $(document).ready(function() {
         });
 
     });
+
+    // Check if exists processed-False class in any button
+    if ($('.retranscribe-audio.processed-False').length > 0) {
+        setTimeout(function() {
+            location.reload();
+        }, 15000);
+    }
+
 });

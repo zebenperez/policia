@@ -42,7 +42,7 @@
             {% for item in report.audios.all %}
                  <div class="row mt-2 small-title"> 
                     <div class="col-12">
-                        <strong>{% trans "Audio:" %} {{forloop.counter}}</strong> &nbsp;<button class="btn-sm retranscribe-audio" data-id="{{item.id}}" data-url="{% url 'agents-audio-retranscribe' %}"><i class="fas fa-redo"></i></button>
+                        <strong>{% trans "Audio:" %} {{forloop.counter}}</strong> &nbsp;<button class="btn-sm retranscribe-audio processed-{{item.processed}}" data-id="{{item.id}}" data-url="{% url 'agents-audio-retranscribe' %}"><i class="fas fa-redo"></i></button>
                     </div>
                 </div>
                 <div class="row"> <div class="col-12">{{item.text}}</div> </div>

@@ -87,6 +87,7 @@ class ReportAudio(models.Model):
     text = models.TextField(verbose_name = _('Texto transcrito'), default="")
     audio = models.FileField(upload_to=upload_audio, blank=True, verbose_name="Audio", help_text="Select file to upload")
     report = models.ForeignKey(Report, verbose_name=_('Informe'), on_delete=models.SET_NULL, null=True, related_name="audios")
+    processed = models.BooleanField(verbose_name = _('Procesado'), default=False)
 
     class Meta:
         verbose_name = _('Report Audio')

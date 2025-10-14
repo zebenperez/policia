@@ -57,6 +57,7 @@ def transcribe_audio(audio_file, obj):
     if response.status_code == 200:
         #print(response.json())
         obj.text = response.json()['texto']
+        obj.processed = True
         obj.save()
         return JsonResponse({'texto': obj.text, 'status': 'ok'})
     else:
