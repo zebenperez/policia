@@ -13,6 +13,7 @@ from policia.commons import get_float, get_int, get_or_none, get_param, get_sess
 from .models import Employee, Report, ReportAudio, Station
 #from .report_lib import get_complainant_datas
 
+
 ACCESS_PATH="{}/gestion/assistances/client/".format(settings.MAIN_URL)
 
 

@@ -14,7 +14,6 @@ import subprocess
 import threading
 import requests
 
-
 @group_required_pwa("employees")
 def index(request):
     try:
@@ -96,7 +95,7 @@ def employee_report_print(request, obj_id):
 #def transcribe_audio(file, obj_id):
 def transcribe_audio(audio_file, obj):
     #response = requests.post('http://localhost:8001/transcribir', files={'audio': audio_file})
-    response = requests.post(IA_SPEECH_TO_TEXT_URL, files={'audio': audio_file})
+    response = requests.post(IA_SPEECH_TO_TEXT_URL, files={'audio': audio_file}, verify=False)
     if response.status_code == 200:
         #print(response.json())
         obj.text = response.json()['texto']
