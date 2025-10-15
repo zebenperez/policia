@@ -1109,7 +1109,7 @@ button.btn-primary {
 	background:#dee7f0;
 }
 /******************************/
-/*
+
 .row.menu {
     line-height: 3;
     letter-spacing: 0;
@@ -1128,7 +1128,7 @@ button.btn-primary {
     border:1px solid #e35000;
 }
 
-*/
+
 #sidebar {
     background: #ffffff !important;
     padding: 1%;
@@ -1154,7 +1154,7 @@ button.btn-primary {
 .nav-link {
 	width: 100%;
 }
-/*
+
 .nav-item i {
 	width: 35px;
 	text-align:center;
@@ -1164,12 +1164,13 @@ button.btn-primary {
 	text-align:center;
 	color: #e35000 !important;
 }
-*/
+
 .nav-link:hover {
 	color:#ffffff;
 	color: #e35000 !important;
 
-/*}
+}	
+
 .nav-item.active .nav-link {
 	color: #e35000 !important;
 }
@@ -1179,7 +1180,7 @@ button.btn-primary {
 	white-space: nowrap !important;
 	padding-left:0;
 }
-*/
+
 .nav-link:hover {
 	border-radius: 5px;
 	color: #e35000 !important;

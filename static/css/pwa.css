@@ -297,6 +297,7 @@ input.btn-primary {
 	display:flex;
 	justify-content: center;
 	align-items: center;
+/*	border:1px solid red;*/
 }
 
 .dropdown {
@@ -545,6 +546,7 @@ h2.primary {
 	border-radius: 20px;
 	box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
 	font-size: 0.95rem;
+	padding-bottom: 50px;
 }
 
 
