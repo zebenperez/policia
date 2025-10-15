@@ -45,7 +45,7 @@
                         <strong>{% trans "Audio:" %} {{forloop.counter}}</strong> &nbsp;<button class="btn-sm retranscribe-audio processed-{{item.processed}}" data-id="{{item.id}}" data-url="{% url 'agents-audio-retranscribe' %}"><i class="fas fa-redo"></i></button>
                     </div>
                 </div>
-                <div class="row"> <div class="col-12">{{item.text}}</div> </div>
+                <div class="row"> <div class="col-12" id="audio-transcription-{{item.id}}">{{item.text}}</div> </div>
             {% endfor %}
         </div>
     </div>

@@ -27,12 +27,12 @@ $(document).ready(function() {
                 Swal.fire({
                     title: 'Éxito',
                     //text in html format
-                    html: 'El audio ha sido retranscrito correctamente.<br>' + json_response.texto,
+                    html: 'El audio ha sido retranscrito correctamente.',
                     icon: 'success',
                     confirmButtonText: 'OK'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        location.reload();
+                        $('#audio-transcription-' + obj_id).html(json_response.texto);
                     }
                 });
             },
@@ -53,10 +53,9 @@ $(document).ready(function() {
     });
 
     // Check if exists processed-False class in any button
-    if ($('.retranscribe-audio.processed-False').length > 0) {
-        setTimeout(function() {
-            location.reload();
-        }, 15000);
+    if ($('button.retranscribe-audio.processed-False').length > 0) {
+        // Trigger click event in the first button with processed-False class
+        $('button.retranscribe-audio.processed-False').first().click();
     }
 
 });
