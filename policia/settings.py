@@ -135,6 +135,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+IA_LLM_URL = "http://iapolllm:8000"
+
+
 try:
     from .local_settings import *
 except Exception:
