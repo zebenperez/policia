@@ -38,7 +38,7 @@
 
     <div class="row audio-list mx-3 mt-3 px-3 py-5">
         <div class="col-12 p-2 text-start my-2">
-            <h1><i class="fas fa-microphone"></i> {% trans "Listado de audios" %}</a></h1>
+            <h1><i class="fas fa-microphone"></i> {% trans "Listado de audios" %} <a data-item="{{ report.id }}" class="btn btn-primary-outline expte-2-llm" data-url="{% url 'agents-report-summarize' %}"><i class="fas fa-comment-nodes"></i> {% trans "IA" %}</a></h1>
             {% for item in report.audios.all %}
                  <div class="row mt-2 small-title"> 
                     <div class="col-12">

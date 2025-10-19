@@ -5,7 +5,8 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.models import User
 from datetime import datetime
 
-from policia.settings import IA_SPEECH_TO_TEXT_URL, IA_SERVICES_URL
+from policia.settings import IA_SPEECH_TO_TEXT_URL, IA_SERVICES_URL, IA_LLM_URL
+from .llmendpoints import IA_LLM_ENDPOINTS
 from policia.decorators import group_required
 from policia.commons import user_in_group, get_or_none, get_param, show_exc
 from gestion.models import Employee, Report, ReportAudio
@@ -13,6 +14,7 @@ from gestion.models import Employee, Report, ReportAudio
 import subprocess
 import threading
 import requests
+import random
 
 
 '''
@@ -50,6 +52,115 @@ def agents_audio_save(request):
             t.start()
     return HttpResponse(report.id)
     #return redirect(reverse('agents-report', kwargs={"obj_id": report.id}))
+
+@group_required("employees")
+def chat_with_llm(request):
+    if request.method != "POST":
+        return JsonResponse({'error': 'Método no permitido'}, status=405)
+    try:
+        errors_answer = ["Lo siento, no puedo ayudarte con eso en este momento.",
+                         "No tengo suficiente información para responder a tu pregunta.",
+                         "Por favor, proporciona más detalles para que pueda asistirte mejor.",
+                         "Ha ocurrido un error al procesar tu solicitud. ¿Podrías intentarlo de nuevo?"]
+        report_id = get_param(request.POST, "report_id")
+        report = get_or_none(Report, report_id)
+        message = get_param(request.POST, "message")
+        report.save()
+
+        if report is None:
+            return JsonResponse({'error': 'Informe no encontrado'}, status=404)
+        datas = ""
+        audios = report.audios.all()
+        transcriptions = []
+        for audio in audios:
+            if audio.processed:
+                transcriptions.append(audio.text)
+        transcriptions = list(reversed(transcriptions))
+        tmp_file_path = f"/tmp/{report.uuid}_{audios.first().id}_transcriptions.txt"
+        with open(tmp_file_path, "w") as f:
+            f.writelines(transcriptions)
+        with open(tmp_file_path, "rb") as f:
+            upload_url = IA_LLM_URL + IA_LLM_ENDPOINTS["upload_expte"].format(uuid=report.uuid)
+            # requests with Bearer token if needed
+            headers = {
+                "Authorization": f"Bearer aaaa-bbbb-cccc-dddd"  # Replace with actual token if needed
+            }
+
+            response = requests.post(upload_url, files={'file': f}, data={'name':report.uuid}, headers=headers, verify=False, timeout=120)
+
+            if response.status_code != 200:
+                return JsonResponse({'error': f"Error uploading data to microservicio: {response.text}"}, status=response.status_code)
+    
+        if response.status_code != 200:
+            return JsonResponse({'error': f"Error uploading data to microservicio: {response.text}"}, status=response.status_code)
+
+        chat_url = IA_LLM_URL + IA_LLM_ENDPOINTS["chat"].format(uuid=report.uuid)
+        # URS is get, wieth q and top_k as params
+        params = {
+            "q": message,
+            "top_k": 5
+        }
+        response = requests.get(chat_url, params=params, headers=headers, verify=False, timeout=120)
+        if response.status_code != 200:
+            print ("Error in LLM chat:", response.text)
+            return JsonResponse({'message': random.choice(errors_answer), 'status':'success'}, status=200)
+        datas = response.json()
+        message = datas.get("answer", random.choice(errors_answer))
+        return JsonResponse({'message': message, 'status': 'success'})
+    except Exception as e:
+        return JsonResponse({'error': show_exc(e)}, status=500)
+
+@group_required("employees")
+def summarize_report_with_ia(request):
+    if request.method != "POST":
+        return JsonResponse({'error': 'Método no permitido'}, status=405)
+    try :
+    
+        obj_id = get_param(request.POST, "obj_id")
+        obj = get_or_none(Report, obj_id)
+        obj.save()
+        if obj is None:
+            return JsonResponse({'error': 'Informe no encontrado'}, status=404)
+        datas = ""
+        audios = obj.audios.all()
+        transcriptions = []
+        for audio in audios:
+            if audio.processed:
+                transcriptions.append(audio.text)
+        transcriptions = list(reversed(transcriptions))
+        tmp_file_path = f"/tmp/{obj.uuid}_{audios.first().id}_transcriptions.txt"
+        with open(tmp_file_path, "w") as f:
+            f.writelines(transcriptions)
+        with open(tmp_file_path, "rb") as f:
+            remove_url = IA_LLM_URL + IA_LLM_ENDPOINTS["clear-expte"].format(uuid=obj.uuid)
+            upload_url = IA_LLM_URL + IA_LLM_ENDPOINTS["upload_expte"].format(uuid=obj.uuid)
+            personal_data = IA_LLM_URL + IA_LLM_ENDPOINTS["personal-data"].format(uuid=obj.uuid)
+            # requests with Bearer token if needed
+            headers = {
+                "Authorization": f"Bearer aaaa-bbbb-cccc-dddd"  # Replace with actual token if needed
+            }
+            # # First, clear existing data
+            # response = requests.delete(remove_url, headers=headers, verify=False)
+            # if response.status_code != 200:
+            #     return JsonResponse({'error': f"Error clearing data in microservicio: {response.text}"}, status=response.status_code)
+            # Then, upload new data
+            response = requests.post(upload_url, files={'file': f}, data={'name':obj.uuid}, headers=headers, verify=False, timeout=120)
+
+            if response.status_code != 200:
+                return JsonResponse({'error': f"Error uploading data to microservicio: {response.text}"}, status=response.status_code)
+            print ("Upload response:", response.text)
+            # Finally, request summarization
+            response = requests.get(personal_data, headers=headers, verify=False, timeout=120)
+            print ("Summarization response:", response.text)
+            if response.status_code == 200:
+                datas = response.json()
+                print (datas)
+            else:
+                return JsonResponse({'error': f"Error summarizing report in microservicio: {response.text}"}, status=response.status_code)
+
+        return JsonResponse({'data': datas})
+    except Exception as e:
+        return JsonResponse({'error': show_exc(e)}, status=500)
 
 def transcribe_audio(audio_file, obj):
     #response = requests.post('http://localhost:8001/transcribir', files={'audio': audio_file})

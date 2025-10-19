@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib.auth.models import User, Group
 from django.db import models
 from django.utils.translation import gettext_lazy as _ 
+import uuid
 
 import datetime
 
@@ -59,6 +60,7 @@ def upload_audio(instance, filename):
     return '/'.join(['%s' % (folder), datetime.datetime.now().strftime("%Y%m%d%H%M%S") + ascii_filename])
 
 class Report(models.Model):
+    uuid = models.CharField(max_length=100, verbose_name = _('UUID'), default=uuid.uuid4)
     date = models.DateTimeField(default=datetime.datetime.now(), null=True, verbose_name=_('Fecha'), blank=True)
     #text = models.TextField(verbose_name = _('Texto transcrito'), default="")
     #audio = models.FileField(upload_to=upload_audio, blank=True, verbose_name="Audio", help_text="Select file to upload")

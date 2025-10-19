@@ -70,4 +70,59 @@ $(document).ready(function() {
         $('button.retranscribe-audio.processed-False').first().click();
     }
 
+    $('.expte-2-llm').click(function() {
+        var obj_id = $(this).data('item');
+
+        var url = $(this).data('url');
+        var button = $(this);
+        button.prop('disabled', true);
+        // Open sweetalert2 with "Processing..." message
+        Swal.fire({
+            title: 'Procesando...',
+            text: 'Por favor, espere mientras se envía el expediente a la IA.',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: {
+                'obj_id': obj_id,
+                'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val()
+            },
+            success: function(response) {
+                json_response = response;
+                Swal.close();
+                Swal.fire({
+                    title: 'Éxito',
+                    //text in html format
+                    html: 'El expediente ha sido enviado a la IA correctamente.<br>Resumen: ' + json_response.data.answer.summarize,
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+            },
+            error: function(xhr, status, error) {
+                var message = 'Ha ocurrido un error desconocido.';
+                try {
+                    var message = JSON.parse(xhr.responseText).error;
+                } catch (e) {
+                    var message = 'Ha ocurrido un error desconocido.';
+                }
+                Swal.close();
+                Swal.fire({
+                    title: 'Error',
+                    html: message,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            },
+            complete: function() {
+                button.prop('disabled', false);
+            }
+        });
+
+    });
 });

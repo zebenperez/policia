@@ -99,11 +99,16 @@
         <div class="message bot-message">
             ¡Hola! ¿En qué puedo ayudarte hoy?
         </div>
+        <div class="message bot-is-typing bot-message" id="botTyping" style="display: none;">
+            <i class="fas fa-ellipsis-h"></i>
+            <span><i><small>Escribiendo...</small></i></span>
+        </div>
     </div>
+
     
     <div class="chat-input-container">
         <input type="text" id="userInput" placeholder="Escribe tu mensaje...">
-        <button id="sendButton">
+        <button id="sendButton" class="send-to-llm" data-url="{% url 'agents-chat-with-llm' %}" data-report_id="{{ report.id }}">
             <i class="fas fa-paper-plane"></i>
         </button>
     </div>
@@ -118,8 +123,23 @@
         function addMessage(text, isUser = false) {
             const messageDiv = document.createElement('div');
             messageDiv.className = isUser ? 'message user-message' : 'message bot-message';
+
             messageDiv.textContent = text;
             chatMessages.appendChild(messageDiv);
+
+            // Hide typing indicator if it's a bot message
+            if (!isUser) {
+                const botTyping = document.getElementById('botTyping');
+                botTyping.style.display = 'none';
+            }
+            else {
+
+                // Show typing indicator for bot response
+                const botTyping = document.getElementById('botTyping');
+                // Cut typing indicator and paste to the end
+                chatMessages.appendChild(botTyping);
+                botTyping.style.display = 'block';
+            }
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
@@ -130,22 +150,30 @@
             addMessage(message, true);
             userInput.value = '';
             try {
-                const response = await fetch('/chatbot/api/', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': '{{ csrf_token }}'
+                var report_id = $(sendButton).data('report_id');
+
+                $.ajax({
+                    url: $(sendButton).data('url'),
+                    type: 'POST',
+                    data: {
+                        'report_id': report_id,
+                        'message': message,
+                        'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val()
                     },
-                    body: JSON.stringify({ message: message })
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            addMessage(response.message);
+                        } else {
+                            addMessage('Lo siento, ha ocurrido un error.');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        addMessage('Error de conexión. Intenta nuevamente.');
+                    }
                 });
-                
-                const data = await response.json();
-                if (data.status === 'success') {
-                    addMessage(data.response);
-                } else {
-                    addMessage('Lo siento, ha ocurrido un error.');
-                }
+            
             } catch (error) {
+                console.error('Error:', error);
                 addMessage('Error de conexión. Intenta nuevamente.');
             }
         }
