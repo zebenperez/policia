@@ -14,7 +14,7 @@ from gestion.models import Employee, Report, ReportAudio
 import subprocess
 import threading
 import requests
-import random
+import random, time
 
 
 '''
@@ -148,15 +148,19 @@ def summarize_report_with_ia(request):
 
             if response.status_code != 200:
                 return JsonResponse({'error': f"Error uploading data to microservicio: {response.text}"}, status=response.status_code)
-            print ("Upload response:", response.text)
+
             # Finally, request summarization
-            response = requests.get(personal_data, headers=headers, verify=False, timeout=120)
-            print ("Summarization response:", response.text)
-            if response.status_code == 200:
-                datas = response.json()
-                print (datas)
-            else:
-                return JsonResponse({'error': f"Error summarizing report in microservicio: {response.text}"}, status=response.status_code)
+        # time_pause = time.time()
+        # while time.time() - time_pause < 10:
+        #     # Wait for 10 seconds to ensure data is processed
+        #     pass
+        response = requests.get(personal_data, verify=False, timeout=1200)
+        print ("Summarization response:", response.text)
+        if response.status_code == 200:
+            datas = response.json()
+            print (datas)
+        else:
+            return JsonResponse({'error': f"Error summarizing report in microservicio: {response.text}"}, status=response.status_code)
 
         return JsonResponse({'data': datas})
     except Exception as e:

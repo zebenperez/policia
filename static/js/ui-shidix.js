@@ -89,6 +89,8 @@ $(document).ready(function() {
         $.ajax({
             url: url,
             type: 'POST',
+            timeout: 600000, // 10 minutes
+
             data: {
                 'obj_id': obj_id,
                 'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val()
