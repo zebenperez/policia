@@ -79,7 +79,7 @@ $(document).ready(function() {
         // Open sweetalert2 with "Processing..." message
         Swal.fire({
             title: 'Procesando...',
-            text: 'Por favor, espere mientras se envía el expediente a la IA.',
+            text: 'Por favor, espere mientras la IA procesa el expediente.',
             allowOutsideClick: false,
             didOpen: () => {
                 Swal.showLoading();
@@ -97,6 +97,26 @@ $(document).ready(function() {
             },
             success: function(response) {
                 json_response = response;
+                try {
+                $('#report-summary-body').html(json_response.data.answer.summarize);
+                // Fill complainant data
+                var denunciante = json_response.data.answer.denunciante;
+            
+                $('#complainant-name').val(denunciante.nombre + ' ' + denunciante.apellidos);
+                $('#complainant-phone').val(denunciante.telefono);
+                $('#complainant-dni').val(denunciante.dni);
+                $('#complainant-address').val(denunciante.direccion);
+
+                var agente = json_response.data.answer.agente;
+                $('#agent-name').val(agente.nombre + ' ' + agente.apellidos);
+                $('#agent-number').val(agente.numero_agente);
+                $('#agent-rank').val(agente.rango);
+                $('#agent-station').val(agente.comisaria);
+                $('#report-extract-data').show();
+                } catch (e) {
+                    console.log("Error filling data: " + e);
+                }
+
                 Swal.close();
                 Swal.fire({
                     title: 'Éxito',
@@ -128,3 +148,4 @@ $(document).ready(function() {
 
     });
 });
+

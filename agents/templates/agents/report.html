@@ -37,8 +37,8 @@
     <br/>
 
     <div class="row audio-list mx-3 mt-3 px-3 py-5">
-        <div class="col-12 p-2 text-start my-2">
-            <h1><i class="fas fa-microphone"></i> {% trans "Listado de audios" %} <a data-item="{{ report.id }}" class="btn btn-primary-outline expte-2-llm" data-url="{% url 'agents-report-summarize' %}"><i class="fas fa-comment-nodes"></i> {% trans "IA" %}</a></h1>
+        <div class="col-8 p-2 text-start my-2">
+            <h1><i class="fas fa-microphone"></i> {% trans "Listado de audios" %} </h1>
             {% for item in report.audios.all %}
                  <div class="row mt-2 small-title"> 
                     <div class="col-12">
@@ -47,6 +47,78 @@
                 </div>
                 <div class="row"> <div class="col-12" id="audio-transcription-{{item.id}}">{{item.text}}</div> </div>
             {% endfor %}
+        </div>
+        <div class="col-4 p-2 text-start my-2">
+            <div class="card p-3">
+                <div class="card-header">
+                    <i class="fas fa-file-alt"></i> {% trans "Informe de la denuncia" %}
+                </div>
+                <div class="card-body" style="min-height: 150px;">
+                    <div class="row">
+                        <div class="col-12" id="report-summary-body">
+                            {{ report.summary|linebreaks }}
+                        </div>
+                    </div>
+                    <div class="row row-cols-2" id="report-extract-data-container">
+                        <div class="col">
+
+                            <div class="form-group mb-3">
+                                <label for="complainant-name">
+                                    <span class="form-text">{% trans "Nombre del denunciante" %}</span>
+                                </label>
+                                <input type="text" id="complainant-name" class="form-control" value="{{ report.complainant.name }}" readonly>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="complainant-phone">
+                                    <span class="form-text">{% trans "Teléfono del denunciante" %}</span>
+                                </label>
+                                <input type="text" id="complainant-phone" class="form-control" value="{{ report.complainant.phone }}" readonly>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="complainant-dni">
+                                    <span class="form-text">{% trans "DNI del denunciante" %}</span>
+                                </label>
+                                <input type="text" id="complainant-dni" class="form-control" value="{{ report.complainant.dni }}" readonly>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="complainant-address" class="form-label">
+                                    <span class="form-text">{% trans "Dirección del denunciante" %}</span>
+                                </label>
+                                <input type="text" id="complainant-address" class="form-control" value="{{ report.complainant.address }}" readonly>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group mb-3">
+                                <label for="agent-name">
+                                    <span class="form-text">{% trans "Nombre del agente" %}</span>
+                                </label>
+                                <input type="text" id="agent-name" class="form-control" value="{{ report.agent.name }}" readonly>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="agent-number">
+                                    <span class="form-text">{% trans "Número del agente" %}</span>
+                                </label>
+                                <input type="text" id="agent-number" class="form-control" value="{{ report.agent.number }}" readonly>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="agent-rank">
+                                    <span class="form-text">{% trans "Rango del agente" %}</span>
+                                </label>
+                                <input type="text" id="agent-rank" class="form-control" value="{{ report.agent.rank }}" readonly>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="agent-station" class="form-label">
+                                    <span class="form-text">{% trans "Comisaría del agente" %}</span>
+                                </label>
+                                <input type="text" id="agent-station" class="form-control" value="{{ report.agent.station }}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a data-item="{{ report.id }}" class="btn btn-primary-outline expte-2-llm" data-url="{% url 'agents-report-summarize' %}"><i class="fas fa-comment-nodes"></i> {% trans "IA" %}</a>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}
