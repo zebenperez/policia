@@ -23,6 +23,7 @@ urlpatterns = [
     path('employees/export', views.employees_export, name='employees-export'),
     path('employees/import', views.employees_import, name='employees-import'),
 
+
     #------------------------- SPEECH TO TEXT -----------------------
     path('set-audio-report', views.set_audio_report, name='set-audio-report'),
 

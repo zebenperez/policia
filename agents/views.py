@@ -139,8 +139,8 @@ def summarize_report_with_ia(request):
             headers = {
                 "Authorization": f"Bearer aaaa-bbbb-cccc-dddd"  # Replace with actual token if needed
             }
-            # # First, clear existing data
-            # response = requests.delete(remove_url, headers=headers, verify=False)
+            # First, clear existing data
+            response = requests.delete(remove_url, headers=headers, verify=False)
             # if response.status_code != 200:
             #     return JsonResponse({'error': f"Error clearing data in microservicio: {response.text}"}, status=response.status_code)
             # Then, upload new data
@@ -300,4 +300,12 @@ def retranscribe_audio(request):
 def health_check(request):
     """Endpoint de salud para verificar que la vista funciona"""
     return JsonResponse({'status': 'ok', 'service': 'audio_stream'})
+
+# @group_required("employees")
+# def reassign_uuids(request):
+#     reports = Report.objects.all()
+#     for report in reports:
+#         report.uuid = Report.new_uuid()
+#         report.save()
+#     return HttpResponse("UUIDs reassigned")
 

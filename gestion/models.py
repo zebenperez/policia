@@ -60,7 +60,7 @@ def upload_audio(instance, filename):
     return '/'.join(['%s' % (folder), datetime.datetime.now().strftime("%Y%m%d%H%M%S") + ascii_filename])
 
 class Report(models.Model):
-    uuid = models.CharField(max_length=100, verbose_name = _('UUID'), default=uuid.uuid4)
+    uuid = models.CharField(max_length=100, verbose_name = _('UUID'), default="")
     date = models.DateTimeField(default=datetime.datetime.now(), null=True, verbose_name=_('Fecha'), blank=True)
     #text = models.TextField(verbose_name = _('Texto transcrito'), default="")
     #audio = models.FileField(upload_to=upload_audio, blank=True, verbose_name="Audio", help_text="Select file to upload")
@@ -79,6 +79,19 @@ class Report(models.Model):
         for t in self.audios.all():
             text += f"{t.text}\r"
         return text 
+    
+    def save(self, *args, **kwargs):
+        # Check if it is new item
+        if self.uuid == None or self.uuid == "" or len(self.uuid) < 5:
+            self.uuid = Report.new_uuid()
+        super().save(*args, **kwargs)
+    
+    @staticmethod
+    def new_uuid():
+        current = str(uuid.uuid4())
+        while Report.objects.filter(uuid=current).exists():
+            current = str(uuid.uuid4())
+        return current
 
     class Meta:
         verbose_name = _('Report')
