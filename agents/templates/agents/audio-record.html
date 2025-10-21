@@ -223,20 +223,32 @@
             
             <div class="timer" id="timer">00:00</div>
             
-            <div class="controls">
-                <button class="btn btn-record" id="startRecord">
-                    <i class="fas fa-microphone"></i>
-                </button>
-                <button class="btn btn-stop" id="stopRecord" disabled>
-                    <i class="fas fa-stop"></i>
-                </button>
-                <button class="btn btn-play" id="playRecord" disabled>
-                    <i class="fas fa-play"></i>
-                </button>
-                <button class="btn btn-upload" id="uploadRecord" disabled>
-                    <i class="fas fa-upload"></i>
-                </button>
-            </div>
+    <div class="row">
+	<div class="col-3 text-center">
+		<button class="btn btn-record" id="startRecord">
+                    <i class="fas fa-microphone-alt"></i>
+		</button><br />
+		INICIAR GRABACIÓN
+	</div>
+	<div class="col-3 text-center">
+		<button class="btn btn-stop" id="stopRecord" disabled>
+		    <i class="fas fa-stop"></i>
+		</button><br />
+		PARAR GRABACIÓN
+	</div>
+	<div class="col-3 text-center">
+		<button class="btn btn-play" id="playRecord" disabled>
+		    <i class="fas fa-play"></i>
+		</button><br />
+		REPRODUCIR GRABACIÓN
+	</div>
+	<div class="col-3 text-center">
+		<button class="btn btn-upload" id="uploadRecord" disabled>
+		    <i class="fas fa-upload"></i>
+		</button><br />
+		GUARDAR GRABACIÓN
+	</div>
+    </div>
             
             <div class="audio-preview">
                 <audio id="audioPreview" controls style="width: 100%; display: none;"></audio>

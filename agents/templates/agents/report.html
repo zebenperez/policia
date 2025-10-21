@@ -4,21 +4,26 @@
 {% block central_content %}
 
     <div class="row mb-2 p-0 expt-head">
-        <div class="col-1 label"><i class="fa fa-file-audio-o"></i> {% trans "Expediente" %}:</div>
-        <div class="col-7 text-start">
+        <div class="col-lg-1 col-1 label"><i class="fa fa-file-audio-o"></i> {% trans "Expediente" %}:</div>
+        <div class="col-lg-4 col-4 text-start">
             <div class="row">
-                <div class="col-12 expt-code"> {{report.code}} </div>
-                <div class="col-12 expt-date"><small>{{report.date|date:"d-m-Y H:i"}}</small></div>
+                <div class="col-lg-12 col-12 expt-code"> {{report.code}} </div>
+                <div class="col-lg-12 col-12 expt-date"><small>{{report.date|date:"d-m-Y H:i"}}</small></div>
             </div>
         </div>
-    
-	     <div class="col-2 view-pdf text-center" >
-		        <a href="{% url "pwa-employee-report-print" report.id %}" target="_blank" lass="btn btn-primary-outline pt-2">
+	<div class="col-lg-2 col-2 view-pdf text-center">
+		        <a href="{% url "pwa-employee-report-print" report.id %}" target="_blank">
                 <i class="fa fa-print"></i> {% trans "Visualizar denuncia" %}</a>
         </div>
-	
-	<div class="col-2 text-end"><a href="{% url "agents-home" %}"><i class="fa fa-angle-left"></i> Volver al listado</a></div>
+	<div class="col-lg-3 offset-lg-2 col-2 text-end">
+		<a href="{% url "agents-home" %}" class="back-button gap-3 px-6 py-3">
+			<svg class="back-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+			</svg> Volver al listado
+		</a>
+	</div>
     </div>
+
     {%comment%}  
     <div class="row m-0 mt-1" style="border: 1px solid red">
         <div class="col-6 view-pdf text-center" >

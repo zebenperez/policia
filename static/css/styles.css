@@ -1585,7 +1585,7 @@ h3.text {
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: #e55000 !important;
+    background: #e1cc8b !important;
 }
 
 /************** footer ****************/
