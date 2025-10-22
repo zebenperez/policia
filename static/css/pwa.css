@@ -168,6 +168,36 @@ a.back-button:hover {
 	transform: scale(1.05);
 }
 
+
+/***** BOTON IA *****/
+
+a.btn.btn-ia.expte-2-llm {
+	color: #ffffff;
+	border-radius: 0.5rem;
+	background-image: linear-gradient(to right, var(--tw-gradient-stops));
+	box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
+	--tw-gradient-to: #1b263a var(--tw-gradient-to-position) !important;
+	--tw-gradient-from: #997f54 var(--tw-gradient-from-position) !important;
+	--tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+	transition-duration: 300ms;
+	transition-property: all;
+	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+a.btn.btn-ia.expte-2-llm:hover {
+}
+
+a.btn.btn-ia.expte-2-llm i {
+	color: #ffffff;
+	font-size: 1.3rem;;
+}
+
+/***** end BOTON IA *****/
+
+
+
+
+
 .bg-circle {
 	border-radius: 50%;
 	font-size: 1.5rem;
