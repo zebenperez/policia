@@ -9,6 +9,6 @@
                 data-url="{% url 'agents-audio-retranscribe' %}"><i class="fas fa-redo"></i></button>
         </div>
     </div>
-    <div class="row"> <pre><div class="col-12" id="audio-transcription-{{item.id}}">{{item.text}}</div></pre> </div>
+    <div class="row"> <div class="col-12" id="audio-transcription-{{item.id}}">{{item.text}}</div> </div>
 {% endfor %}
 
