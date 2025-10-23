@@ -567,6 +567,11 @@ h2.primary {
 	width: 90% !important;
 }
 
+.transcription-dialog {
+	white-space: break-spaces;
+	font-family: sans-serif !important;
+}
+
 .output_start, .output_end {
 	color: white;
 	overflow-y: hidden;
