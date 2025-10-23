@@ -15,7 +15,7 @@ urlpatterns = [
     path('report/summarize', views.summarize_report_with_ia, name="agents-report-summarize"),
     path('chat-with-llm', views.chat_with_llm, name="agents-chat-with-llm"),
 
-    # path('reassign-uuids/', views.reassign_uuids, name="agents-reassign-uuids"),
+#    path('reassign-uuids/', views.reassign_uuids, name="agents-reassign-uuids"),
 
     #path('reports/', views.agents_reports, name="agents-reports"),
 #    path('employee/report/print/<int:obj_id>', views.employee_report_print, name="pwa-employee-report-print"),

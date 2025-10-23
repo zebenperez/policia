@@ -142,9 +142,11 @@ def summarize_report_with_ia(request):
         datas = ""
         audios = obj.audios.all()
         transcriptions = []
-        for audio in audios:
-            if audio.processed:
+        for audio in audios: 
+            if audio.processed and audio.text != '':
                 transcriptions.append(audio.text)
+        if transcriptions == []:
+            return JsonResponse({'error': f"No hay transcripciones válidas"}, status=422)
         transcriptions = list(reversed(transcriptions))
         tmp_file_path = f"/tmp/{obj.uuid}_{audios.first().id}_transcriptions.txt"
         with open(tmp_file_path, "w") as f:
@@ -213,3 +215,12 @@ def health_check(request):
     """Endpoint de salud para verificar que la vista funciona"""
     return JsonResponse({'status': 'ok', 'service': 'audio_stream'})
 
+# def reassign_uuids(request):
+#     reports = Report.objects.all()
+#     for report in reports:
+#         if report.uuid is None or len(report.uuid) < 5:
+#             reoport.uuid = Report.new_uuid()
+#             report.save()
+#     return HttpResponse("OK")
+# 
+# 
