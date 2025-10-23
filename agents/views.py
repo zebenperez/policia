@@ -149,7 +149,7 @@ def summarize_report_with_ia(request):
             return JsonResponse({'error': f"No hay transcripciones válidas"}, status=422)
         transcriptions = list(reversed(transcriptions))
         tmp_file_path = f"/tmp/{obj.uuid}_{audios.first().id}_transcriptions.txt"
-        with open(tmp_file_path, "w") as f:
+        with open(tmp_file_path, "w", encoding="utf-8", newline="") as f:
             f.writelines(transcriptions)
         with open(tmp_file_path, "rb") as f:
             remove_url = IA_LLM_URL + IA_LLM_ENDPOINTS["clear-expte"].format(uuid=obj.uuid)
