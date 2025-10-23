@@ -8,6 +8,7 @@ urlpatterns = [
     path('report/<int:obj_id>', views.agents_report, name="agents-report"),
     path('report/new/', views.agents_report_new, name="agents-report-new"),
     path('audio/save', views.agents_audio_save, name="agents-audio-save"),
+    path('report/print/<int:obj_id>', views.agents_report_print, name="agents-report-print"),
 
     ## Dani
     path('audio/retranscribe', views.retranscribe_audio, name="agents-audio-retranscribe"),

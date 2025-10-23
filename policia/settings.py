@@ -144,8 +144,8 @@ except Exception:
     pass
 
 # Configuración de sesiones (necesario para tracking)
-SESSION_ENGINE = 'django.contrib.sessions.backends.db'
-SESSION_COOKIE_AGE = 1209600  # 2 semanas
+#SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+#SESSION_COOKIE_AGE = 1209600  # 2 semanas
 
 # Para desarrollo, permite CORS si es necesario
 #CORS_ALLOW_ALL_ORIGINS = True  # Solo para desarrollo
@@ -158,13 +158,13 @@ SESSION_COOKIE_AGE = 1209600  # 2 semanas
 #]
 
 # Configuración de seguridad para WebSocket
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT = False  # Si usas HTTPS en producción
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+#SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+#SECURE_SSL_REDIRECT = False  # Si usas HTTPS en producción
+#SESSION_COOKIE_SECURE = True
+#CSRF_COOKIE_SECURE = True
 
 # Configuración WebSocket
-WEBSOCKET_PORT = '8000'
+#WEBSOCKET_PORT = '8000'
 
 # Configuración para producción
-WEBSOCKET_URL = 'wss://policia.shidix.es/ws/audio'
+#WEBSOCKET_URL = 'wss://policia.shidix.es/ws/audio'
