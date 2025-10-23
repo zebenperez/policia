@@ -56,25 +56,19 @@ def agents_report_print(request, obj_id):
     obj = get_or_none(Report, obj_id)
     datas = ""
     audio = obj.audios.all().first()
-    print("--1--")
     if audio != None:
-        response = requests.post(IA_SERVICES_URL, params={'texto': audio.text})
-        datas = ""
-        print("--2--")
         try:
+            response = requests.post(IA_SERVICES_URL, params={'texto': audio.text})
+            datas = ""
             if response.status_code == 200:
-                print("--3--")
                 #print(response.json())
                 datas = response.json()
                 #return response.json()['texto']
             else:
-                print("--4--")
                 raise Exception(f"Error en microservicio: {response.text}")
         except Exception as e:
-            print("--5--")
             print(e)
-    print("--6--")
-    print(datas)
+    #print(datas)
     return render(request, "agents/print.html", {"obj": obj, "datas": datas})
 
 @group_required("employees")

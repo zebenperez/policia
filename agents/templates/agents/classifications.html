@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Fichas de Delitos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Generador de Fichas de Delitos</h1>
+            <p class="text-gray-600">Sistema para documentar información detallada de delitos penales</p>
+        </header>
+
+        <main>
+            <form id="delitoForm" class="bg-white rounded-lg shadow-lg p-6 md:p-8 space-y-6">
+                <!-- Nombre del delito y referencia legal -->
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="nombreDelito" class="block text-sm font-medium text-gray-700 mb-2">Nombre del Delito</label>
+                        <input type="text" id="nombreDelito" name="nombreDelito" required
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                               placeholder="Ej: Robo con fuerza en las cosas">
+                    </div>
+                    <div>
+                        <label for="referenciaLegal" class="block text-sm font-medium text-gray-700 mb-2">Referencia Legal</label>
+                        <input type="text" id="referenciaLegal" name="referenciaLegal" required
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                               placeholder="Ej: Artículo 238 del Código Penal">
+                    </div>
+                </div>
+
+                <!-- Definición operativa -->
+                <div>
+                    <label for="definicionOperativa" class="block text-sm font-medium text-gray-700 mb-2">Definición Operativa</label>
+                    <textarea id="definicionOperativa" name="definicionOperativa" rows="3" required
+                              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                              placeholder="Describe en qué consiste el delito de forma práctica..."></textarea>
+                </div>
+
+                <!-- Elementos esenciales -->
+                <div>
+                    <label for="elementosEsenciales" class="block text-sm font-medium text-gray-700 mb-2">Elementos Esenciales</label>
+                    <div id="elementosContainer" class="space-y-2">
+                        <div class="flex gap-2">
+                            <input type="text" name="elemento" 
+                                   class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                   placeholder="Elemento esencial que debe concurrir...">
+                            <button type="button" onclick="removeElemento(this)" 
+                                    class="px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors">
+                                ✕
+                            </button>
+                        </div>
+                    </div>
+                    <button type="button" onclick="addElemento()" 
+                            class="mt-2 px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors">
+                        + Añadir Elemento
+                    </button>
+                </div>
+
+                <!-- Elementos diferenciadores -->
+                <div>
+                    <label for="elementosDiferenciadores" class="block text-sm font-medium text-gray-700 mb-2">Elementos Diferenciadores</label>
+                    <textarea id="elementosDiferenciadores" name="elementosDiferenciadores" rows="3" required
+                              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                              placeholder="Qué lo diferencia de otros delitos similares..."></textarea>
+                </div>
+
+                <!-- Ejemplos -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Ejemplos Reales o Hipotéticos</label>
+                    <div id="ejemplosContainer" class="space-y-3">
+                        <div class="border border-gray-200 rounded-md p-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-medium text-gray-700">Ejemplo 1</span>
+                                <button type="button" onclick="removeEjemplo(this)" 
+                                        class="px-2 py-1 bg-red-500 text-white rounded text-sm hover:bg-red-600 transition-colors">
+                                    Eliminar
+                                </button>
+                            </div>
+                            <textarea name="ejemplo" rows="2" 
+                                      class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                      placeholder="Describe un ejemplo del delito..."></textarea>
+                        </div>
+                    </div>
+                    <button type="button" onclick="addEjemplo()" 
+                            class="mt-2 px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors">
+                        + Añadir Ejemplo
+                    </button>
+                </div>
+
+                <!-- Indicadores prácticos -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Indicadores Prácticos en Denuncias</label>
+                    <p class="text-sm text-gray-500 mb-3">Palabras clave y expresiones frecuentes que podrían aparecer en denuncias ciudadanas</p>
+                    <div id="indicadoresContainer" class="space-y-2">
+                        <div class="flex gap-2">
+                            <input type="text" name="indicador" 
+                                   class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                   placeholder="Ej: 'me han forzado la puerta', 'han roto la ventana'...">
+                            <button type="button" onclick="removeIndicador(this)" 
+                                    class="px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors">
+                                ✕
+                            </button>
+                        </div>
+                    </div>
+                    <button type="button" onclick="addIndicador()" 
+                            class="mt-2 px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors">
+                        + Añadir Indicador
+                    </button>
+                </div>
+
+                <!-- Botones de acción -->
+                <div class="flex flex-col sm:flex-row gap-4 pt-6">
+                    <button type="submit" 
+                            class="flex-1 bg-blue-600 text-white py-3 px-6 rounded-md hover:bg-blue-700 transition-colors font-medium">
+                        Generar Ficha
+                    </button>
+                    <button type="button" onclick="resetForm()" 
+                            class="flex-1 bg-gray-500 text-white py-3 px-6 rounded-md hover:bg-gray-600 transition-colors font-medium">
+                        Limpiar Formulario
+                    </button>
+                </div>
+            </form>
+
+            <!-- Área de resultado -->
+            <div id="resultadoContainer" class="hidden mt-8 bg-white rounded-lg shadow-lg p-6 md:p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800">Ficha Generada</h2>
+                    <button onclick="exportarFicha()" 
+                            class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors">
+                        Exportar JSON
+                    </button>
+                </div>
+                <div id="fichaContent" class="space-y-4"></div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        let ejemploCounter = 1;
+
+        function addElemento() {
+            const container = document.getElementById('elementosContainer');
+            const div = document.createElement('div');
+            div.className = 'flex gap-2';
+            div.innerHTML = `
+                <input type="text" name="elemento" 
+                       class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                       placeholder="Elemento esencial que debe concurrir...">
+                <button type="button" onclick="removeElemento(this)" 
+                        class="px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors">
+                    ✕
+                </button>
+            `;
+            container.appendChild(div);
+        }
+
+        function removeElemento(button) {
+            button.parentElement.remove();
+        }
+
+        function addEjemplo() {
+            ejemploCounter++;
+            const container = document.getElementById('ejemplosContainer');
+            const div = document.createElement('div');
+            div.className = 'border border-gray-200 rounded-md p-4';
+            div.innerHTML = `
+                <div class="flex justify-between items-center mb-2">
+                    <span class="font-medium text-gray-700">Ejemplo ${ejemploCounter}</span>
+                    <button type="button" onclick="removeEjemplo(this)" 
+                            class="px-2 py-1 bg-red-500 text-white rounded text-sm hover:bg-red-600 transition-colors">
+                        Eliminar
+                    </button>
+                </div>
+                <textarea name="ejemplo" rows="2" 
+                          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          placeholder="Describe un ejemplo del delito..."></textarea>
+            `;
+            container.appendChild(div);
+        }
+
+        function removeEjemplo(button) {
+            button.closest('.border').remove();
+        }
+
+        function addIndicador() {
+            const container = document.getElementById('indicadoresContainer');
+            const div = document.createElement('div');
+            div.className = 'flex gap-2';
+            div.innerHTML = `
+                <input type="text" name="indicador" 
+                       class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                       placeholder="Ej: 'me han forzado la puerta', 'han roto la ventana'...">
+                <button type="button" onclick="removeIndicador(this)" 
+                        class="px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors">
+                    ✕
+                </button>
+            `;
+            container.appendChild(div);
+        }
+
+        function removeIndicador(button) {
+            button.parentElement.remove();
+        }
+
+        function resetForm() {
+            document.getElementById('delitoForm').reset();
+            document.getElementById('resultadoContainer').classList.add('hidden');
+            
+            // Reset dynamic fields
+            document.getElementById('elementosContainer').innerHTML = `
+                <div class="flex gap-2">
+                    <input type="text" name="elemento" 
+                           class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                           placeholder="Elemento esencial que debe concurrir...">
+                    <button type="button" onclick="removeElemento(this)" 
+                            class="px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors">
+                        ✕
+                    </button>
+                </div>
+            `;
+            
+            document.getElementById('ejemplosContainer').innerHTML = `
+                <div class="border border-gray-200 rounded-md p-4">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-medium text-gray-700">Ejemplo 1</span>
+                        <button type="button" onclick="removeEjemplo(this)" 
+                                class="px-2 py-1 bg-red-500 text-white rounded text-sm hover:bg-red-600 transition-colors">
+                            Eliminar
+                        </button>
+                    </div>
+                    <textarea name="ejemplo" rows="2" 
+                              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                              placeholder="Describe un ejemplo del delito..."></textarea>
+                </div>
+            `;
+            
+            document.getElementById('indicadoresContainer').innerHTML = `
+                <div class="flex gap-2">
+                    <input type="text" name="indicador" 
+                           class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                           placeholder="Ej: 'me han forzado la puerta', 'han roto la ventana'...">
+                    <button type="button" onclick="removeIndicador(this)" 
+                            class="px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors">
+                        ✕
+                    </button>
+                </div>
+            `;
+            
+            ejemploCounter = 1;
+        }
+
+        let fichaData = {};
+
+        document.getElementById('delitoForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            
+            // Recopilar datos del formulario
+            fichaData = {
+                nombreDelito: formData.get('nombreDelito'),
+                referenciaLegal: formData.get('referenciaLegal'),
+                definicionOperativa: formData.get('definicionOperativa'),
+                elementosEsenciales: formData.getAll('elemento').filter(el => el.trim() !== ''),
+                elementosDiferenciadores: formData.get('elementosDiferenciadores'),
+                ejemplos: formData.getAll('ejemplo').filter(ej => ej.trim() !== ''),
+                indicadoresPracticos: formData.getAll('indicador').filter(ind => ind.trim() !== ''),
+                fechaCreacion: new Date().toLocaleDateString('es-ES')
+            };
+            
+            // Mostrar la ficha generada
+            mostrarFicha(fichaData);
+        });
+
+        function mostrarFicha(data) {
+            const container = document.getElementById('fichaContent');
+            
+            container.innerHTML = `
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+                    <h3 class="text-xl font-bold text-blue-800">${data.nombreDelito}</h3>
+                    <p class="text-blue-600">${data.referenciaLegal}</p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-gray-800 mb-2">Definición Operativa</h4>
+                            <p class="text-gray-600 bg-gray-50 p-3 rounded">${data.definicionOperativa}</p>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-gray-800 mb-2">Elementos Esenciales</h4>
+                            <ul class="list-disc list-inside space-y-1 text-gray-600">
+                                ${data.elementosEsenciales.map(el => `<li>${el}</li>`).join('')}
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-gray-800 mb-2">Elementos Diferenciadores</h4>
+                            <p class="text-gray-600 bg-gray-50 p-3 rounded">${data.elementosDiferenciadores}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-gray-800 mb-2">Ejemplos (${data.ejemplos.length})</h4>
+                            <div class="space-y-2">
+                                ${data.ejemplos.map((ej, i) => `
+                                    <div class="bg-yellow-50 p-3 rounded border-l-2 border-yellow-400">
+                                        <strong>Ejemplo ${i + 1}:</strong> ${ej}
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-gray-800 mb-2">Indicadores Prácticos</h4>
+                            <div class="flex flex-wrap gap-2">
+                                ${data.indicadoresPracticos.map(ind => `
+                                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">"${ind}"</span>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-6 text-sm text-gray-500 text-center">
+                    Ficha creada el ${data.fechaCreacion}
+                </div>
+            `;
+            
+            document.getElementById('resultadoContainer').classList.remove('hidden');
+            document.getElementById('resultadoContainer').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function exportarFicha() {
+            const dataStr = JSON.stringify(fichaData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `ficha_${fichaData.nombreDelito.replace(/\s+/g, '_').toLowerCase()}.json`;
+            link.click();
+            URL.revokeObjectURL(url);
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98f6b365065d0311',t:'MTc2MDYwODczOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
+
