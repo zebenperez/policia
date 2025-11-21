@@ -1,6 +1,37 @@
 function setWait() { $("body").addClass("loading"); }
 function unsetWait() { $("body").removeClass("loading"); }
 
+function setProcess() { 
+    Swal.fire({
+        title: 'Procesando...',
+        text: '',
+        html: 'Por favor, espere mientras se retranscribe el audio.<br/><div class="timerp" id="timerp">00:00</div>',
+        allowOutsideClick: false,
+        didOpen: () => { Swal.showLoading(); }
+    });
+}
+
+function unsetProcess() { 
+    Swal.close();
+    Swal.fire({
+        title: 'Éxito',
+        //text in html format
+        html: 'El expediente ha sido enviado a la IA correctamente.',
+        icon: 'success',
+        confirmButtonText: 'OK'
+    });
+}
+
+function errorProcess(message) { 
+    Swal.close();
+    Swal.fire({
+        title: 'Error',
+        html: message,
+        icon: 'error',
+        confirmButtonText: 'OK'
+    });
+}
+
 function ajaxGet(url, datas, target, modal_target)
 {
     setWait();
@@ -192,6 +223,7 @@ function uploadObjFile(obj, url, target, obj_id, field, token)
 
 function uploadMulti(obj, url, target, obj_id, up, token)
 {
+    $("body").css("cursor", "progress");
     var data = new FormData();
     $.each(obj[0].files, function(i, file) {
         data.append("file", file);
@@ -222,6 +254,7 @@ function uploadMulti(obj, url, target, obj_id, up, token)
             }
         },
         error : function(e){alert("Error: "+e.responseText);},
+        complete : function(){$("body").css("cursor", "default");}
     });
 }
 

@@ -1,0 +1,40 @@
+{% load i18n training_tags %}
+
+<style>
+.formatted-response h1, .formatted-response h2, .formatted-response h3 {
+    color: #2c3e50;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+}
+
+.formatted-response ul, .formatted-response ol {
+    margin-left: 1.5em;
+    margin-bottom: 1em;
+}
+
+.formatted-response li {
+    margin-bottom: 0.5em;
+}
+
+.formatted-response strong {
+    color: #e74c3c;
+    font-weight: 600;
+}
+
+.formatted-response em {
+    color: #3498db;
+    font-style: italic;
+}
+
+.formatted-response code {
+    background-color: #f8f9fa;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+}
+</style>
+
+{% for item in obj.prompts.all %}
+    <div class="w-100 text-end mt-4"><span class="text-primary">{{item.text}} </span></div><br/>
+    <span class="">{{item.response|md|safe}} </span></br>
+{% endfor %}

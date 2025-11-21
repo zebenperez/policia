@@ -1,0 +1,7 @@
+{% load i18n %}
+
+<ul class="list-group">
+    {% for t in t_list %}
+        <li class="list-group-item"><a href="{% url "training-home" t.id %}">{{t.date|date:"d-m-Y H:i"}} </a></li>
+    {% endfor %}
+</ul>

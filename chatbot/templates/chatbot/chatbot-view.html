@@ -87,6 +87,20 @@
     #sendButton i {
         color: #ffffff;
     }
+
+    #uploadFileButton {
+        background: #6c757d;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 45px;
+        height: 45px;
+        cursor: pointer;
+        margin-left: 0.5rem;
+    }
+    #uploadFileButton i {
+        color: #ffffff;
+    }
 </style>
 
 <div class="chatbot-container">
@@ -111,10 +125,55 @@
         <button id="sendButton" class="send-to-llm" data-url="{% url 'agents-chat-with-llm' %}" data-report_id="{{ report.id }}">
             <i class="fas fa-paper-plane"></i>
         </button>
+        <button id="uploadFileButton" class="upload-file" data-url="{% url 'agents-upload-file-to-llm' %}" data-report_id="{{ report.id }}">
+            <i class="fas fa-paperclip"></i>
+        </button>
     </div>
 </div>
 
 <script>
+    // Widget for upload file
+    document.getElementById('uploadFileButton').addEventListener('click', function() {
+        const reportId = this.getAttribute('data-report_id');
+        const uploadUrl = this.getAttribute('data-url');
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = '.pdf,.doc,.docx,.txt'; // Acceptable file types
+        fileInput.style.display = 'none';
+        fileInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('report_id', reportId);
+                formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+
+                fetch(uploadUrl, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        alert('Archivo subido exitosamente.');
+                    } else {
+                        alert('Error al subir el archivo.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error de conexión. Intenta nuevamente.');
+                });
+            }
+        });
+        document.body.appendChild(fileInput);
+        fileInput.click();
+        document.body.removeChild(fileInput);
+    });
+
+
+
+
     document.addEventListener('DOMContentLoaded', function() {
         const chatMessages = document.getElementById('chatMessages');
         const userInput = document.getElementById('userInput');

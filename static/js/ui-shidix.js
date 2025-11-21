@@ -63,6 +63,92 @@ $(document).ready(function() {
 
     });
 
+    $('.edit-audio').click(function (e) {
+        e.preventDefault();
+
+        var url = $(this).data('url');
+        var button = $(this);
+        var obj_id = $(this).data('id');
+
+        button.prop('disabled', true);
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: {
+                'obj_id': $(this).data('id'),
+                'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val()
+            },
+            success: function (response) {
+                // Abrir modal con el formulario
+                Swal.fire({
+                    title: 'Editar Audio',
+                    html: response.html,
+                    showCancelButton: true,
+                    confirmButtonText: 'Guardar',
+                    cancelButtonText: 'Cancelar',
+                    focusConfirm: false,
+                    showLoaderOnConfirm: true,
+                    allowOutsideClick: () => !Swal.isLoading(),
+
+                    preConfirm: () => {
+                        const form = Swal.getPopup().querySelector('form');
+                        if (!form) {
+                            Swal.showValidationMessage('No se ha encontrado el formulario');
+                            return false;
+                        }
+
+                        const formData = new FormData(form);
+
+                        return new Promise(function (resolve, reject) {
+                            $.ajax({
+                                url: form.action,
+                                type: form.method,
+                                data: formData,
+                                processData: false,
+                                contentType: false,
+                                enctype: 'multipart/form-data',
+                                success: function (saveResponse) {
+                                    resolve(saveResponse); // esto será result.value
+                                },
+                                error: function (xhr, status, error) {
+                                    Swal.showValidationMessage(
+                                        'Ha ocurrido un error al guardar el audio:  ' + error
+                                    );
+                                    reject(error);
+                                }
+                            });
+                        });
+                    },
+                }).then((result) => {
+                    json_response = result.value;
+                    if (result.isConfirmed) {
+                        Swal.fire({
+                            title: 'Éxito',
+                            text: 'El audio ha sido guardado correctamente.',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        });
+                        $('#audio-transcription-' + json_response.obj_id).html(json_response.texto);
+
+                        // aquí puedes refrescar la tabla/listado si quieres
+                    }
+                });
+            },
+            error: function (xhr, status, error) {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Ha ocurrido un error al cargar el formulario',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            }
+        }).always(function () {
+            button.prop('disabled', false);
+        });
+    });
+
+
     // Check if exists processed-False class in any button
     if ($('button.retranscribe-audio.processed-False').length > 0) {
         // Trigger click event in the first button with processed-False class

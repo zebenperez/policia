@@ -3,6 +3,9 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 import json
+from agents.llmendpoints import IA_LLM_ENDPOINTS
+import requests
+from policia.settings import IA_LLM_URL
 
 @csrf_exempt
 @require_POST
@@ -49,4 +52,30 @@ def generate_response(user_message):
 
 def chatbot_view(request):
     return render(request, 'chatbot/chatbot.html')
+
+@csrf_exempt
+@require_POST
+def upload_file(request):
+    try:
+        uploaded_file = request.FILES['file']
+        report_id = request.POST.get('report_id', '')
+        upload_url = IA_LLM_URL + IA_LLM_ENDPOINTS["upload_expte"].format(uuid=report_id)
+        # requests with Bearer token if needed
+        headers = {
+            "Authorization": f"Bearer aaaa-bbbb-cccc-dddd"  # Replace with actual token if needed
+        }
+        response = requests.post(upload_url, files={'file': uploaded_file}, data={'name': report_id}, headers=headers, verify=False, timeout=120)
+        
+        # Aquí tu lógica para manejar el archivo
+        
+        return JsonResponse({
+            'status': 'success'
+        })
+        
+    except Exception as e:
+        return JsonResponse({
+            'file_url': '',
+            'status': 'error'
+        })
+
 

@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.template.loader import render_to_string as render_string
+from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import login, logout
@@ -47,8 +49,9 @@ def agents_audio_save(request):
             concept = "Esperando traducción de audio..."
             audio = request.FILES["audio"]
             report_audio = ReportAudio.objects.create(text=concept, audio=audio, report=report)
-            t = threading.Thread(target=transcribe_audio, args=[report_audio.audio, report_audio], daemon=True)
-            t.start()
+            transcribe_audio(report_audio.audio, report_audio)
+            #t = threading.Thread(target=transcribe_audio, args=[report_audio.audio, report_audio], daemon=True)
+            #t.start()
     return HttpResponse(report.id)
 
 @group_required("employees")
@@ -186,6 +189,29 @@ def summarize_report_with_ia(request):
     except Exception as e:
         return JsonResponse({'error': show_exc(e)}, status=500)
 
+#def fix_text(orig):
+#    import anthropic
+#
+#    api_key = "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"
+#    client = anthropic.Anthropic(api_key=api_key)
+#    response = client.messages.create(
+#        model="claude-3-haiku-20240307",
+#        max_tokens=2048,
+#        messages=[
+#            {
+#                "role": "user",
+#                "content": f"""Corrige la ortografía y gramática del siguiente texto en español:
+#
+#                {orig}
+#
+#                Proporciona:
+#                    1. El texto corregido
+#                    2. Lista de correcciones realizadas con explicación breve"""
+#            }
+#        ]
+#    )
+#    return response.content[0].text
+
 def transcribe_audio(audio_file, obj):
     #response = requests.post('http://localhost:8001/transcribir', files={'audio': audio_file})
     response = requests.post(IA_SPEECH_TO_TEXT_URL, files={'audio': audio_file}, verify=False)
@@ -194,6 +220,11 @@ def transcribe_audio(audio_file, obj):
         obj.text = response.json()['texto']
         obj.processed = True
         obj.save()
+
+        #t = fix_text(obj.text)
+        #obj.text += "<br/>---------------------------------------"
+        #obj.text += f'<br/>{t}'
+        #obj.save()
         return JsonResponse({'texto': obj.text, 'status': 'ok'})
     else:
         raise Exception(f"Error en microservicio: {response.text}")
@@ -210,7 +241,34 @@ def retranscribe_audio(request):
         return response
     except Exception as e:
         return JsonResponse({'error': show_exc(e)}, status=500)
+    
+@csrf_exempt
+def audio_form_save(request):
+    try:
+        if request.method != "POST":
+            return JsonResponse({'error': 'Método no permitido'}, status=405)
+        obj_id = get_param(request.POST, "id")
+        report_audio = ReportAudio.objects.get(pk=obj_id)
+        report_audio.text = get_param(request.POST, "text")
+        report_audio.processed = True
+        report_audio.save()
+        return JsonResponse({'status': 'ok', 'obj_id': report_audio.id, 'texto': report_audio.text})
+    except Exception as e:
+        print(f"Error: {show_exc(e)}")
+    return JsonResponse({'error': 'Error al guardar el formulario'}, status=500)
 
+def audio_form(request):
+    try:
+        if request.method != "POST":
+            return JsonResponse({'error': 'Método no permitido'}, status=405)
+        obj_id = get_param(request.POST, "obj_id")
+        report_audio = ReportAudio.objects.get(pk=obj_id)
+        template = render_string("agents/audio-form.html", {"item": report_audio})
+        return JsonResponse({'html': template})
+    except Exception as e:
+        print(f"Error: {show_exc(e)}")
+    return JsonResponse({'error': 'Error al cargar el formulario'}, status=500)
+    
 def health_check(request):
     """Endpoint de salud para verificar que la vista funciona"""
     return JsonResponse({'status': 'ok', 'service': 'audio_stream'})

@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block central_content%}
+	<div class="row m-0">
+		<div class="col-4 text-center">
+            <div class="card">
+                <div class="card-header bg-success"> <div class="row m-0">
+                    <div class="col-10">Chats</div>
+                    <div class="col-2"><a href="{% url "training-new" %}" class="btn btn-xs"><i class="fas fa-plus"></i></a></div>
+                </div></div>
+                <div class="card-body"> 
+                    <div id="div-docs">{% include "training/t-list.html" %}</div>
+                </div>
+            </div>
+            <div class="card mt-4">
+                <div class="card-header bg-success"> Documentos</div>
+                <div class="card-body"> 
+                    <div id="div-docs">{% include "training/doc-list.html" %}</div>
+                    <label for ="file" class="btn btn-sm new">
+                        <i class="fas fa-upload"></i><span class="d-none d-sm-block">{%trans "Elegir"%}&nbsp;{%trans "Archivo"%}</span>
+                    </label>
+                    <input type="file" class="multiupload d-none" name="file" id="file" 
+                        data-url="{%url 'training-docs-upload'%}" data-target="div-docs" data-obj-id="{{obj.id}}" 
+                        data-csrf-token="{{ csrf_token }}" multiple/>
+                </div>
+            </div>
+
+		</div>
+		<div class="col-8">
+	        <div class="row m-0">
+		        <div class="col-12">
+                    <div id="div-card-chat" class="card" style="min-height:600px; max-height:800; overflow-y:scroll">
+                        <div class="card-body">
+                            <div id="div-chat">{% include "training/chat.html" %}<div>
+                            <div id="div-wait" class="spinner-border mt-4" role="status" style="display:none"> 
+                                <span class="visually-hidden">Loading...</span> </div>
+                        </div>
+                    </div>
+                </div>
+		        <div class="col-12 text-center">
+                    <div class="card">
+                        <div class="card-body"> 
+                            <textarea id="prompt" class="form-control" placeholder="Prompt"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+		</div>
+	</div>
+    {%comment%}
+    <button id="btn-send-prompt" class="hide ark" 
+        data-url="{% url "training-send-prompt" %}" data-target="div-chat" data-obj_id="{{obj.id}}" data-value=""> </button>
+    {%endcomment%}
+    <script>
+        $('#div-card-chat').scrollTop($('#div-card-chat')[0].scrollHeight);
+        $("#prompt").on("keydown", function(e) {
+            if (e.key === "Enter") {
+                console.log("enter!");
+                e.preventDefault();   
+                //$("#btn-send-prompt").data("value", $(this).val());
+                //$("#btn-send-prompt").click();
+                let url = "{% url "training-send-prompt" %}";
+                let target = "div-chat";
+                let datas = {"obj_id": "{{obj.id}}", "value": $(this).val()}
+
+                $("#div-wait").show();
+                $.ajax({
+                    url : url,
+                    type : 'GET',
+                    data : datas,
+                    cache : false,
+                    dataType : 'html',
+                    beforeSend : function(){},
+                    success : function(data){
+                        $('#'+target).html(data);
+                        $('#prompt').val("");
+                    },
+                    error : function(e){alert("Error: "+e.responseText);},
+                    complete : function(){$("#div-wait").hide();$('#prompt').val("");}
+                });
+
+            }
+        });
+    </script>
+{% endblock %}

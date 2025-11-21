@@ -1,0 +1,10 @@
+{% load i18n %}
+
+<ul class="list-group">
+    {% for doc in obj.docs.all %}
+        <li class="list-group-item">{{doc.doc}} - 
+            <button class="btn btn-xs ark" data-url="{% url "training-docs-remove" %}" data-target="div-docs" data-obj_id="{{doc.id}}">
+                <i class="fas fa-trash"></i></button> 
+        </li>
+    {% endfor %}
+</ul>

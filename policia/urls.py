@@ -24,6 +24,7 @@ urlpatterns = [
     path('gestion/', include('gestion.urls')),
     path('pwa/', include('pwa.urls')),
     path('agents/', include('agents.urls')),
+    path('training/', include('training.urls')),
     path('chatbot/', include('chatbot.urls')),
     path('admin/', admin.site.urls),
 
