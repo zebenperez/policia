@@ -4,6 +4,6 @@
     <input type="hidden" name="id" id="id_id" value="{{ item.id }}">
     <div class="form-group">
         <label for="id_text" class="text-left"><span class="form-text">Transcripción:</span><br></label>
-        <input type="text" class="form-control" id="id_text" name="text" value="{{ item.text|default_if_none:'' }}">
+        <textarea class="form-control" id="id_text" name="text">{{ item.text|default_if_none:'' }}</textarea>
     </div>  
 </form>

@@ -195,6 +195,9 @@ def interpretation_report_with_ia(request):
         obj.save()
         if obj is None:
             return JsonResponse({'error': 'Informe no encontrado'}, status=404)
+        headers = {
+            "Authorization": f"Bearer aaaa-bbbb-cccc-dddd"  # Replace with actual token if needed
+        }
         # datas = ""
         # audios = obj.audios.all()
         # transcriptions = []
@@ -226,9 +229,11 @@ def interpretation_report_with_ia(request):
             datas = response.json()
             print (datas)
         else:
+            print (f"Error interpreting report in microservicio: {response.text}")
             return JsonResponse({'error': f"Error interpreting report in microservicio: {response.text}"}, status=response.status_code)
         return JsonResponse({'data': datas})
     except Exception as e:
+        print (f"Error in interpretation_report_with_ia: {show_exc(e)}")
         return JsonResponse({'error': show_exc(e)}, status=500)
 
 #def fix_text(orig):
