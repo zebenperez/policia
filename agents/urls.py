@@ -15,6 +15,7 @@ urlpatterns = [
     ## Dani
     path('audio/retranscribe', views.retranscribe_audio, name="agents-audio-retranscribe"),
     path('report/summarize', views.summarize_report_with_ia, name="agents-report-summarize"),
+    path('report/interpretation', views.interpretation_report_with_ia, name="agents-report-interpretation"),
     path('chat-with-llm', views.chat_with_llm, name="agents-chat-with-llm"),
 
 #    path('reassign-uuids/', views.reassign_uuids, name="agents-reassign-uuids"),

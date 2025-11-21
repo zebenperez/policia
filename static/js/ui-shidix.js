@@ -205,15 +205,68 @@ $(document).ready(function() {
 
                 Swal.close();
                 Swal.fire({
-                    title: 'Éxito',
-                    //text in html format
-                    html: 'El expediente ha sido enviado a la IA correctamente.<br>Resumen: ' + json_response.data.answer.summarize,
-                    icon: 'success',
-                    confirmButtonText: 'OK'
+                    title: 'Interpretando....',
+                    text: 'Se han recuperado los datos. Por favor, espere mientras la IA interpreta el expediente y elabora un relato detallado de la situación.',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
                 });
+ 
+
+                //requet url to fetch interpretation
+                var url_interpretation = button.data('url-interpretation');
+                $.ajax({
+                    url: url_interpretation,
+                    type: 'POST',
+                    timeout: 600000, // 10 minutes
+                    data: {
+                        'obj_id': obj_id,
+                        'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val()
+                    },
+                    success: function(response_interpretation) {
+                        json_response_interpretation = response_interpretation;
+                        try {
+                            $('#report-interpretation').html(json_response_interpretation.data.answer.interpretation);
+                            Swal.close();
+                            
+                            Swal.fire({
+                                title: 'Éxito',
+                                //text in html format
+                                html: 'El expediente ha sido enviado a la IA correctamente.<br>Resumen: ' + json_response.data.answer.summarize,
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            });
+                        } catch (e) {
+                            console.log("Error filling interpretation data: " + e);
+                            Swal.close();
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'Ha ocurrido un error al procesar la interpretación del expediente',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        }
+
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.close();
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Ha ocurrido un error al obtener la interpretación del expediente',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                        console.log("Error fetching interpretation: " + error);
+                    }
+                });
+
             },
             error: function(xhr, status, error) {
                 var message = 'Ha ocurrido un error desconocido.';
+                console.log(xhr.responseText);
+                console.log(error);
+                console.log(status);
                 try {
                     var message = JSON.parse(xhr.responseText).error;
                 } catch (e) {

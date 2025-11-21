@@ -43,7 +43,7 @@
         <div class="col-8 p-2 text-start my-2"> {% include "agents/audio-transcription.html" %} </div>
 
         <div class="col-4 p-2 text-start my-2">
-	        <a data-item="{{ report.id }}" class="btn btn-ia expte-2-llm w-100" data-url="{% url 'agents-report-summarize' %}">
+	        <a data-item="{{ report.id }}" class="btn btn-ia expte-2-llm w-100" data-url="{% url 'agents-report-summarize' %}" data-url-interpretation="{% url 'agents-report-interpretation' %}">
                 <i class="fas fa-lightbulb px-2"></i> {% trans "Analizar por IA" %}</a>
             <div class="card p-3 mt-2">
                 <div class="card-header">
@@ -51,11 +51,14 @@
                 </div>
                 <div class="card-body" style="min-height: 150px;">
                     <div class="row">
+                        <div class="col-12"><label><strong>{% trans "Resumen" %}</strong></label></div>
                         <div class="col-12" id="report-summary-body">
                             {{ report.summary|linebreaks }}
                         </div>
                     </div>
+                    <hr class="mt-4"/>
                     <div class="row row-cols-2" id="report-extract-data-container">
+                        <div class="col-12"><label><strong>{% trans "Datos extraídos" %}</strong></label></div>
                         <div class="col">
 
                             <div class="form-group mb-3">
@@ -109,6 +112,11 @@
                                 <input type="text" id="agent-station" class="form-control" value="{{ report.agent.station }}" readonly>
                             </div>
                         </div>
+                    </div>
+                    <hr class="mt-4"/>
+                    <div class="row">
+                        <div class="col-12"><label><strong>{% trans "Interpretación" %}</strong></label></div>
+                        <div class="col-12" id="report-interpretation">&nbsp;</div>
                     </div>
                 </div>
 		{%comment%}

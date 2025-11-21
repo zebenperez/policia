@@ -133,6 +133,7 @@ def chat_with_llm(request):
 
 @group_required("employees")
 def summarize_report_with_ia(request):
+    print("Summarizing report with IA")
     if request.method != "POST":
         return JsonResponse({'error': 'Método no permitido'}, status=405)
     try :
@@ -157,26 +158,16 @@ def summarize_report_with_ia(request):
         with open(tmp_file_path, "rb") as f:
             remove_url = IA_LLM_URL + IA_LLM_ENDPOINTS["clear-expte"].format(uuid=obj.uuid)
             upload_url = IA_LLM_URL + IA_LLM_ENDPOINTS["upload_expte"].format(uuid=obj.uuid)
-            personal_data = IA_LLM_URL + IA_LLM_ENDPOINTS["personal-data"].format(uuid=obj.uuid)
-            # requests with Bearer token if needed
             headers = {
                 "Authorization": f"Bearer aaaa-bbbb-cccc-dddd"  # Replace with actual token if needed
             }
-            # First, clear existing data
             response = requests.delete(remove_url, headers=headers, verify=False)
-            # if response.status_code != 200:
-            #     return JsonResponse({'error': f"Error clearing data in microservicio: {response.text}"}, status=response.status_code)
-            # Then, upload new data
             response = requests.post(upload_url, files={'file': f}, data={'name':obj.uuid}, headers=headers, verify=False, timeout=120)
 
             if response.status_code != 200:
                 return JsonResponse({'error': f"Error uploading data to microservicio: {response.text}"}, status=response.status_code)
-
-            # Finally, request summarization
-        # time_pause = time.time()
-        # while time.time() - time_pause < 10:
-        #     # Wait for 10 seconds to ensure data is processed
-        #     pass
+        print ("Uploaded report data to LLM microservice")
+        personal_data = IA_LLM_URL + IA_LLM_ENDPOINTS["personal-data"].format(uuid=obj.uuid)
         response = requests.get(personal_data, verify=False, timeout=1200)
         print ("Summarization response:", response.text)
         if response.status_code == 200:
@@ -185,6 +176,57 @@ def summarize_report_with_ia(request):
         else:
             return JsonResponse({'error': f"Error summarizing report in microservicio: {response.text}"}, status=response.status_code)
 
+        return JsonResponse({'data': datas})
+    except Exception as e:
+        return JsonResponse({'error': show_exc(e)}, status=500)
+    
+@group_required("employees")
+def interpretation_report_with_ia(request):
+    print("Interpreting report with IA")
+    if request.method != "POST":
+        return JsonResponse({'error': 'Método no permitido'}, status=405)
+    try :
+        t0 = time.time()
+        while ((time.time()) - t0 < 3.0): # Pause in order to allow previous summarization to complete
+            time.sleep(0.1)
+
+        obj_id = get_param(request.POST, "obj_id")
+        obj = get_or_none(Report, obj_id)
+        obj.save()
+        if obj is None:
+            return JsonResponse({'error': 'Informe no encontrado'}, status=404)
+        # datas = ""
+        # audios = obj.audios.all()
+        # transcriptions = []
+        # for audio in audios: 
+        #     if audio.processed and audio.text != '':
+        #         transcriptions.append(audio.text)
+        # if transcriptions == []:
+        #     return JsonResponse({'error': f"No hay transcripciones válidas"}, status=422)
+        # transcriptions = list(reversed(transcriptions))
+        # tmp_file_path = f"/tmp/{obj.uuid}_{audios.first().id}_transcriptions.txt"
+        # with open(tmp_file_path, "w", encoding="utf-8", newline="") as f:
+        #     f.writelines(transcriptions)
+        # with open(tmp_file_path, "rb") as f:
+        #     remove_url = IA_LLM_URL + IA_LLM_ENDPOINTS["clear-expte"].format(uuid=obj.uuid)
+        #     upload_url = IA_LLM_URL + IA_LLM_ENDPOINTS["upload_expte"].format(uuid=obj.uuid)
+        #     headers = {
+        #         "Authorization": f"Bearer aaaa-bbbb-cccc-dddd"  # Replace with actual token if needed
+        #     }
+        #     response = requests.delete(remove_url, headers=headers, verify=False)
+        #     response = requests.post(upload_url, files={'file': f}, data={'name':obj.uuid}, headers=headers, verify=False, timeout=120)
+
+        #     if response.status_code != 200:
+        #         return JsonResponse({'error': f"Error uploading data to microservicio: {response.text}"}, status=response.status_code)
+        print ("Uploaded report data to LLM microservice")
+        interpretation_url = IA_LLM_URL + IA_LLM_ENDPOINTS["interpretation"].format(uuid=obj.uuid)
+        response = requests.get(interpretation_url, headers=headers, verify=False, timeout=1200)
+        print ("Interpretation response:", response.text)
+        if response.status_code == 200:
+            datas = response.json()
+            print (datas)
+        else:
+            return JsonResponse({'error': f"Error interpreting report in microservicio: {response.text}"}, status=response.status_code)
         return JsonResponse({'data': datas})
     except Exception as e:
         return JsonResponse({'error': show_exc(e)}, status=500)
