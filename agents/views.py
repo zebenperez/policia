@@ -19,6 +19,16 @@ import requests
 import random, time
 
 
+def log2file(msg: str, path: str = "/code/logs/rag_app.log"):
+    """Log simple a file."""
+    try:
+        timestamp = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        with open(path, "a", encoding="utf-8") as f:
+            f.write(f"[{timestamp}] {msg}\n")
+    except Exception as e:
+        print(f"Logging error: {e}")
+
+
 '''
     AGENTS
 '''
@@ -33,7 +43,7 @@ def agents_report(request, obj_id):
         report = Report.objects.get(pk=obj_id)
         return render(request, "agents/report.html", {"report": report})
     except Exception as e:
-        print(f"Error: {e}")
+        log2file(f"Error: {e}")
 
 @group_required("employees")
 def agents_report_new(request):
@@ -43,7 +53,7 @@ def agents_report_new(request):
 @group_required("employees")
 def agents_audio_save(request):
     report = get_or_none(Report, get_param(request.POST, "report"))
-    #print(report)
+    #log2file(report)
     if report != None:
         if "audio" in request.FILES and request.FILES["audio"] != "":
             concept = "Esperando traducción de audio..."
@@ -64,14 +74,14 @@ def agents_report_print(request, obj_id):
             response = requests.post(IA_SERVICES_URL, params={'texto': audio.text})
             datas = ""
             if response.status_code == 200:
-                #print(response.json())
+                #log2file(response.json())
                 datas = response.json()
                 #return response.json()['texto']
             else:
                 raise Exception(f"Error en microservicio: {response.text}")
         except Exception as e:
-            print(e)
-    #print(datas)
+            log2file(e)
+    #log2file(datas)
     return render(request, "agents/print.html", {"obj": obj, "datas": datas})
 
 @group_required("employees")
@@ -121,9 +131,9 @@ def chat_with_llm(request):
             "q": message,
             "top_k": 5
         }
-        response = requests.get(chat_url, params=params, headers=headers, verify=False, timeout=120)
+        response = requests.get(chat_url, params=params, headers=headers, verify=False, timeout=1200)
         if response.status_code != 200:
-            print ("Error in LLM chat:", response.text)
+            log2file("Error in LLM chat:", response.text)
             return JsonResponse({'message': random.choice(errors_answer), 'status':'success'}, status=200)
         datas = response.json()
         message = datas.get("answer", random.choice(errors_answer))
@@ -133,7 +143,7 @@ def chat_with_llm(request):
 
 @group_required("employees")
 def summarize_report_with_ia(request):
-    print("Summarizing report with IA")
+    log2file("Summarizing report with IA")
     if request.method != "POST":
         return JsonResponse({'error': 'Método no permitido'}, status=405)
     try :
@@ -156,23 +166,29 @@ def summarize_report_with_ia(request):
         with open(tmp_file_path, "w", encoding="utf-8", newline="") as f:
             f.writelines(transcriptions)
         with open(tmp_file_path, "rb") as f:
-            remove_url = IA_LLM_URL + IA_LLM_ENDPOINTS["clear-expte"].format(uuid=obj.uuid)
+            # remove_url = IA_LLM_URL + IA_LLM_ENDPOINTS["clear-expte"].format(uuid=obj.uuid)
+            reset_url = IA_LLM_URL + IA_LLM_ENDPOINTS["reset-expte"].format(uuid=obj.uuid)
+            load_context_url = IA_LLM_URL + IA_LLM_ENDPOINTS["load-context"].format(uuid=obj.uuid) + "?force=true"
             upload_url = IA_LLM_URL + IA_LLM_ENDPOINTS["upload_expte"].format(uuid=obj.uuid)
             headers = {
                 "Authorization": f"Bearer aaaa-bbbb-cccc-dddd"  # Replace with actual token if needed
             }
-            response = requests.delete(remove_url, headers=headers, verify=False)
-            response = requests.post(upload_url, files={'file': f}, data={'name':obj.uuid}, headers=headers, verify=False, timeout=120)
+            log2file("\tClearing previous report data in LLM microservice")
+            response = requests.delete(reset_url, headers=headers, verify=False, timeout=1200)
+            log2file("\tLoading context in LLM microservice")
+            response = requests.get(load_context_url, headers=headers, verify=False, timeout=1200)
+            log2file("\tUploading report data to LLM microservice")
+            response = requests.post(upload_url, files={'file': f}, data={'name':obj.uuid}, headers=headers, verify=False, timeout=1200)
 
             if response.status_code != 200:
                 return JsonResponse({'error': f"Error uploading data to microservicio: {response.text}"}, status=response.status_code)
-        print ("Uploaded report data to LLM microservice")
+        log2file("Uploaded report data to LLM microservice")
         personal_data = IA_LLM_URL + IA_LLM_ENDPOINTS["personal-data"].format(uuid=obj.uuid)
         response = requests.get(personal_data, verify=False, timeout=1200)
-        print ("Summarization response:", response.text)
+        log2file("Summarization response:", response.text)
         if response.status_code == 200:
             datas = response.json()
-            print (datas)
+            log2file(datas)
         else:
             return JsonResponse({'error': f"Error summarizing report in microservicio: {response.text}"}, status=response.status_code)
 
@@ -182,10 +198,11 @@ def summarize_report_with_ia(request):
     
 @group_required("employees")
 def interpretation_report_with_ia(request):
-    print("Interpreting report with IA")
+    log2file("Interpreting report with IA")
     if request.method != "POST":
         return JsonResponse({'error': 'Método no permitido'}, status=405)
     try :
+        tries = 0
         t0 = time.time()
         while ((time.time()) - t0 < 3.0): # Pause in order to allow previous summarization to complete
             time.sleep(0.1)
@@ -221,19 +238,22 @@ def interpretation_report_with_ia(request):
 
         #     if response.status_code != 200:
         #         return JsonResponse({'error': f"Error uploading data to microservicio: {response.text}"}, status=response.status_code)
-        print ("Uploaded report data to LLM microservice")
+        log2file("Asking for interpretation to LLM microservice")
         interpretation_url = IA_LLM_URL + IA_LLM_ENDPOINTS["interpretation"].format(uuid=obj.uuid)
-        response = requests.get(interpretation_url, headers=headers, verify=False, timeout=1200)
-        print ("Interpretation response:", response.text)
+        response = JsonResponse({}, status=500)
+        while tries < 3 and response.status_code != 200:
+            response = requests.get(interpretation_url, headers=headers, verify=False, timeout=1200)
+            log2file(f"Interpretation response [{response.status_code}]: {response.text}")
+            tries += 1
         if response.status_code == 200:
             datas = response.json()
-            print (datas)
+            log2file(datas)
         else:
-            print (f"Error interpreting report in microservicio: {response.text}")
+            log2file(f"Error interpreting report in microservicio: {response.text}")
             return JsonResponse({'error': f"Error interpreting report in microservicio: {response.text}"}, status=response.status_code)
         return JsonResponse({'data': datas})
     except Exception as e:
-        print (f"Error in interpretation_report_with_ia: {show_exc(e)}")
+        log2file(f"Error in interpretation_report_with_ia: {show_exc(e)}")
         return JsonResponse({'error': show_exc(e)}, status=500)
 
 #def fix_text(orig):
@@ -263,7 +283,7 @@ def transcribe_audio(audio_file, obj):
     #response = requests.post('http://localhost:8001/transcribir', files={'audio': audio_file})
     response = requests.post(IA_SPEECH_TO_TEXT_URL, files={'audio': audio_file}, verify=False)
     if response.status_code == 200:
-        #print(response.json())
+        #log2file(response.json())
         obj.text = response.json()['texto']
         obj.processed = True
         obj.save()
@@ -301,7 +321,7 @@ def audio_form_save(request):
         report_audio.save()
         return JsonResponse({'status': 'ok', 'obj_id': report_audio.id, 'texto': report_audio.text})
     except Exception as e:
-        print(f"Error: {show_exc(e)}")
+        log2file(f"Error: {show_exc(e)}")
     return JsonResponse({'error': 'Error al guardar el formulario'}, status=500)
 
 def audio_form(request):
@@ -313,7 +333,7 @@ def audio_form(request):
         template = render_string("agents/audio-form.html", {"item": report_audio})
         return JsonResponse({'html': template})
     except Exception as e:
-        print(f"Error: {show_exc(e)}")
+        log2file(f"Error: {show_exc(e)}")
     return JsonResponse({'error': 'Error al cargar el formulario'}, status=500)
     
 def health_check(request):
