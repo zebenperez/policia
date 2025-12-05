@@ -133,7 +133,7 @@ def chat_with_llm(request):
         }
         response = requests.get(chat_url, params=params, headers=headers, verify=False, timeout=1200)
         if response.status_code != 200:
-            log2file("Error in LLM chat:", response.text)
+            log2file("Error in LLM chat:" + response.text)
             return JsonResponse({'message': random.choice(errors_answer), 'status':'success'}, status=200)
         datas = response.json()
         message = datas.get("answer", random.choice(errors_answer))
@@ -166,7 +166,7 @@ def summarize_report_with_ia(request):
         with open(tmp_file_path, "w", encoding="utf-8", newline="") as f:
             f.writelines(transcriptions)
         with open(tmp_file_path, "rb") as f:
-            # remove_url = IA_LLM_URL + IA_LLM_ENDPOINTS["clear-expte"].format(uuid=obj.uuid)
+            remove_url = IA_LLM_URL + IA_LLM_ENDPOINTS["clear-expte"].format(uuid=obj.uuid)
             reset_url = IA_LLM_URL + IA_LLM_ENDPOINTS["reset-expte"].format(uuid=obj.uuid)
             load_context_url = IA_LLM_URL + IA_LLM_ENDPOINTS["load-context"].format(uuid=obj.uuid) + "?force=true"
             upload_url = IA_LLM_URL + IA_LLM_ENDPOINTS["upload_expte"].format(uuid=obj.uuid)
@@ -174,6 +174,7 @@ def summarize_report_with_ia(request):
                 "Authorization": f"Bearer aaaa-bbbb-cccc-dddd"  # Replace with actual token if needed
             }
             log2file("\tClearing previous report data in LLM microservice")
+            # response = requests.delete(remove_url, headers=headers, verify=False, timeout=1200)
             response = requests.delete(reset_url, headers=headers, verify=False, timeout=1200)
             log2file("\tLoading context in LLM microservice")
             response = requests.get(load_context_url, headers=headers, verify=False, timeout=1200)
@@ -185,10 +186,8 @@ def summarize_report_with_ia(request):
         log2file("Uploaded report data to LLM microservice")
         personal_data = IA_LLM_URL + IA_LLM_ENDPOINTS["personal-data"].format(uuid=obj.uuid)
         response = requests.get(personal_data, verify=False, timeout=1200)
-        log2file("Summarization response:", response.text)
         if response.status_code == 200:
             datas = response.json()
-            log2file(datas)
         else:
             return JsonResponse({'error': f"Error summarizing report in microservicio: {response.text}"}, status=response.status_code)
 
@@ -215,42 +214,18 @@ def interpretation_report_with_ia(request):
         headers = {
             "Authorization": f"Bearer aaaa-bbbb-cccc-dddd"  # Replace with actual token if needed
         }
-        # datas = ""
-        # audios = obj.audios.all()
-        # transcriptions = []
-        # for audio in audios: 
-        #     if audio.processed and audio.text != '':
-        #         transcriptions.append(audio.text)
-        # if transcriptions == []:
-        #     return JsonResponse({'error': f"No hay transcripciones válidas"}, status=422)
-        # transcriptions = list(reversed(transcriptions))
-        # tmp_file_path = f"/tmp/{obj.uuid}_{audios.first().id}_transcriptions.txt"
-        # with open(tmp_file_path, "w", encoding="utf-8", newline="") as f:
-        #     f.writelines(transcriptions)
-        # with open(tmp_file_path, "rb") as f:
-        #     remove_url = IA_LLM_URL + IA_LLM_ENDPOINTS["clear-expte"].format(uuid=obj.uuid)
-        #     upload_url = IA_LLM_URL + IA_LLM_ENDPOINTS["upload_expte"].format(uuid=obj.uuid)
-        #     headers = {
-        #         "Authorization": f"Bearer aaaa-bbbb-cccc-dddd"  # Replace with actual token if needed
-        #     }
-        #     response = requests.delete(remove_url, headers=headers, verify=False)
-        #     response = requests.post(upload_url, files={'file': f}, data={'name':obj.uuid}, headers=headers, verify=False, timeout=120)
-
-        #     if response.status_code != 200:
-        #         return JsonResponse({'error': f"Error uploading data to microservicio: {response.text}"}, status=response.status_code)
         log2file("Asking for interpretation to LLM microservice")
         interpretation_url = IA_LLM_URL + IA_LLM_ENDPOINTS["interpretation"].format(uuid=obj.uuid)
         response = JsonResponse({}, status=500)
         while tries < 3 and response.status_code != 200:
             response = requests.get(interpretation_url, headers=headers, verify=False, timeout=1200)
-            log2file(f"Interpretation response [{response.status_code}]: {response.text}")
             tries += 1
         if response.status_code == 200:
             datas = response.json()
-            log2file(datas)
         else:
             log2file(f"Error interpreting report in microservicio: {response.text}")
             return JsonResponse({'error': f"Error interpreting report in microservicio: {response.text}"}, status=response.status_code)
+        log2file("Interpretation completed")
         return JsonResponse({'data': datas})
     except Exception as e:
         log2file(f"Error in interpretation_report_with_ia: {show_exc(e)}")
