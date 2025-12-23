@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block central_content%}
+	<div class="row m-0">
+		<div class="col-4 text-center">
+            <div class="card mt-4">
+                <div class="card-header bg-success"> Documentos</div>
+                <div class="card-body"> 
+                    <div id="div-docs">{% include "base_docs/doc-list.html" %}</div>
+                    <label for ="file" class="btn btn-sm new">
+                        <i class="fas fa-upload"></i><span class="d-none d-sm-block">{%trans "Elegir"%}&nbsp;{%trans "Archivo"%}</span>
+                    </label>
+                    <input type="file" class="multiupload d-none" name="file" id="file" 
+                        data-url="{%url 'base-docs-upload'%}" data-target="div-docs" data-obj-id="{{obj.id}}" 
+                        data-csrf-token="{{ csrf_token }}" multiple/>
+                </div>
+            </div>
+
+		</div>
+	</div>
+{% endblock %}

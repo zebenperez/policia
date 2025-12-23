@@ -2,8 +2,9 @@ from django.conf import settings
 from django.contrib.auth.models import User, Group
 from django.db import models
 from django.utils.translation import gettext_lazy as _ 
-import uuid
+from django.utils import timezone
 
+import uuid
 import datetime
 
 
@@ -108,6 +109,24 @@ class ReportAudio(models.Model):
     class Meta:
         verbose_name = _('Report Audio')
         verbose_name_plural = _('Reports Audios')
+        ordering = ["-id"]
+
+'''
+    Knowledge Docs
+'''
+def upload_doc(instance, filename):
+    ascii_filename = str(filename.encode('ascii', 'ignore'))
+    instance.filename = ascii_filename
+    folder = "training"
+    return '/'.join(['%s' % (folder), timezone.now().strftime("%Y%m%d%H%M%S") + "__" + ascii_filename])
+
+class BaseDoc(models.Model):
+    uuid = models.CharField(max_length=100, verbose_name = _('UUID'), default="")
+    doc = models.FileField(upload_to=upload_doc, blank=True, verbose_name="Document", help_text="Select file to upload")
+
+    class Meta:
+        verbose_name = _('Documento')
+        verbose_name_plural = _('Documentos')
         ordering = ["-id"]
 
 

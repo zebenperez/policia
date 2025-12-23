@@ -10,7 +10,7 @@ import os, csv, requests
 from policia.settings import IA_SERVICES_URL
 from policia.decorators import group_required
 from policia.commons import get_float, get_int, get_or_none, get_param, get_session, set_session, show_exc, generate_qr, csv_export
-from .models import Employee, Report, ReportAudio, Station
+from .models import Employee, Report, ReportAudio, Station, BaseDoc
 #from .report_lib import get_complainant_datas
 
 
@@ -240,4 +240,28 @@ def set_audio_report(request):
         report.text = text
         report.save()
     return HttpResponse("")
+
+'''
+    KNOWLEDGE DOCS
+'''
+@group_required("admins")
+def base_docs(request):
+    return render(request, "base_docs/home.html", {"item_list": BaseDoc.objects.all()})
+
+@group_required("admins")
+def docs_upload(request):
+    file_list = request.FILES.getlist('file')
+    for f in file_list:
+        td = BaseDoc.objects.create(doc=f)
+        #print(f)
+    return render(request, "base_docs/doc-list.html", {"item_list": BaseDoc.objects.all()})
+
+@group_required("admins")
+def docs_remove(request):
+    obj = get_or_none(BaseDoc, get_param(request.GET, "obj_id"))
+    if obj != None:
+        obj.doc.delete(save=True)
+        obj.delete()
+    return render(request, "base_docs/doc-list.html", {"item_list": BaseDoc.objects.all()})
+
 
