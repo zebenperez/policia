@@ -7,4 +7,5 @@ IA_LLM_ENDPOINTS = {
     "clear-expte": "/collection/{uuid:s}",
     "reset-expte": "/collection/{uuid:s}/reset",
     "chat": "/chat/{uuid:s}",
+    "upload-knowledge": "/upload-knowledge",
 }

@@ -1,10 +1,21 @@
 {% load i18n %}
 
-<ul class="list-group">
-    {% for doc in item_list %}
-        <li class="list-group-item">{{doc.doc}} - 
-            <button class="btn btn-xs ark" data-url="{% url "base-docs-remove" %}" data-target="div-docs" data-obj_id="{{doc.id}}">
-                <i class="fas fa-trash"></i></button> 
-        </li>
-    {% endfor %}
-</ul>
+<div class="row list-header m-0">
+	<div class="col-6 py-3 title-list"><strong>Nombre del archivo</strong></div>
+	<div class="col-4 py-3 title-list"><strong>UUID</strong></div>
+	<div class="col-2 py-3 title-list text-end"><strong>Acciones</strong></div>
+</div>
+
+{% for doc in item_list %}
+<div class="row item-list m-0">
+	<div class="col-lg-6 py-3">{{doc.doc}}</div>
+	<div class="col-lg-4 py-3">{{doc.uuid}}</div>
+	<div class="col-lg-2 py-3 text-end">
+	    <button class="btn btn-xs ark" data-url="{% url "base-docs-remove" %}" data-target="div-docs" data-obj_id="{{doc.id}}"
+            data-confirm="{% trans "Esta sguro/a de que desea borrar este elemento?" %}"> <i class="fas fa-trash"></i></button> 
+    </div>
+</div>
+{% endfor %}
+
+
+

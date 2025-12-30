@@ -244,15 +244,30 @@ def set_audio_report(request):
 '''
     KNOWLEDGE DOCS
 '''
+from policia.settings import IA_SPEECH_TO_TEXT_URL, IA_SERVICES_URL, IA_LLM_URL
+from agents.llmendpoints import IA_LLM_ENDPOINTS
+
 @group_required("admins")
 def base_docs(request):
     return render(request, "base_docs/home.html", {"item_list": BaseDoc.objects.all()})
 
 @group_required("admins")
+@csrf_exempt
 def docs_upload(request):
+    import json 
+
     file_list = request.FILES.getlist('file')
+    upload_url = IA_LLM_URL + IA_LLM_ENDPOINTS["upload-knowledge"]
+    headers = { "Authorization": f"Bearer aaaa-bbbb-cccc-dddd" }
+
+
     for f in file_list:
         td = BaseDoc.objects.create(doc=f)
+        f.seek(0)
+        response = requests.post(upload_url, files={'file': f}, data={}, headers=headers, verify=False, timeout=120)
+        datas = json.loads(response.text)
+        td.uuid = datas["vector_id"] 
+        td.save()
         #print(f)
     return render(request, "base_docs/doc-list.html", {"item_list": BaseDoc.objects.all()})
 
