@@ -259,14 +259,16 @@ def docs_upload(request):
     file_list = request.FILES.getlist('file')
     upload_url = IA_LLM_URL + IA_LLM_ENDPOINTS["upload-knowledge"]
     headers = { "Authorization": f"Bearer aaaa-bbbb-cccc-dddd" }
-
+    bd = BaseDoc.objects.all().first()
+    vector_store_id = "" if bd == None else bd.vuuid
 
     for f in file_list:
         td = BaseDoc.objects.create(doc=f)
         f.seek(0)
-        response = requests.post(upload_url, files={'file': f}, data={}, headers=headers, verify=False, timeout=120)
+        response = requests.post(upload_url, files={'file': f}, data={'vector_store_id': vector_store_id}, headers=headers, verify=False, timeout=120)
         datas = json.loads(response.text)
-        td.uuid = datas["vector_id"] 
+        td.uuid = datas["file_id"] 
+        td.vuuid = datas["vector_id"] 
         td.save()
         #print(f)
     return render(request, "base_docs/doc-list.html", {"item_list": BaseDoc.objects.all()})

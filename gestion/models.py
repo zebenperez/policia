@@ -122,6 +122,7 @@ def upload_doc(instance, filename):
 
 class BaseDoc(models.Model):
     uuid = models.CharField(max_length=100, verbose_name = _('UUID'), default="")
+    vuuid = models.CharField(max_length=100, verbose_name = _('Vector UUID'), default="")
     doc = models.FileField(upload_to=upload_doc, blank=True, verbose_name="Document", help_text="Select file to upload")
 
     class Meta:
