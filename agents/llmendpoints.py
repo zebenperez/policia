@@ -7,4 +7,10 @@ IA_LLM_ENDPOINTS = {
     "clear-expte": "/collection/{uuid:s}",
     "reset-expte": "/collection/{uuid:s}/reset",
     "chat": "/chat/{uuid:s}",
+
+    "openai-upload-expte": "/openai/collection/{uuid:s}/upload",
+    "openai-chat": "/openai/chat/{uuid:s}/{vs_id:s}",
+    "openai-interpretation": "/openai/interpretation/{vs_id:s}",
+    "openai-personal-data": "/openai/personal-data-recover/{vs_id:s}",
+
 }

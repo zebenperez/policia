@@ -17,6 +17,11 @@ urlpatterns = [
     path('report/summarize', views.summarize_report_with_ia, name="agents-report-summarize"),
     path('report/interpretation', views.interpretation_report_with_ia, name="agents-report-interpretation"),
     path('chat-with-llm', views.chat_with_llm, name="agents-chat-with-llm"),
+    path('assistant/<int:report_id>', views.agents_assistant, name="agents-assistant"),
+    path('assistant/', views.agents_assistant, name="agents-assistant"),
+    path('assistant/start-voice-turn', views.assistant_start_voice_turn, name="api-agents-assistant-start-voice-turn"),
+    # path('assistant/voice/turn', views.assistant_start_voice_turn, name="agents-assistant-voice-turn"),
+
 
 #    path('reassign-uuids/', views.reassign_uuids, name="agents-reassign-uuids"),
 

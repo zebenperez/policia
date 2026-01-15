@@ -227,13 +227,15 @@
                         }
                     },
                     error: function(xhr, status, error) {
-                        addMessage('Error de conexión. Intenta nuevamente.');
+                        json_response = xhr.responseJSON;
+                        addMessage('Error de conexión. Intenta nuevamente.' + (json_response && json_response.message ? json_response.message : ''));
                     }
                 });
             
             } catch (error) {
+                json_response = error.responseJSON;
                 console.error('Error:', error);
-                addMessage('Error de conexión. Intenta nuevamente.');
+                addMessage('Error de conexión. Intenta nuevamente.' + (json_response && json_response.message ? json_response.message : ''));
             }
         }
         
