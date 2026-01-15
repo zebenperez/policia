@@ -3,11 +3,13 @@
         max-width: 500px;
         min-height: 630px;
         width: 100%;
-        background-color: rgba(255, 255, 255, 0.95);
+/*        background-color: rgba(255, 255, 255, 0.95);*/
         border-radius: 20px;
+	border: 1px solid #2f344a;
         box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
         overflow: hidden;
         transition: transform 0.3s ease;
+	color: rgb(255 255 255 / 0.5);
     }
     
     .container:hover {
@@ -37,16 +39,13 @@
     }
     
     .visualizer {
-        height: 120px;
-        background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
-        border-radius: 12px;
         margin-bottom: 25px;
         display: flex;
         align-items: center;
         justify-content: center;
         overflow: hidden;
         position: relative;
-        border: 1px solid #e0e0e0;
+	color: rgb(255 255 255 / 0.5);
     }
     
     .visualizer-content {
@@ -58,7 +57,7 @@
     .visualizer-content i {
         font-size: 2.5rem;
         margin-bottom: 10px;
-        color: #1b263a;
+	color: #fff;
     }
     
     .visualizer-bars {
@@ -67,10 +66,11 @@
         left: 0;
         width: 100%;
         height: 100%;
-        display: flex;
         align-items: flex-end;
         justify-content: space-around;
         padding: 0 10px;
+        /*display: flex;*/
+        display: none;
     }
     
     .bar {
@@ -147,21 +147,22 @@
         margin-top: 15px;
         font-weight: 500;
         transition: all 0.3s ease;
+	color:#fff;
     }
     
     .status.recording {
-        background-color: #ffeaea;
-        color: #ff416c;
         animation: pulse 1.5s infinite;
+     	background-color: #2a3246;
+        color: #ff416c;
     }
     
     .status.ready {
-        background-color: #e8f5e9;
+     	background-color: #2a3246;
         color: #2e7d32;
     }
     
     .status.sending {
-        background-color: #e3f2fd;
+     	background-color: #2a3246;
         color: #1565c0;
     }
     
@@ -169,7 +170,7 @@
         text-align: center;
         font-size: 1.5rem;
         font-weight: 600;
-        color: #1b263a;
+        color: #ffffff;
         margin: 15px 0;
         font-family: 'Courier New', monospace;
     }
@@ -405,7 +406,7 @@
         // Enviar audio a servidor
         $('#uploadRecord').click(function() {
             if (!audioBlob) {
-                $('#status').text('No hay audio grabado').css('background-color', '#ffebee').css('color', '#c62828');
+                $('#status').text('No hay audio grabado').css('background-color', '#2a3246').css('color', '#c62828');
                 return;
             }
             
@@ -447,7 +448,7 @@
                 },
                 error: function(xhr, status, error) {
                     errorProcess(error);
-                    $('#status').text('Error al enviar el audio').css('background-color', '#ffebee').css('color', '#c62828');
+                    $('#status').text('Error al enviar el audio').css('background-color', '#2a3246').css('color', '#c62828');
                     console.error('Error:', error);
                     $('#uploadRecord').prop('disabled', false);
                 }

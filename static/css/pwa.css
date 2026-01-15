@@ -1,5 +1,6 @@
 
 body {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #1a1a2e 100%);
 	font-family: sans-serif !important;
 }
 
@@ -62,39 +63,20 @@ input#code.form-control.btn.asm.w-50 {
 
 /*********** END UTILS *************/
 
+.card {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #1a1a2e 100%);
+	border: 1px solid #2f344a;
+	color: rgb(255 255 255 / 0.5);
+
+}
+.card-header {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #1a1a2e 100%) !important;
+	color: rgb(255 255 255 / 0.5) !important;
+}
+
 
 /*********** BUTTONS *************/
-/*
-.bg-success.asm { 
-    background: #3b693a!important;
-}
-.btn-success.asm { 
-    background: #3b693a;
-    border:1px solid #3b693a;
-    font-size: 1.2rem;
-    font-weight: 600;
-    text-transform: uppercase;
-}
-.btn-light.asm { 
-    background: #ffffff;
-    -webkit-box-shadow: 0 1px 5px rgba(0,0,0,0.2);
-}
 
-.btn.btn-danger.asm {
-    text-transform: uppercase;
-    font-size: 1.2rem;
-    font-weight: 600;
-}
-
-.btn.btn-secondary.asm {
-    text-transform: uppercase;
-    font-size: 0.8rem;
-    font-weight: 400;
-    color: #e35000;
-    border: 1px solid #e35000;
-    background: #fdf4ef;
-}
-*/
 
 label.btn-primary,
 a.btn-primary,
@@ -132,7 +114,6 @@ a.btn-primary-creation {
 	--tw-bg-opacity: 1;
 	box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
 	border-radius: 1rem;
-	background: #e3d394 !important;	
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -141,9 +122,17 @@ a.btn-primary-creation {
 	width: 450px;
 	margin: 20px auto;
 	color: #213a6c;
+
+	background-image: linear-gradient(to right, var(--tw-gradient-stops));
+	--tw-gradient-to: #7c3aed var(--tw-gradient-to-position);
+	--tw-gradient-from: #d946ef var(--tw-gradient-from-position);
+	--tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+	color:#ffffff;
+
 }
 a.btn-primary-creation:hover {
-	background: #213a6c !important;	
+	transform: scale(1.1); 
+	transition: 0.5s;
 }
 
 a.btn-primary-creation:hover {
@@ -156,14 +145,16 @@ a.back-button {
 	font-weight: 600;
 	display: inline-flex;
 	align-items: center;
-	background-image: linear-gradient(to right, var(--tw-gradient-stops));
 	box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
-	--tw-gradient-to: #1b263a var(--tw-gradient-to-position) !important;
-	--tw-gradient-from: #997f54 var(--tw-gradient-from-position) !important;
-	--tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 	transition-duration: 300ms;
 	transition-property: all;
 	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+	background-image: linear-gradient(to right, var(--tw-gradient-stops));
+	--tw-gradient-to: #7c3aed var(--tw-gradient-to-position);
+	--tw-gradient-from: #d946ef var(--tw-gradient-from-position);
+	--tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+
 }
 a.back-button:hover {
 	transform: scale(1.05);
@@ -177,12 +168,13 @@ a.btn.btn-ia.expte-2-llm {
 	border-radius: 0.5rem;
 	background-image: linear-gradient(to right, var(--tw-gradient-stops));
 	box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
-	--tw-gradient-to: #1b263a var(--tw-gradient-to-position) !important;
-	--tw-gradient-from: #997f54 var(--tw-gradient-from-position) !important;
-	--tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 	transition-duration: 300ms;
 	transition-property: all;
 	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+	background: linear-gradient(90deg, rgba(245, 158, 11, 0.08) 0%, transparent 100%);
+	    border-left: 4px solid #e3d394;
+
 }
 
 a.btn.btn-ia.expte-2-llm:hover {
@@ -194,9 +186,6 @@ a.btn.btn-ia.expte-2-llm i {
 }
 
 /***** end BOTON IA *****/
-
-
-
 
 
 .bg-circle {
@@ -213,7 +202,7 @@ a.btn.btn-ia.expte-2-llm i {
 	align-items: center;
 	justify-content: center;
 	margin: 0 auto;
-	background: white;
+/*	background: white;*/
 }
 
 .btn.btn-record {
@@ -257,7 +246,7 @@ a.btn.btn-ia.expte-2-llm i {
 }
 
 .btn-primary-creation i {
-	color: #213a6c;
+	color:white;
 	font-size: 2.2rem;
 }
 
@@ -306,7 +295,7 @@ input.btn-primary {
 /*********** HEADER *************/
 
 .header.sticky-top {
-        background-color: #001538 !important;
+        background-color: #dadbdf !important;
 	color: #fff!important;
 	box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
 	border-bottom: 1px solid #e7f2d8;
@@ -355,13 +344,14 @@ input.btn-primary {
 	display: inline-block;
 }        
 .dropdown-content {
-	background: #ffffff;
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #1a1a2e 100%);
 	--tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 	--tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
 	box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 	--tw-text-opacity: 1;
-	color: rgb(55 65 81 / var(--tw-text-opacity, 1)) !important;
+	color: #dadbdf !important;
 	border-radius: 0.5rem;
+	border:1px solid #2f344a;
 	display: none;
 	position: absolute;
 	top: 20px;
@@ -372,6 +362,9 @@ input.btn-primary {
 .dropdown-content a {
 	    display: block;
 
+}
+.dropdown-content a:hover {
+	color: #fff;
 }
 .dropdown-content a.close {
 	    --tw-text-opacity: 1;
@@ -386,7 +379,7 @@ input.btn-primary {
 	align-items: center;
 }
 .profile-icon {
-	background-color: rgb(255 255 255 / 0.2);    
+	background-color: #222b46;
 	border-radius: 9999px;
 	display:flex;
 	justify-content: center;
@@ -452,10 +445,6 @@ input.btn-primary {
 
 /*********** CONTENT *************/
 
-body {
-    background: #fff;
-}
-
 .container-fluid {
     padding: 0 !important;
 }
@@ -506,19 +495,20 @@ a.asm {
 }
 
 .small-title {
-	color: #bf7716;
+	/*color: #bf7716;*/
+	color: #fff;
 }
 
 h1, h1 i, 
 h1.primary {
-    color: #001538 !important;
+    color: #dadbdf !important;
     font-weight: 600;
     font-size: 1.25rem !important;
     line-height: 1.75rem;
 }
 
 h2.primary {
-    color: #001538;
+    color: #dadbdf;
     font-weight: 600;
     font-size: 1.125rem;
     line-height: 1.75rem;
@@ -595,51 +585,58 @@ h2.primary {
 
 /*** end STREAMING ***/
 
-.report-list, 
-.audio-list {
-	background-color: rgba(255, 255, 255, 0.95);
+.report-list  {
+	background-color: #2f374f;
 	border-radius: 20px;
 	box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
 	font-size: 0.95rem;
-	padding-bottom: 50px;
+	padding-top: 20px;
+	padding-bottom: 20px;
 }
 
+
+.audio-list {
+	border-radius: 20px;
+	box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+	font-size: 0.95rem;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	border: 1px solid #2f344a;
+}
 
 /*** Expedientes page ***/
 
 
 .row.expt-list {
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #474c62;
     align-items: center;
 }
 .row.expt-list i {
-    color: #e3d394;
+    color: #8b5cf6;
     font-size: 1.5rem;
 }
 .row.expt-list:hover {
-	background: #dde8f2 !important;
+	background: #414960 !important;
 }
 .row.expt-list:hover i {
-	color: white !important;
-	color: #213a6c !important;
+	color: #8b5cf6 !important;
 }
 
 .expt-head { 
-    background: #f1f1f1;
+    color: #dadbdf !important;
     -webkit-box-shadow: 0 4px 5px rgba(0,0,0,0.2);
-    border-bottom: 1px solid #fff;
     border-top:0px !important;
+    border-bottom: 1px solid #2f344a;
     align-items: center;
-    height: 70px;
     font-size: 1rem;
 }
 .expt-code {
-	color: #213a6c;
+	color: #ffffff;
 	font-weight: 600;
 }
 
 .expt-date {
-	color: #666;
+	color: #ffffff;
 }
 
 .top-actions  {
@@ -656,23 +653,24 @@ h2.primary {
 
 .view-pdf {
 	border-radius: 0.5rem;
-	background: #fff !important;
 	padding: 0.5rem;	
+	background: #141628;
+	border: 1px solid #2f344a;
 
 }
 .view-pdf:hover {
-	border: 1px solid #ccc;
+	border: 1px solid #42475e;
 }
 .view-pdf a {
 	display: inline-block;
         cursor: pointer;
 	font-size: 1rem;
-	color: #213a6c;
+	color: #dadbdf !important;
+
 }
 
 .view-pdf i {
-	/*font-size: 1.5rem;*/
-	color: #213a6c;
+	color: #dadbdf !important;
 }
 
 .titledown {

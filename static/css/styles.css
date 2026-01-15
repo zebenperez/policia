@@ -3,7 +3,7 @@
 /*** CONTENT ***/
 
 body {
-	background-color: #f5f7fa; 
+	background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #1a1a2e 100%);
 	font-family: sans-serif !important;
 	font-size: 0.8rem;
 }
@@ -18,7 +18,6 @@ body {
     z-index: 9999;
     cursor: progress;
     background: url('https://usagif.com/wp-content/uploads/loading-12.gif') 50% 50% no-repeat;
-    /*background: url(/static/img/loading.gif) 50% 50% no-repeat;*/
     background-size: 50px 50px;
 }
 
@@ -443,9 +442,9 @@ h2.pathway a {
 .form-control {
 	padding: 0rem 0.5em 0.1rem 0.5em;
 	font-size: 0.9em;
-	color: #333;
-	border-color: #ced4da;
-	border-width: 0px 0px 1px 0px !important;
+    	border: 1px solid #2f344a !important;
+	background: #2f364f !important;
+	color: rgb(255 255 255 / 0.9) !important;
 }
 
 .select-file {
@@ -578,7 +577,8 @@ button.btn.btn-success {
 }
 
 .fa, .fas, .far {
-	color: rgba(0,0,0,.54);
+	/*color: rgba(0,0,0,.54);*/
+	color: #8b5cf6;
 	font-size: 13px;
 }
 
@@ -753,7 +753,7 @@ html {
 /*** UTILS ***/
 
 .bg-black-600 {
-	background: #001538 !important;
+	background: #dadbdf !important;
 }
 .bg-blue-600 {
 	background: #213a6c !important;
@@ -762,7 +762,7 @@ html {
 	background: #8c99b2 !important;
 }
 .text-black-600 {
-	color: #001538 ;
+	color: #dadbdf ;
 }
 .text-gray-500 {
 	--tw-text-opacity: 1;
@@ -773,15 +773,14 @@ html {
 /*** HEADER ***/
 
 .head.sticky-top {
-        background-color: #001538 !important;
+/*	background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #1a1a2e 100%);*/
 	color: #fff!important;
 	box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
-	border-bottom: 1px solid #e7f2d8;
+	border-bottom: 1px solid #2f344a;
 	align-items: center;
 	font-size: 0.8rem;
 	width: 100%;
 	top: 0;
-	webkit-box-shadow: 0 1px 5px rgba(0,0,0,0.2);
 }
 .head-container {
 	width: 100%;
@@ -798,7 +797,7 @@ html {
 }
 .app-logo {
 /*	background: #ffffff;*/
-	color: #001538;
+	color: #dadbdf;
 	width: 2.5rem;
 	height: 2.5rem;
 	--tw-bg-opacity: 1;
@@ -904,9 +903,10 @@ html {
 }
 
 #content-section {
-	background: #fff;
 	border-radius: 0.5rem;
-	margin-top: 25px;
+	/*margin-top: 25px;*/
+	margin-top: 5px;
+	margin-bottom: 5px;
 }
 .top-inner-content {
 	display: flex;
