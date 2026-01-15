@@ -96,6 +96,7 @@ input#code.form-control.btn.asm.w-50 {
 }
 */
 
+label.btn-primary,
 a.btn-primary,
 button.btn-primary {
 	--tw-space-y-reverse: 0;
@@ -686,6 +687,11 @@ h2.primary {
     font-size: 16px;
     font-weight: 600;
     margin-top: 10px;
+}
+
+i.fas.fa-upload,
+i.fas.fa-upload:hover {
+    color: #ffffff;
 }
 
 /*** end Expedientes page ***/

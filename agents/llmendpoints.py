@@ -13,4 +13,5 @@ IA_LLM_ENDPOINTS = {
     "openai-interpretation": "/openai/interpretation/{vs_id:s}",
     "openai-personal-data": "/openai/personal-data-recover/{vs_id:s}",
 
+    "upload-knowledge": "/upload-knowledge",
 }

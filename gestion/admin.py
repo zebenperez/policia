@@ -2,6 +2,9 @@ from django.contrib import admin
 from .models import *
 
 
+class BaseDocAdmin(admin.ModelAdmin):
+    list_display = ('id', 'uuid', 'vuuid', 'doc')
+
 class ReportAdmin(admin.ModelAdmin):
     list_display = ('code', 'date', 'employee')
 
@@ -9,6 +12,7 @@ class ReportAudioAdmin(admin.ModelAdmin):
     list_display = ('report', 'text')
 
 
+admin.site.register(BaseDoc, BaseDocAdmin)
 admin.site.register(Employee)
 admin.site.register(Report, ReportAdmin)
 admin.site.register(ReportAudio, ReportAudioAdmin)

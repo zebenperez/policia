@@ -906,6 +906,7 @@ html {
 #content-section {
 	background: #fff;
 	border-radius: 0.5rem;
+	margin-top: 25px;
 }
 .top-inner-content {
 	display: flex;
