@@ -66,6 +66,8 @@ class Report(models.Model):
     #text = models.TextField(verbose_name = _('Texto transcrito'), default="")
     #audio = models.FileField(upload_to=upload_audio, blank=True, verbose_name="Audio", help_text="Select file to upload")
     employee = models.ForeignKey(Employee,verbose_name=_('Empleado'),on_delete=models.SET_NULL,null=True,related_name="reports")
+    vector_id = models.CharField(max_length=200, verbose_name = _('Vector ID'), default="", blank=True)
+    conversation_id = models.CharField(max_length=200, verbose_name = _('Conversation ID'), default="", blank=True)
 
     def __str__(self):
         return self.code
@@ -105,6 +107,7 @@ class ReportAudio(models.Model):
     audio = models.FileField(upload_to=upload_audio, blank=True, verbose_name="Audio", help_text="Select file to upload")
     report = models.ForeignKey(Report, verbose_name=_('Informe'), on_delete=models.SET_NULL, null=True, related_name="audios")
     processed = models.BooleanField(verbose_name = _('Procesado'), default=False)
+    upload_id = models.CharField(max_length=200, verbose_name = _('Upload ID'), default="", blank=True)
 
     class Meta:
         verbose_name = _('Report Audio')

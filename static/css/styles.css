@@ -1630,6 +1630,10 @@ h3.text {
     border:none;
 }
 
+.transcription-dialog {
+	max-height: 300px;
+	overflow-y: scroll;
+}
 
 
 /*****************************/

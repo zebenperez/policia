@@ -3,14 +3,14 @@
 <h1><i class="fas fa-microphone"></i> {% trans "Listado de audios" %} </h1>
 {% for item in report.audios.all %}
      <div class="row mt-4 mb-2 small-title"> 
-        <div class="col-8">
+        <div class="col">
             <strong>{% trans "Audio:" %} {{forloop.counter}}</strong> &nbsp;
             <button class="btn-sm retranscribe-audio processed-{{item.processed}}" data-id="{{item.id}}" 
                 data-url="{% url 'agents-audio-retranscribe' %}"><i class="fas fa-redo"></i></button>
             <button class="btn-sm edit-audio edit-audio" data-url="{% url 'agents-audio-form'%}" data-id="{{item.id}}">
                 <i class="fas fa-edit"></i></button>
         </div>
-        <div class="col-4">
+        <div class="col">
             <audio controls>
                 <source src="{{ item.audio.url }}" type="audio/mpeg">
                 Tu navegador no soporta la reproducción de audio.
@@ -18,14 +18,15 @@
         </div>
     </div>
     <div class="row mt-2"> 
-        <div class="col-6">
+        <div class="col-12">
             <div class="card">
                 <div class="card-header"> <h1>{% trans "Texto transcrito" %}</h1></div>
                 <div class="card-body">
-                    <div class="transcription-dialog" id="audio-transcription-{{item.id}}"><pre>{{item.text}}</pre></div>
+                    <div class="transcription-dialog" id="audio-transcription-{{item.id}}">{{item.text}}</div>
                 </div>
             </div>
         </div>
+        {% comment %}
         <div class="col-6">
             <div class="card">
                 <div class="card-header"><h1>{% trans "Texto interpretado" %}</h1></div>
@@ -34,6 +35,7 @@
                 </div>
             </div>
         </div>
+        {% endcomment %}
     </div>
     <hr class="mt-4"/>
 {% endfor %}

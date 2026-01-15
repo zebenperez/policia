@@ -227,13 +227,13 @@ $(document).ready(function() {
                     success: function(response_interpretation) {
                         json_response_interpretation = response_interpretation;
                         try {
-                            $('#report-interpretation').html(json_response_interpretation.data.answer.interpretation);
+                            $('#report-interpretation').html(json_response_interpretation.data.answer);
                             Swal.close();
                             
                             Swal.fire({
                                 title: 'Éxito',
                                 //text in html format
-                                html: 'El expediente ha sido enviado a la IA correctamente.<br>Resumen: ' + json_response.data.answer.summarize,
+                                html: 'El expediente ha sido enviado a la IA correctamente.<br> Puede revisar y completar los datos extraídos y el relato generado antes de continuar.',
                                 icon: 'success',
                                 confirmButtonText: 'OK'
                             });

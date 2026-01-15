@@ -213,3 +213,4 @@ media
 **.bak
 **.deprecated*
 *.py2
+**.old
