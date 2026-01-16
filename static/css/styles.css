@@ -43,10 +43,11 @@ body.loading .overlay{
 /*** LIST TABLES ***/
 
 .item-list {
-	border-top: 1px solid #e7f2d8;
+	border-bottom: 1px solid #2f344a;
+	color:#fff;
 }
 .item-list:hover {
-	background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1));
+	background-color: #2f364f;
 }
 
 
@@ -163,10 +164,7 @@ span.status-completed, span.status-in-process, span.status-pending  {
 }
 
 .content {
-	background: white;
-    /*overflow-y: scroll;*/
-	/*height: 95vh;*/
-    /*padding-bottom: 5vh !important;*/
+/*	background: white;*/
 }
 
 .gral-acts, .gral-acts:hover {
@@ -224,7 +222,7 @@ button.btn.btn-danger.ark.cancel {
 button.btn.btn-primary,
 a.btn.btn-primary, a.btn.btn-secondary, a.btn.btn-primary.ark, a.btn.btn-secondary.ark {
     background-color: #82bc00 !important;
-    border:1px solid #82bc00 !important;
+    border:none !important;
     font-size:1rem !important;
 }
 button.btn.btn-primary:hover,
@@ -257,6 +255,24 @@ a.btn.btn-primary:hover, a.btn.btn-secondary:hover, a.btn.btn-primary.ark:hover,
 	background-color: #e7f2d8;
 }
 
+.btn-xs,
+.btn-sm {
+	/*background: #6c757d;*/
+	background: #7c3aed;
+	color: white;
+	border: none;
+	border-radius: 50%;
+	width: 35px;
+	height: 35px;
+	padding: 0.75rem;
+	cursor: pointer;
+}
+.btn-xs i,
+.btn-sm i {
+	color: #fff;
+}
+
+
 a.btn.btn-primary.ark:hover, a.btn.btn-secondary.ark:hover {
     background-color: #4b7764 !important;
 }
@@ -276,8 +292,7 @@ i.fas.fa-upload:hover { color: #4b7764; }
 
 i.fas.fa-route.white, i.fa.fa-truck, i.fa.fa-warehouse, i.fas.fa-times, i.far.fa-users, i.fas.fa-users.orange, i.fa.fa-medkit.orange, i.fa.fa-phone, i.fa.fa-envelope,
 i.fas.fa-keyboard.orange {
-	/*font-size: 1.3rem;*/
-	color: #213a6c;
+	color: #fff;
 }
 i.fas.fa-user.orange,
 i.fas.fa-phone.orange,
@@ -407,7 +422,7 @@ span.sub-h2 {
 }
 
 .badge {
-	color: #213a6c !important;
+	color: #8b5cf6 !important;
 	font-size: 0.9rem !important;
     text-transform: capitalize;
 }
@@ -415,7 +430,7 @@ span.sub-h2 {
 h2.pathway,
 h2.pathway a {
 	text-decoration: none;
-	color: #213a6c !important;
+	color: #ffffff !important;
 	font-size: 0.875rem !important;
 }
 
@@ -480,23 +495,24 @@ input.form-control.login {
 /************* Modal popup styles ***********/
 
 .modal-content {
-    border: 1px solid rgba(0, 0, 0, 0.2);
+	background: #171e37;
+    border: 1px solid #2f344a;
     border-radius: 0.3rem;
 }
 
 .modal-head {
-	background-color: #ffffff;
+	background: linear-gradient(90deg, rgba(245, 158, 11, 0.08) 0%, transparent 100%);
 	box-shadow: 0 0.125rem 0.25rem rgba(2, 6, 23, 0.075);
 	font-size: 1.3rem;
 	font-weight: 600;
 	letter-spacing: 0;
-	color: #213a6c;
+	color: #fff;
 	align-items: center;
 }
 
 #common-modal-body {
-	color: 666666;
-    padding: 0;
+	color: #ccc;
+	padding: 0;
 }
 
 #common-modal-body .d-flex.justify-center {
@@ -756,7 +772,7 @@ html {
 	background: #dadbdf !important;
 }
 .bg-blue-600 {
-	background: #213a6c !important;
+	background: #2f364f !important;
 }
 .bg-blue-400 {
 	background: #8c99b2 !important;
@@ -768,6 +784,11 @@ html {
 	--tw-text-opacity: 1;
 	color: rgb(107 114 128 / var(--tw-text-opacity, 1));
 }
+.text-gray-600 {
+	--tw-text-opacity: 1;
+	color: #ccc !important;
+}
+
 
 
 /*** HEADER ***/
@@ -877,7 +898,8 @@ html {
 }
 
 .main-menu {
-	background: #ffffff;
+	    color: #fff!important;
+    border-bottom: 1px solid #2f344a;
 	--tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
 	--tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
 }
@@ -887,15 +909,15 @@ html {
 	margin-left: auto!important;
 }
 .menu-items a {
-	color: #333333;
+	color: #fff;
 	font-size: 1.2em !important;
 	padding: 1.5rem;
 }
 .menu-items a:hover,
 .menu-items a.active {
 	--tw-text-opacity: 1;
-	color: rgb(37 99 235 / var(--tw-text-opacity, 1));
-	border-bottom: 2px solid blue;
+	color: #c4aaff;
+	border-bottom: 1px solid #c4aaff;
 }
 
 #main-content {
@@ -916,7 +938,7 @@ html {
 }
 .top-inner-content h2 {
 	--tw-text-opacity: 1;
-	color: rgb(31 41 55 / var(--tw-text-opacity, 1));
+	color: rgb(255 255 255 / 0.5);
 	font-weight: 700;
 	font-size: 1.5rem;
 	line-height: 2rem;
@@ -934,8 +956,10 @@ select.profile-selector {
 
 .search-area {
 	--tw-bg-opacity: 1;
-	background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1));
+	/*background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1));*/
 	border-radius: 0.5rem;
+	border: 1px solid #2f344a;
+	color: rgb(255 255 255 / 0.5);
 }
 .search-grid {
 	display: grid;
@@ -943,7 +967,7 @@ select.profile-selector {
 }
 .search-grid label {
 	--tw-text-opacity: 1;
-	color: rgb(55 65 81 / var(--tw-text-opacity, 1));
+	color: #fff;
 	font-weight: 500;
 	font-size: 0.875rem;
 	line-height: 1.25rem;    
@@ -951,14 +975,14 @@ select.profile-selector {
 }
 .search-grid input,
 .search-grid select {
-	background: #ffffff;
+	background: #2f364f !important;
 	--tw-text-opacity: 1;
-	color: rgb(17 24 39 / var(--tw-text-opacity, 1));
+	color: #ffffff !important;
 	font-size: 0.875rem;
 	line-height: 1.25rem;
 	--tw-border-opacity: 1;
 	border-radius: 0.5rem;
-	border:1px solid #ced4da !important;
+	border: 1px solid #4a5067 !important;
 }
 
 button.btn-primary {
@@ -968,30 +992,33 @@ button.btn-primary {
 	transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;
 	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 	transition-duration: 150ms;
-	color:#ffffff;
 	font-weight: 500;
 	font-size: 1rem;
 	--tw-bg-opacity: 1;
 	border-radius: 0.5rem;
-	background: #213a6c !important;	
+	background-image: linear-gradient(to right, var(--tw-gradient-stops));
+	--tw-gradient-to: #8b5cf6 var(--tw-gradient-to-position);
+	--tw-gradient-from: #d946ef var(--tw-gradient-from-position);
+	--tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+	color:#ffffff;
 }
 
 /*** Listados ***/
 
 .list-card {
-	border:1px solid #ced4da !important;
+	border:1px solid #2f344a !important;
 	border-radius: 0.5rem;
 }
 
 .list-header {
 	--tw-bg-opacity: 1;
-	background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1));
+/*	background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1));*/
 }
 .list-header .title-list {
+	background: #141628;
 	text-align: left;
 	--tw-text-opacity: 1;
-/*	color: rgb(107 114 128 / var(--tw-text-opacity, 1));*/
-	color:#213a6c;
+	color:#fff;
 	letter-spacing: 0.05em;
 	text-transform: uppercase;
 	font-weight: 500;

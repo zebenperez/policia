@@ -79,8 +79,10 @@ input#code.form-control.btn.asm.w-50 {
 
 
 label.btn-primary,
-a.btn-primary,
-button.btn-primary {
+a.btn-primary
+
+/*button.btn-primary*/
+{
 	--tw-space-y-reverse: 0;
 	margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
 	margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
@@ -139,53 +141,50 @@ a.btn-primary-creation:hover {
 	color: #ffffff;
 }
 
-a.back-button {
-	border-radius: 0.75rem;
-	color: #ffffff;
-	font-weight: 600;
+.navigation {	
+	font-size: 0.8rem;
+	border-radius: 0.5rem;
+	color: #dadbdf !important;
 	display: inline-flex;
 	align-items: center;
 	box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
 	transition-duration: 300ms;
 	transition-property: all;
 	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-
-	background-image: linear-gradient(to right, var(--tw-gradient-stops));
-	--tw-gradient-to: #7c3aed var(--tw-gradient-to-position);
-	--tw-gradient-from: #d946ef var(--tw-gradient-from-position);
-	--tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+	padding: 0.5rem;
+	background: #141628;
+	border: 1px solid #2f344a;
+}
+.navigation:hover {
+	border: 1px solid #42475e;
+	color: #ffffff !important;
 
 }
-a.back-button:hover {
-	transform: scale(1.05);
-}
 
 
-/***** BOTON IA *****/
-
-a.btn.btn-ia.expte-2-llm {
+.doaction {
+	border-radius: 0.5rem !important;
 	color: #ffffff;
-	border-radius: 0.5rem;
-	background-image: linear-gradient(to right, var(--tw-gradient-stops));
+	font-weight: 600;
+	/*display: inline-flex;*/
+	align-items: center;
 	box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
 	transition-duration: 300ms;
 	transition-property: all;
 	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-
-	background: linear-gradient(90deg, rgba(245, 158, 11, 0.08) 0%, transparent 100%);
-	    border-left: 4px solid #e3d394;
-
+	background-image: linear-gradient(to right, var(--tw-gradient-stops));
+	--tw-gradient-to: #7c3aed var(--tw-gradient-to-position);
+	--tw-gradient-from: #d946ef var(--tw-gradient-from-position);
+	--tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
-
-a.btn.btn-ia.expte-2-llm:hover {
-}
-
-a.btn.btn-ia.expte-2-llm i {
+.doaction a:hover,
+.doaction:hover {
 	color: #ffffff;
-	font-size: 1.3rem;;
 }
-
-/***** end BOTON IA *****/
+.doaction i {
+	color: #ffffff;
+	font-size: 1.1rem;
+}
 
 
 .bg-circle {
