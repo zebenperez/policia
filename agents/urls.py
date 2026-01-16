@@ -13,6 +13,7 @@ urlpatterns = [
     path('report/print/<int:obj_id>', views.agents_report_print, name="agents-report-print"),
 
     ## Dani
+    path('report/extract-personal-data', views.extract_personal_data, name="agents-report-extract-personal-data"),
     path('audio/retranscribe', views.retranscribe_audio, name="agents-audio-retranscribe"),
     path('report/summarize', views.summarize_report_with_ia, name="agents-report-summarize"),
     path('report/interpretation', views.interpretation_report_with_ia, name="agents-report-interpretation"),

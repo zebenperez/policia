@@ -1,20 +1,20 @@
-$(document).ready(function() {
+$(document).ready(function () {
     let muted = false;
-    $('.retranscribe-audio').click(function() {
+    $('.retranscribe-audio').click(function () {
         var obj_id = $(this).data('id');
         var url = $(this).data('url');
         var button = $(this);
         button.prop('disabled', true);
         // Open sweetalert2 with "Processing..." message
         if (muted === false) {
-        Swal.fire({
-            title: 'Procesando...',
-            text: 'Por favor, espere mientras se retranscribe el audio.',
-            allowOutsideClick: false,
-            didOpen: () => {
-                Swal.showLoading();
-            }
-        });
+            Swal.fire({
+                title: 'Procesando...',
+                text: 'Por favor, espere mientras se retranscribe el audio.',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
         }
 
         $.ajax({
@@ -24,39 +24,39 @@ $(document).ready(function() {
                 'obj_id': obj_id,
                 'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val()
             },
-            success: function(response) {
+            success: function (response) {
                 json_response = response;
                 if (muted == false) {
-                Swal.close();
-                Swal.fire({
-                    title: 'Éxito',
-                    //text in html format
-                    html: 'El audio ha sido retranscrito correctamente.',
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $('#audio-transcription-' + obj_id).html(json_response.texto);
-                    }
-                });
+                    Swal.close();
+                    Swal.fire({
+                        title: 'Éxito',
+                        //text in html format
+                        html: 'El audio ha sido retranscrito correctamente.',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $('#audio-transcription-' + obj_id).html(json_response.texto);
+                        }
+                    });
                 } else {
                     $('#audio-transcription-' + obj_id).html(json_response.texto);
                     muted = false;
                 }
                 button.removeClass('processed-False').addClass('processed-True');
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 if (muted == false) {
-                Swal.close();
-                Swal.fire({
-                    title: 'Error',
-                    text: 'Ha ocurrido un error al retranscribir el audio',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
+                    Swal.close();
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Ha ocurrido un error al retranscribir el audio',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
                 }
             },
-            complete: function() {
+            complete: function () {
                 button.prop('disabled', false);
             }
         });
@@ -156,7 +156,7 @@ $(document).ready(function() {
         $('button.retranscribe-audio.processed-False').first().click();
     }
 
-    $('.expte-2-llm').click(function() {
+    $('.expte-2-llm').click(function () {
         var obj_id = $(this).data('item');
 
         var url = $(this).data('url');
@@ -181,24 +181,24 @@ $(document).ready(function() {
                 'obj_id': obj_id,
                 'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val()
             },
-            success: function(response) {
+            success: function (response) {
                 json_response = response;
                 try {
-                $('#report-summary-body').html(json_response.data.answer.summarize);
-                // Fill complainant data
-                var denunciante = json_response.data.answer.denunciante;
-            
-                $('#complainant-name').val(denunciante.nombre + ' ' + denunciante.apellidos);
-                $('#complainant-phone').val(denunciante.telefono);
-                $('#complainant-dni').val(denunciante.dni);
-                $('#complainant-address').val(denunciante.direccion);
+                    $('#report-summary-body').html(json_response.data.answer.summarize);
+                    // Fill complainant data
+                    var denunciante = json_response.data.answer.denunciante;
 
-                var agente = json_response.data.answer.agente;
-                $('#agent-name').val(agente.nombre + ' ' + agente.apellidos);
-                $('#agent-number').val(agente.numero_agente);
-                $('#agent-rank').val(agente.rango);
-                $('#agent-station').val(agente.comisaria);
-                $('#report-extract-data').show();
+                    $('#complainant-name').val(denunciante.nombre + ' ' + denunciante.apellidos);
+                    $('#complainant-phone').val(denunciante.telefono);
+                    $('#complainant-dni').val(denunciante.dni);
+                    $('#complainant-address').val(denunciante.direccion);
+
+                    var agente = json_response.data.answer.agente;
+                    $('#agent-name').val(agente.nombre + ' ' + agente.apellidos);
+                    $('#agent-number').val(agente.numero_agente);
+                    $('#agent-rank').val(agente.rango);
+                    $('#agent-station').val(agente.comisaria);
+                    $('#report-extract-data').show();
                 } catch (e) {
                     console.log("Error filling data: " + e);
                 }
@@ -212,7 +212,7 @@ $(document).ready(function() {
                         Swal.showLoading();
                     }
                 });
- 
+
 
                 //requet url to fetch interpretation
                 var url_interpretation = button.data('url-interpretation');
@@ -224,12 +224,12 @@ $(document).ready(function() {
                         'obj_id': obj_id,
                         'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val()
                     },
-                    success: function(response_interpretation) {
+                    success: function (response_interpretation) {
                         json_response_interpretation = response_interpretation;
                         try {
                             $('#report-interpretation').html(json_response_interpretation.data.answer);
                             Swal.close();
-                            
+
                             Swal.fire({
                                 title: 'Éxito',
                                 //text in html format
@@ -249,7 +249,7 @@ $(document).ready(function() {
                         }
 
                     },
-                    error: function(xhr, status, error) {
+                    error: function (xhr, status, error) {
                         Swal.close();
                         Swal.fire({
                             title: 'Error',
@@ -262,7 +262,7 @@ $(document).ready(function() {
                 });
 
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 var message = 'Ha ocurrido un error desconocido.';
                 console.log(xhr.responseText);
                 console.log(error);
@@ -280,11 +280,80 @@ $(document).ready(function() {
                     confirmButtonText: 'OK'
                 });
             },
-            complete: function() {
+            complete: function () {
                 button.prop('disabled', false);
             }
         });
 
     });
+
+    load_expedient_interpretation($('#report-interpretation').data('obj-id'), $('#report-interpretation').data('url'));
+    extract_personal_data($('#report-interpretation').data('obj-id'), $('#report-interpretation').data('url-extract-personal-data'));
 });
 
+async function load_expedient_interpretation(obj_id, url) {
+    console.log("Loading interpretation for obj_id: " + obj_id + " from url: " + url);
+    var button = $('#launch-analysis');
+    obj_id = obj_id || button.data('item');
+    url = url || button.data('url-interpretation');
+    $.ajax({
+        url: url,
+        type: 'POST',
+        timeout: 600000, // 10 minutes
+        data: {
+            'obj_id': obj_id,
+            'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val()
+        },
+        success: function (response_interpretation) {
+            json_response_interpretation = response_interpretation;
+            try {
+                $('#report-interpretation').html(json_response_interpretation.data.answer);
+                return true;
+            } catch (e) {
+                console.log("Error filling interpretation data: " + e);
+                $('#report-interpretation').html('<p class="text-danger">No se ha podido cargar la interpretación del expediente.</p>');
+                return false;
+            }
+
+        },
+        error: function (xhr, status, error) {
+            $('#report-interpretation').html('<p class="text-danger">No se ha podido cargar la interpretación del expediente.</p>');
+            console.log("Error fetching interpretation: " + error);
+            return false;
+        }
+    });
+}
+
+async function extract_personal_data(obj_id, url) {
+    var button = $('#launch-analysis');
+    obj_id = obj_id || button.data('item');
+    url = url || button.data('url-extract-personal-data');
+    $.ajax({
+        url: url,
+        type: 'POST',
+        timeout: 600000, // 10 minutes
+        data: {
+            'obj_id': obj_id,
+            'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val()
+        },
+        success: function (response) {
+            json_response = response;
+            try {
+                // Show extracted personal data in a Swal
+                let personal_data_html = '<ul>';
+                for (const [key, value] of Object.entries(json_response.data.personal_data)) {
+                    personal_data_html += `<li><strong>${key}:</strong> ${value}</li>`;
+                }
+                personal_data_html += '</ul>';
+
+
+            } catch (e) {
+                console.log("Error displaying personal data: " + e);
+            }
+
+        },
+        error: function (xhr, status, error) {
+            console.log("Error fetching personal data: " + error);
+        }
+    });
+}

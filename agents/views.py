@@ -194,8 +194,56 @@ def get_interpretation(collection_uuid:str):
     except Exception as e:
         log2file(f"Error in interpretation_report_with_ia: {show_exc(e)}")
         return None
-
-
+    
+@group_required("employees")
+def extract_personal_data(request):
+    log2file("Extracting data request received")
+    if request.method != "POST":
+        log2file("Método no permitido")
+        return JsonResponse({'error': 'Método no permitido'}, status=405)
+    try:
+        log2file("Extracting personal data with IA")
+        obj_id = get_param(request.POST, "obj_id")
+        obj = get_or_none(Report, obj_id)
+        if obj is None:
+            return JsonResponse({'error': 'Informe no encontrado'}, status=404)
+        log2file(f"Extracting personal data for report {obj.uuid}")
+        datas = ""
+        audios = obj.audios.all()
+        transcriptions = []
+        for audio in audios: 
+            if audio.processed and audio.text != '' and len(audio.upload_id) < 5:
+                transcriptions.append(audio.text)
+        if transcriptions != []:
+            transcriptions = list(reversed(transcriptions))
+            tmp_file_path = f"/tmp/{obj.uuid}_{audios.first().id}_transcriptions.txt"
+            with open(tmp_file_path, "w", encoding="utf-8", newline="") as f:
+                f.writelines(transcriptions)
+            with open(tmp_file_path, "rb") as f:
+                upload_url = IA_LLM_URL + IA_LLM_ENDPOINTS["openai-upload-expte"].format(uuid=obj.uuid)
+                headers = {
+                    "Authorization": f"Bearer aaaa-bbbb-cccc-dddd"  # Replace with actual token if needed
+                }
+                log2file("Uploading report data to LLM microservice")
+                response = requests.post(upload_url, files={'file': f}, data={'name':obj.uuid}, headers=headers, verify=False, timeout=1200)
+                if response.status_code == 200:
+                    upload_id = response.json().get("file_id", "")
+                    for audio in audios:
+                        audio.upload_id = upload_id
+                        audio.save()
+                else:
+                    log2file(f"Error uploading data to microservicio: {response.text}")
+                log2file("Uploaded report data to LLM microservice")
+        personal_data = IA_LLM_URL + IA_LLM_ENDPOINTS["openai-personal-data"].format(uuid=obj.uuid)
+        response = requests.get(personal_data, verify=False, timeout=1200)
+        if response.status_code == 200:
+            datas = response.json()
+        else:
+            return JsonResponse({'error': f"Error extracting personal data in microservicio: {response.text}"}, status=response.status_code)
+        return JsonResponse({'data': datas})
+    except Exception as e:
+        log2file(f"Error: {show_exc(e)}")
+        return JsonResponse({'error': show_exc(e)}, status=500)
 
 @group_required("employees")
 def summarize_report_with_ia(request):
@@ -294,7 +342,6 @@ def interpretation_report_with_ia(request):
 
 
 def transcribe_audio(audio_file, obj):
-    #response = requests.post('http://localhost:8001/transcribir', files={'audio': audio_file})
     response = requests.post(IA_SPEECH_TO_TEXT_URL, files={'audio': audio_file}, verify=False)
     if response.status_code == 200:
         #log2file(response.json())
@@ -302,10 +349,6 @@ def transcribe_audio(audio_file, obj):
         obj.processed = True
         obj.save()
 
-        #t = fix_text(obj.text)
-        #obj.text += "<br/>---------------------------------------"
-        #obj.text += f'<br/>{t}'
-        #obj.save()
         return JsonResponse({'texto': obj.text, 'status': 'ok'})
     else:
         raise Exception(f"Error en microservicio: {response.text}")
@@ -388,17 +431,6 @@ def audio_form(request):
 def health_check(request):
     """Endpoint de salud para verificar que la vista funciona"""
     return JsonResponse({'status': 'ok', 'service': 'audio_stream'})
-
-# def reassign_uuids(request):
-#     reports = Report.objects.all()
-#     for report in reports:
-#         if report.uuid is None or len(report.uuid) < 5:
-#             reoport.uuid = Report.new_uuid()
-#             report.save()
-#     return HttpResponse("OK")
-# 
-# 
-
 
 def agents_assistant(request, report_id=None):
     return render(request, "agents/assistant.html", {"report_id": report_id})

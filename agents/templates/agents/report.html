@@ -43,7 +43,7 @@
         <div class="col-4 p-2 text-start my-2"> {% include "agents/audio-transcription.html" %} </div>
 
         <div class="col-8 p-2 text-start my-2">
-	        <a data-item="{{ report.id }}" class="btn btn-ia expte-2-llm w-100" data-url="{% url 'agents-report-summarize' %}" data-url-interpretation="{% url 'agents-report-interpretation' %}">
+	        <a id="launch-analysis" data-item="{{ report.id }}" class="btn btn-ia expte-2-llm w-100" data-url="{% url 'agents-report-summarize' %}" data-url-interpretation="{% url 'agents-report-interpretation' %}" data-url-extract-personal-data="{% url 'agents-report-extract-personal-data' %}">
                 <i class="fas fa-lightbulb px-2"></i> {% trans "Analizar por IA" %}</a>
             <div class="card p-3 mt-2">
                 <div class="card-header_">

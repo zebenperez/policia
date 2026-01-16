@@ -226,7 +226,7 @@ async function postChat(text) {
   // Append report_id, csrfmiddlewaretoken if available, and message
   form.append("report_id", report_id);
   form.append("message", text);
-    // Add csrftoken if available
+  // Add csrftoken if available
   const csrftoken = document.cookie.split('; ').find(row => row.startsWith('csrftoken='));
   if (csrftoken) {
     form.append("csrfmiddlewaretoken", csrftoken.split('=')[1]);
@@ -293,7 +293,7 @@ function stopUptimeTimer() {
 async function toggleVoiceConversation(cfg) {
   if (voiceSession) {
     // Stop conversation mode
-    try { speechSynthesis.cancel(); } catch (_) {}
+    try { speechSynthesis.cancel(); } catch (_) { }
     await voiceSession.stop();
     voiceSession = null;
     hideTypingIndicator();
@@ -448,14 +448,14 @@ async function startBackendMode(options = {}) {
   const cfg = {
     apiUrl: "/agents/assistant/start-voice-turn",
     language: "es",
-    startThreshold: 0.020,
+    startThreshold: 0.010,
     stopThreshold: 0.012,
     minSpeechMs: 250,
     silenceMs: 800,
     maxTurnMs: 20000,
     vadFps: 30,
-    onStateChange: () => {},
-    onTurn: () => {},
+    onStateChange: () => { },
+    onTurn: () => { },
     onError: (err) => console.error(err),
     ...options,
   };
@@ -471,7 +471,7 @@ async function startBackendMode(options = {}) {
   let state = State.IDLE;
   const setState = (s) => {
     state = s;
-    try { cfg.onStateChange(s); } catch (_) {}
+    try { cfg.onStateChange(s); } catch (_) { }
   };
 
   const STORAGE_KEY = "voice_conversation_id";
@@ -662,12 +662,12 @@ async function startBackendMode(options = {}) {
       if (vadTimer) clearInterval(vadTimer);
       vadTimer = null;
 
-      try { speechSynthesis.cancel(); } catch (_) {}
+      try { speechSynthesis.cancel(); } catch (_) { }
 
       await stopRecorder();
 
       if (mediaStream) mediaStream.getTracks().forEach((t) => t.stop());
-      try { await audioCtx.close(); } catch (_) {}
+      try { await audioCtx.close(); } catch (_) { }
     } catch (e) {
       cfg.onError(e);
     }
