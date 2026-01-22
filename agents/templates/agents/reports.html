@@ -1,19 +1,169 @@
 {% load static i18n pwa_tags %}
 
 
-<div class="row m-0 pb-5">
-	<div class="col-12"> <h1 class="primary mt-4 mb-2"><i class="fa fa-file-audio"></i> Listado de Expedientes</h1> </div>
+<div class="app-wrapper h-100 w-100 p-6">
+<div class="flex flex-col lg:flex-row gap-6 h-100">
 
-	<div class="col-12 report-list mt-3">
-		<div class="text-start my-2">
+	<!-- Columna izquierda: Perfil del usuario (1/3) -->
+	<div class="w-full lg:w-1/3">
+		<div class="profile-card p-6">
+
+		<!-- Avatar -->
+		<div class="avatar">
+			<div class="avatar-ring p-1 mb-4">
+				<div class="avatar-initials">CM</div>
+			</div>
+			<div class="user-online"><span class="status-dot"></span> <span class="online">En línea</span></div>
+		</div>
+
+		<!-- Info del usuario -->
+		<div class="text-center mb-6">
+			<h2 id="user-name" class="user-name mb-1">Carlos Martínez</h2>
+			<p id="user-role" class="user-role">Gestor Administrativo</p>
+		</div>
+
+		<!-- Estadísticas -->
+		<div class="stats">
+			<div class="stats-box p-4 text-center">
+				<div class="stats-number">24</div>
+				<div class="stats-text mt-1">Expedientes activos</div>
+			</div>
+			<div class="stats-box p-4 text-center">
+				<div class="stats-number">156 </div>
+				<div class="stats-text mt-1">Completados </div>
+			</div>
+		</div>
+
+		<!-- Detalles adicionales -->
+		<div class="more-details py-3">
+			<div class="details-element"><i class="fa fa-envelope"></i><span class="opacity-70">carlos.martinez@empresa.com</span></div>
+			<div class="details-element"><i class="fa fa-phone"></i><span class="opacity-70">+34 922 123 123</span></div>
+			<div class="details-element">
+				<svg class="w-4 h-4 opacity-50" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg><span class="opacity-70">Departamento Legal</span></div>
+			<div class="details-element">
+				<svg class="w-4 h-4 opacity-50" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg><span class="opacity-70">Miembro desde Mar 2023</span></div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Columna derecha: Listado de expedientes (2/3) -->
+	<div class="w-full lg:w-2/3 flex flex-col">
+		<div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+			<div>
+				<h1 id="page-title" class="text-2xl font-bold mb-1">Mis Expedientes</h1>
+				<p class="text-sm opacity-60">Gestiona y consulta tus expedientes activos</p>
+			</div>
+			<a href="{% url "agents-report-new" %}" class="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-semibold px-6 py-3 rounded-xl flex items-center justify-center gap-2 transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105">
+				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg><span>Crear nuevo expediente</span>
+			</a>
+		</div>
+
+		<!-- Header de la tabla -->
+		<div class="flex items-center px-4 py-3 text-xs font-semibold uppercase tracking-wider opacity-50 border-b border-white/10">
+			<div class="flex-1"> Nº Expediente  </div>
+			<div class="w-32 text-center hidden sm:block">Fecha</div>
+			<div class="w-24 text-center hidden sm:block">Hora</div>
+			<div class="w-10"></div>
+		</div>
+
+		
+
+		<!-- Lista de expedientes -->
+		<div class="flex-1 overflow-auto" id="expedientes-list">
+
 			{% for item in item_list %}
 				<div class="row expt-list p-2" 
-                    onclick="window.location.href='{% url "agents-report" item.id %}'" style="cursor:pointer">
+     					   onclick="window.location.href='{% url "agents-report" item.id %}'" style="cursor:pointer">
 					<div class="col-lg-8 expt-code"> {{item.code}} </div>
 					<div class="col-lg-2 expt-date"><small>{{item.date|date:"d-m-Y H:i"}}</small></div>
 					<div class="col-lg-2 text-end"><i class="fa fa-chevron-circle-right"></i></div>
 				</div>
 			{% endfor %}
+
 		</div>
 	</div>
 </div>
+</div>
+
+<script>
+    const defaultConfig = {
+      page_title: 'Mis Expedientes',
+      user_name: 'Carlos Martínez',
+      user_role: 'Gestor Administrativo',
+      font_family: 'Plus Jakarta Sans'
+    };
+
+    function getInitials(name) {
+      return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+    }
+
+    async function onConfigChange(config) {
+      const pageTitle = config.page_title || defaultConfig.page_title;
+      const userName = config.user_name || defaultConfig.user_name;
+      const userRole = config.user_role || defaultConfig.user_role;
+      const fontFamily = config.font_family || defaultConfig.font_family;
+
+      document.getElementById('page-title').textContent = pageTitle;
+      document.getElementById('user-name').textContent = userName;
+      document.getElementById('user-role').textContent = userRole;
+      document.getElementById('avatar-initials').textContent = getInitials(userName);
+
+      document.body.style.fontFamily = `${fontFamily}, sans-serif`;
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [],
+        borderables: [],
+        fontEditable: {
+          get: () => config.font_family || defaultConfig.font_family,
+          set: (value) => {
+            config.font_family = value;
+            window.elementSdk.setConfig({ font_family: value });
+          }
+        },
+        fontSizeable: undefined
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ['page_title', config.page_title || defaultConfig.page_title],
+        ['user_name', config.user_name || defaultConfig.user_name],
+        ['user_role', config.user_role || defaultConfig.user_role]
+      ]);
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    } else {
+      onConfigChange(defaultConfig);
+    }
+
+    // Funcionalidad del botón crear expediente
+    document.getElementById('crear-expediente-btn').addEventListener('click', function() {
+      // Crear mensaje de confirmación inline
+      const container = document.createElement('div');
+      container.className = 'fixed top-4 right-4 bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3 z-50 animate-slide-in';
+      container.innerHTML = `
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        <span class="font-semibold">Nuevo expediente creado correctamente</span>
+      `;
+      document.body.appendChild(container);
+
+      // Eliminar mensaje después de 3 segundos
+      setTimeout(() => {
+        container.style.opacity = '0';
+        container.style.transform = 'translateX(400px)';
+        setTimeout(() => container.remove(), 300);
+      }, 3000);
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c1e35fc662117f6',t:'MTc2OTA3NjA5NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
