@@ -603,7 +603,7 @@ h2.primary {
 	border: 1px solid #2f344a;
 }
 
-/*** Expedientes page ***/
+/*** EXPEDIENTES ***/
 
 
 .row.expt-list {
@@ -646,6 +646,170 @@ h2.primary {
 	color: #213a6c;
 	
 }
+
+
+/* Columna izquierda: Perfil del usuario (1/3) */
+
+.profile-card {
+	border-color: rgb(255 255 255 / 0.1) !important;
+	border:1px solid;
+	border-radius: 1rem !important;
+}
+.avatar {
+	align-items: center!important;
+	display: flex!important;
+	margin-bottom: 1.5rem!important;
+	flex-direction: column;
+}
+.avatar-ring {
+	background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+	border-radius: 9999px;
+}
+
+.avatar-initials {
+	display: flex!important;
+	font-size: 1.875rem;
+	font-weight: 700;
+	--tw-bg-opacity: 1;
+	background-color: rgb(24 29 53 / var(--tw-bg-opacity, 1));    
+	border-radius: 9999px;
+	justify-content: center;
+	align-items: center;
+	width: 6rem;
+	height: 6rem;
+	color:#fff;
+}
+
+.user-online {
+	gap: 0.5rem!important;
+	display: flex!important;
+	align-items: center;
+}
+
+.status-dot {
+	    animation: pulse 2s infinite;
+--tw-bg-opacity: 1;
+    background-color: rgb(52 211 153 / var(--tw-bg-opacity, 1));
+        border-radius: 9999px;
+    width: 0.5rem;
+    height: 0.5rem;
+
+}
+.online {
+    --tw-text-opacity: 1;
+    color: rgb(52 211 153 / var(--tw-text-opacity, 1));
+    font-size: 0.75rem;
+    line-height: 1rem;
+}
+
+h2.user-name {
+	font-weight: 700;
+	font-size: 1.25rem;
+	line-height: 1.75rem;
+	margin-bottom: 0.25rem!important;
+	color: #fff;
+}
+
+p.user-role {
+	opacity: 0.6;
+	font-size: 0.875rem;
+	line-height: 1.25rem;
+	color: #fff;
+}
+
+.stats {
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	display: grid;
+	margin-bottom: 1.5rem;
+	gap: 1.5rem!important;
+}
+
+.stats-box {
+	background-color: rgb(255 255 255 / 0.05);
+	border-radius: 0.75rem;
+}
+
+.stats-number {
+	--tw-text-opacity: 1;
+	color: rgb(129 140 248 / var(--tw-text-opacity, 1));
+	font-weight: 700;
+	font-size: 1.5rem;
+	line-height: 2rem;
+}
+.stats-text {
+	opacity: 0.5;
+	font-size: 0.75rem;
+	line-height: 1rem;
+	color: #fff;
+}
+
+.more-details {
+	
+}
+
+.details-element {
+	color: #fff;
+	font-size: 0.875rem;
+	line-height: 1.25rem;
+	gap: 1rem!important;
+	display: flex;
+	align-items: center;
+	opacity: 0.9;
+}
+
+   .expediente-row {
+      transition: all 0.2s ease;
+    }
+    .expediente-row:hover {
+      background: rgba(255, 255, 255, 0.08);
+      transform: translateX(4px);
+    }
+    .expediente-row:hover .arrow-icon {
+      transform: translateX(4px);
+      opacity: 1;
+    }
+    .arrow-icon {
+      transition: all 0.2s ease;
+      opacity: 0.6;
+    }
+    .profile-card {
+      background: linear-gradient(145deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.03) 100%);
+      backdrop-filter: blur(10px);
+    }
+    .avatar-ring {
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+    }
+    .status-dot {
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    .animate-slide-in {
+      animation: slideIn 0.3s ease-out;
+      transition: all 0.3s ease;
+    }
+    @keyframes slideIn {
+      from {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+
+
+
+
+
+
+
+
+/*** END EXPEDIENTES ***/
 
 
 /*** VIEW PDF ***/

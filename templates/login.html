@@ -26,6 +26,7 @@
         <title>{% trans "IAPol"%}</title>
     </head>
 
+
     <body>
 
 	 <div class="main-screen p-4">
@@ -34,101 +35,57 @@
 		<!-- Columna informativa (2/3) -->
 		<div class="info-column p-8">
 			<div class="content">
-			    <div class="content-top">
-				<h1 class="mb-4">Portal de IAPol Denuncias</h1>
-				<p class="mb-6">Acceda a nuestros servicios digitales para realizar trámites, consultas y solicitudes de manera rápida y segura.</p>
-			
-				<div class="info-indications py-2 mb-8">
-				    <div class="indication">
-					<div class="vigneta p-2 mr-4">
-					    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-					      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-					    </svg>
-					</div>	
-					<div>
-					    <h3>Trámites en línea</h3>
-					    <p>Realice sus gestiones sin necesidad de desplazarse a nuestras oficinas.</p>
-					</div>
-				    </div>
-			    
-				    <div class="indication">
-					<div class="vigneta p-2 mr-4">
-					    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-					      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-					    </svg>
-					</div>
-					<div>
-					    <h3>Seguridad garantizada</h3>
-					    <p>Sus datos personales están protegidos con los más altos estándares de seguridad.</p>
-					</div>
-				    </div>
-			    
-				    <div class="indication">
-					<div class="vigneta p-2 mr-4">
-					    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-					      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-					    </svg>
-					</div>
-					<div>
-					    <h3>Asistencia 24/7</h3>
-					    <p>Contamos con personal disponible para atender sus consultas en todo momento.</p>
-					</div>
-				    </div>
+
+				<!-- Logo with IAPol text -->
+				<div class="mb-10 opacity-0 animate-fade-in delay-1">
+					<div class="mx-auto"><!-- IAPol text --> <span class="font-orbitron text-5xl font-black tracking-wider neon-title" style="color: #ffffff;">IAPol</span>	</div>
 				</div>
-			    </div>
-			    
-			    <!-- Imagen de policía atendiendo a un ciudadano -->
-			    <div class="content-bottom">
-				<div class="media-div">
-				    <svg class="w-100" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
-					<rect width="800" height="500" fill="#f0f4f8"/>
-					<!-- Mostrador/escritorio -->
-					<rect x="100" y="300" width="600" height="80" fill="#6b7280"/>
-					<rect x="100" y="290" width="600" height="20" fill="#4b5563"/>
-					
-					<!-- Oficial de policía -->
-					<circle cx="300" cy="220" r="50" fill="#1e40af"/> <!-- cabeza -->
-					<rect x="275" y="270" width="50" height="100" fill="#1e3a8a"/> <!-- cuerpo -->
-					<rect x="275" y="270" width="50" height="30" fill="#1e40af"/> <!-- cuello uniforme -->
-					<rect x="260" y="270" width="15" height="70" fill="#1e3a8a"/> <!-- brazo izquierdo -->
-					<rect x="325" y="270" width="15" height="70" fill="#1e3a8a"/> <!-- brazo derecho -->
-					<rect x="290" y="190" width="20" height="10" fill="#f8fafc"/> <!-- visera gorra -->
-					<rect x="275" y="200" width="50" height="20" fill="#1e40af"/> <!-- gorra -->
-					<rect x="285" y="230" width="30" height="5" fill="#f8fafc"/> <!-- ojos -->
-					<rect x="295" y="245" width="10" height="5" fill="#f8fafc"/> <!-- boca -->
-					
-					<!-- Insignia -->
-					<circle cx="295" cy="290" r="10" fill="#fcd34d"/>
-					
-					<!-- Ciudadano -->
-					<circle cx="500" cy="220" r="50" fill="#f59e0b"/> <!-- cabeza -->
-					<rect x="475" y="270" width="50" height="100" fill="#0369a1"/> <!-- cuerpo -->
-					<rect x="460" y="270" width="15" height="70" fill="#0369a1"/> <!-- brazo izquierdo -->
-					<rect x="525" y="270" width="15" height="70" fill="#0369a1"/> <!-- brazo derecho -->
-					<rect x="485" y="230" width="30" height="5" fill="#f8fafc"/> <!-- ojos -->
-					<rect x="495" y="245" width="10" height="5" fill="#f8fafc"/> <!-- boca -->
-					
-					<!-- Computadora -->
-					<rect x="320" y="320" width="60" height="40" fill="#1f2937"/>
-					<rect x="350" y="360" width="10" height="20" fill="#1f2937"/>
-					<rect x="340" y="380" width="30" height="5" fill="#1f2937"/>
-					<rect x="325" y="325" width="50" height="30" fill="#60a5fa"/>
-					
-					<!-- Documentos -->
-					<rect x="420" y="330" width="40" height="30" fill="#f3f4f6"/>
-					<rect x="425" y="335" width="30" height="2" fill="#9ca3af"/>
-					<rect x="425" y="340" width="30" height="2" fill="#9ca3af"/>
-					<rect x="425" y="345" width="20" height="2" fill="#9ca3af"/>
-					
-					<!-- Elementos decorativos -->
-					<rect x="150" y="150" width="100" height="70" fill="#e5e7eb"/> <!-- cuadro en pared -->
-					<rect x="600" y="170" width="50" height="100" fill="#d1d5db"/> <!-- elemento decorativo -->
-				    </svg>
-				    <div class="media-text p-4">
-					<p>Atención personalizada en nuestras comisarías</p>
-				    </div>
+
+				<div class="grid grid-cols-1 md:grid-cols-3 gap-8 justify-center items-start max-w-6xl mx-auto">
+
+				<!-- Urgencia Button -->
+				<div class="w-full opacity-0 animate-fade-in delay-4"><button id="btn-urgencia" class="btn-primary btn-mode glow-urgencia w-full px-8 py-8 rounded-3xl font-bold text-lg relative"> <span class="relative z-10 flex flex-col items-center justify-center gap-4">
+				<div class="icon-wrapper">
+				<div class="w-16 h-16 rounded-full flex items-center justify-center" style="background: rgba(255,255,255,0.2);">
+				<svg class="w-10 h-10" fill="none" stroke="currentColor" viewbox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+				</svg>
 				</div>
-			    </div>
+				</div><span id="text-urgencia" class="font-orbitron text-xl tracking-widest">URGENCIA</span> </span> </button>
+				<div id="desc-urgencia" class="description-box mt-4 px-6 py-5 rounded-2xl backdrop-blur-lg" style="background: rgba(59, 130, 246, 0.15); border: 2px solid rgba(59, 130, 246, 0.3);">
+				<p class="font-rajdhani text-base font-medium leading-relaxed" style="color: rgba(255,255,255,0.9);">⚡ Modo para situaciones críticas que requieren atención inmediata y respuesta rápida.</p>
+				</div>
+				</div>
+
+				<!-- Operador Button -->
+				<div class="w-full opacity-0 animate-fade-in delay-5"><button id="btn-operador" class="btn-primary btn-mode glow-operador w-full px-8 py-8 rounded-3xl font-bold text-lg relative"> <span class="relative z-10 flex flex-col items-center justify-center gap-4">
+				<div class="icon-wrapper">
+				<div class="w-16 h-16 rounded-full flex items-center justify-center" style="background: rgba(255,255,255,0.2);">
+				<svg class="w-10 h-10" fill="none" stroke="currentColor" viewbox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+				</svg>
+				</div>
+				</div><span id="text-operador" class="font-orbitron text-xl tracking-widest">OPERADOR</span> </span> </button>
+				<div id="desc-operador" class="description-box mt-4 px-6 py-5 rounded-2xl backdrop-blur-lg" style="background: rgba(59, 130, 246, 0.15); border: 2px solid rgba(59, 130, 246, 0.3);">
+				<p class="font-rajdhani text-base font-medium leading-relaxed" style="color: rgba(255,255,255,0.9);">💼 Modo estándar de operación para el trabajo diario y tareas rutinarias del sistema.</p>
+				</div>
+				</div>
+
+				<!-- Instructor Button -->
+				<div class="w-full opacity-0 animate-fade-in delay-6"><button id="btn-instructor" class="btn-primary btn-mode glow-instructor w-full px-8 py-8 rounded-3xl font-bold text-lg relative"> <span class="relative z-10 flex flex-col items-center justify-center gap-4">
+				<div class="icon-wrapper">
+				<div class="w-16 h-16 rounded-full flex items-center justify-center" style="background: rgba(255,255,255,0.2);">
+				<svg class="w-10 h-10" fill="none" stroke="currentColor" viewbox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
+				</svg>
+				</div>
+				</div><span id="text-instructor" class="font-orbitron text-xl tracking-widest">INSTRUCTOR</span> </span> </button>
+				<div id="desc-instructor" class="description-box mt-4 px-6 py-5 rounded-2xl backdrop-blur-lg" style="background: rgba(59, 130, 246, 0.15); border: 2px solid rgba(59, 130, 246, 0.3);">
+				<p class="font-rajdhani text-base font-medium leading-relaxed" style="color: rgba(255,255,255,0.9);">🎓 Modo de formación y enseñanza para capacitación de nuevos usuarios del sistema.</p>
+				</div>
+				</div>
+
+
+</div>
+
+
 			</div>
 		    </div>
 		<!-- Fin Columna informativa (2/3) -->
@@ -137,9 +94,11 @@
 
 		<div class="login-column p-8">
 			<div class="login-container mb-8">
+				<!--
 				<div class="login-icon mb-4">
-				    <img src="{% static "images/logo_IAPol-1.png" %}" alt="" height="50px" />
+					 <img src="{% static "images/logo_IAPol-1.png" %}" alt="" height="50px" /> 
 				</div>
+				-->
 	               	        <h2>Acceso al sistema</h2>
                	        	<p>Ingrese sus credenciales para continuar</p>
 			</div>
@@ -157,3 +116,171 @@
 
     </body>
 </html>
+
+ <script>
+    const defaultConfig = {
+      main_title: 'SELECCIONA TU MODO',
+      subtitle: 'ELIGE CÓMO DESEAS CONTINUAR',
+      button_urgencia: 'URGENCIA',
+      button_operador: 'OPERADOR',
+      button_instructor: 'INSTRUCTOR',
+      desc_urgencia: '⚡ Modo para situaciones críticas que requieren atención inmediata y respuesta rápida.',
+      desc_operador: '💼 Modo estándar de operación para el trabajo diario y tareas rutinarias del sistema.',
+      desc_instructor: '🎓 Modo de formación y enseñanza para capacitación de nuevos usuarios del sistema.',
+      background_color: '#0a0e1a',
+      text_color: '#ffffff',
+      urgencia_color: '#ef4444',
+      operador_color: '#3b82f6',
+      instructor_color: '#10b981'
+    };
+
+    let config = { ...defaultConfig };
+    let activeDescription = null;
+
+    async function onConfigChange(newConfig) {
+      config = { ...defaultConfig, ...newConfig };
+
+      // Update text content
+      document.getElementById('main-title').textContent = config.main_title || defaultConfig.main_title;
+      document.getElementById('subtitle').textContent = config.subtitle || defaultConfig.subtitle;
+      document.getElementById('text-urgencia').textContent = config.button_urgencia || defaultConfig.button_urgencia;
+      document.getElementById('text-operador').textContent = config.button_operador || defaultConfig.button_operador;
+      document.getElementById('text-instructor').textContent = config.button_instructor || defaultConfig.button_instructor;
+
+      // Update descriptions
+      document.querySelector('#desc-urgencia p').textContent = config.desc_urgencia || defaultConfig.desc_urgencia;
+      document.querySelector('#desc-operador p').textContent = config.desc_operador || defaultConfig.desc_operador;
+      document.querySelector('#desc-instructor p').textContent = config.desc_instructor || defaultConfig.desc_instructor;
+
+      // Update colors
+      document.getElementById('main-title').style.color = config.text_color || defaultConfig.text_color;
+      document.getElementById('subtitle').style.color = `${config.text_color || defaultConfig.text_color}b3`;
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.background_color || defaultConfig.background_color,
+            set: (value) => {
+              config.background_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ background_color: value });
+            }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => {
+              config.text_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ text_color: value });
+            }
+          },
+          {
+            get: () => config.urgencia_color || defaultConfig.urgencia_color,
+            set: (value) => {
+              config.urgencia_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ urgencia_color: value });
+            }
+          },
+          {
+            get: () => config.operador_color || defaultConfig.operador_color,
+            set: (value) => {
+              config.operador_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ operador_color: value });
+            }
+          },
+          {
+            get: () => config.instructor_color || defaultConfig.instructor_color,
+            set: (value) => {
+              config.instructor_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ instructor_color: value });
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ['main_title', config.main_title || defaultConfig.main_title],
+        ['subtitle', config.subtitle || defaultConfig.subtitle],
+        ['button_urgencia', config.button_urgencia || defaultConfig.button_urgencia],
+        ['button_operador', config.button_operador || defaultConfig.button_operador],
+        ['button_instructor', config.button_instructor || defaultConfig.button_instructor],
+        ['desc_urgencia', config.desc_urgencia || defaultConfig.desc_urgencia],
+        ['desc_operador', config.desc_operador || defaultConfig.desc_operador],
+        ['desc_instructor', config.desc_instructor || defaultConfig.desc_instructor]
+      ]);
+    }
+
+    function toggleDescription(buttonId, descId) {
+      const descElement = document.getElementById(descId);
+      const button = document.getElementById(buttonId);
+
+      // If clicking the same button, toggle it
+      if (activeDescription === descId) {
+        descElement.classList.remove('show');
+        button.classList.remove('active');
+        activeDescription = null;
+      } else {
+        // Hide previous description
+        if (activeDescription) {
+          document.getElementById(activeDescription).classList.remove('show');
+          const prevButton = document.querySelector(`[data-desc="${activeDescription}"]`);
+          if (prevButton) prevButton.classList.remove('active');
+        }
+
+        // Show new description
+        descElement.classList.add('show');
+        button.classList.add('active');
+        activeDescription = descId;
+      }
+    }
+
+    // Button click handlers with enhanced feedback
+    document.getElementById('btn-urgencia').addEventListener('click', function() {
+      this.setAttribute('data-desc', 'desc-urgencia');
+      toggleDescription('btn-urgencia', 'desc-urgencia');
+
+      // Add pulse effect
+      this.style.animation = 'none';
+      setTimeout(() => {
+        this.style.animation = '';
+      }, 10);
+    });
+
+    document.getElementById('btn-operador').addEventListener('click', function() {
+      this.setAttribute('data-desc', 'desc-operador');
+      toggleDescription('btn-operador', 'desc-operador');
+
+      // Add pulse effect
+      this.style.animation = 'none';
+      setTimeout(() => {
+        this.style.animation = '';
+      }, 10);
+    });
+
+    document.getElementById('btn-instructor').addEventListener('click', function() {
+      this.setAttribute('data-desc', 'desc-instructor');
+      toggleDescription('btn-instructor', 'desc-instructor');
+
+      // Add pulse effect
+      this.style.animation = 'none';
+      setTimeout(() => {
+        this.style.animation = '';
+      }, 10);
+    });
+
+    // Initialize SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c0e2bfc77c0f443',t:'MTc2ODkwNzkxMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
