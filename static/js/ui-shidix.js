@@ -292,10 +292,11 @@ $(document).ready(function () {
 });
 
 async function load_expedient_interpretation(obj_id, url) {
-    console.log("Loading interpretation for obj_id: " + obj_id + " from url: " + url);
     var button = $('#launch-analysis');
     obj_id = obj_id || button.data('item');
     url = url || button.data('url-interpretation');
+    console.log("Loading interpretation for obj_id: " + obj_id + " from url: " + url);
+
     $.ajax({
         url: url,
         type: 'POST',
@@ -340,11 +341,20 @@ async function extract_personal_data(obj_id, url) {
             json_response = response;
             try {
                 // Show extracted personal data in a Swal
-                let personal_data_html = '<ul>';
-                for (const [key, value] of Object.entries(json_response.data.personal_data)) {
-                    personal_data_html += `<li><strong>${key}:</strong> ${value}</li>`;
-                }
-                personal_data_html += '</ul>';
+                let denunciante = json_response.data.answer.denunciante;
+                let agente = json_response.data.answer.agente;
+                $('#complainant-name').val(denunciante.nombre + ' ' + denunciante.apellidos);
+                $('#complainant-phone').val(denunciante.telefono);
+                $('#complainant-dni').val(denunciante.dni);
+                $('#complainant-address').val(denunciante.direccion);
+
+                $('#agent-name').val(agente.nombre + ' ' + agente.apellidos);
+                $('#agent-number').val(agente.numero_agente);
+                $('#agent-rank').val(agente.rango);
+                $('#agent-station').val(agente.comisaria);
+
+                $('#report-extract-data-missing').html(json_response.data.answer.preguntas);
+
 
 
             } catch (e) {

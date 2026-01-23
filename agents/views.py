@@ -116,6 +116,7 @@ def chat_with_llm(request):
         headers = {
             "Authorization": f"Bearer aaaa-bbbb-cccc-dddd"  # Replace with actual token if needed
         }
+        vector_store_id = report.vector_id
         if transcriptions != []:
             tmp_file_path = f"/tmp/{report.uuid}_{audios.first().id}_transcriptions.txt"
             with open(tmp_file_path, "w") as f:
@@ -143,7 +144,8 @@ def chat_with_llm(request):
                 return JsonResponse({'error': f"Error uploading data to microservicio: {response.text}"}, status=response.status_code)
 
         collection_name = f"{report.uuid}:{report.conversation_id}"
-        chat_url = IA_LLM_URL + IA_LLM_ENDPOINTS["openai-chat"].format(uuid=collection_name, vs_id=report.vector_id)
+        vector_store_id = report.vector_id or "NONE"
+        chat_url = IA_LLM_URL + IA_LLM_ENDPOINTS["openai-chat"].format(uuid=collection_name, vs_id=vector_store_id)
         log2file(f"Chat URL: {chat_url}")
         # URS is get, wieth q and top_k as params
         params = {
@@ -234,10 +236,16 @@ def extract_personal_data(request):
                 else:
                     log2file(f"Error uploading data to microservicio: {response.text}")
                 log2file("Uploaded report data to LLM microservice")
-        personal_data = IA_LLM_URL + IA_LLM_ENDPOINTS["openai-personal-data"].format(uuid=obj.uuid)
+        personal_data = IA_LLM_URL + IA_LLM_ENDPOINTS["openai-personal-data"].format(vs_id=f"{obj.uuid}:{obj.vector_id}:{obj.conversation_id}")
         response = requests.get(personal_data, verify=False, timeout=1200)
+
         if response.status_code == 200:
             datas = response.json()
+            try:
+                import json
+                datas = json.loads(datas)
+            except:
+                pass
         else:
             return JsonResponse({'error': f"Error extracting personal data in microservicio: {response.text}"}, status=response.status_code)
         return JsonResponse({'data': datas})
@@ -341,7 +349,7 @@ def interpretation_report_with_ia(request):
         return JsonResponse({'error': show_exc(e)}, status=500)
 
 
-def transcribe_audio(audio_file, obj):
+def transcribe_audio_old(audio_file, obj):
     response = requests.post(IA_SPEECH_TO_TEXT_URL, files={'audio': audio_file}, verify=False)
     if response.status_code == 200:
         #log2file(response.json())
@@ -353,6 +361,36 @@ def transcribe_audio(audio_file, obj):
     else:
         raise Exception(f"Error en microservicio: {response.text}")
     
+def transcribe_audio(audio_file, obj):
+    response = requests.post(IA_SPEECH_TO_TEXT_URL, files={'audio': audio_file.file}, verify=False)
+
+    if response.status_code == 200:
+        data = response.json()
+        speakers = data.get('speakers', [])
+        segments = data.get('segments', [])
+        full_text = ""
+        for speaker in speakers:
+            speaker_text = ""
+            for segment in segments:
+                if segment.get('speaker', '') == speaker:
+                    speaker_text += segment.get('text', '') + " "
+            full_text += speaker_text.strip() + "\n"
+        log2file(f"Transcribed text: {full_text.strip()}")
+        
+
+        log2file(f"{response.json()}")
+        texto = full_text.strip()
+
+        obj.text = texto
+        obj.processed = True
+        obj.save()
+
+        return JsonResponse({'texto': obj.text, 'status': 'ok'})
+    else:
+        log2file(f"Error transcribing audio: {response.text}")
+        raise Exception(f"Error en microservicio: {response.text}")
+    
+    
 def retranscribe_audio(request):
     if request.method != "POST":
         return JsonResponse({'error': 'Método no permitido'}, status=405)
@@ -361,10 +399,12 @@ def retranscribe_audio(request):
     if obj is None:
         return JsonResponse({'error': 'Audio no encontrado'}, status=404)
     try:
+        log2file(f"Retranscribing audio ID {obj.audio.file.name}")
         response = transcribe_audio(obj.audio, obj)
         return response
     except Exception as e:
         return JsonResponse({'error': show_exc(e)}, status=500)
+    
 
 def assistant_start_voice_turn(request):
     try:

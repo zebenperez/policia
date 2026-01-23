@@ -330,8 +330,8 @@ async function toggleVoiceConversation(cfg) {
         addAssistantMessage(assistant, liveCfg);
 
         // TTS: pronunciar lo más importante
-        const spoken = [assistant.text, assistant.advice].filter(Boolean).join(" ");
-        speakText(spoken, "es-ES");
+        // const spoken = [assistant.text, assistant.advice].filter(Boolean).join(" ");
+        // speakText(spoken, "es-ES");
       },
       onError: (err) => {
         console.error(err);
@@ -373,8 +373,8 @@ async function sendTextMessage(cfg) {
     hideTypingIndicator();
     addAssistantMessage(assistant, liveCfg);
 
-    const spoken = [assistant.text, assistant.advice].filter(Boolean).join(" ");
-    speakText(spoken, "es-ES");
+    // const spoken = [assistant.text, assistant.advice].filter(Boolean).join(" ");
+    // speakText(spoken, "es-ES");
   } catch (e) {
     hideTypingIndicator();
     console.error(e);
