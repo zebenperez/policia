@@ -168,14 +168,14 @@ input#username.form-control.w-100.px-4.py-3,
 }
 .login-2-col a {
 	--tw-text-opacity: 1;
-	color: #7c3aed;
+	color: #6c9add;
 	font-weight: 500;
 	font-size: 0.75rem;
 	line-height: 1rem;
 	text-decoration: none;
 }
 .login-2-col a:hover {
-	color: #d946ef;
+	color: #ffffff;
 }
 .password-eye {
 	position:relative !important;
@@ -211,7 +211,6 @@ button.btn-primary {
 	border-radius: 0.5rem;
 	background-image: linear-gradient(to right, var(--tw-gradient-stops));
 	--tw-gradient-to: #7c3aed var(--tw-gradient-to-position);
-	--tw-gradient-from: #d946ef var(--tw-gradient-from-position);
 	--tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 	color:#ffffff;
 }

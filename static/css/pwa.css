@@ -80,8 +80,6 @@ input#code.form-control.btn.asm.w-50 {
 
 label.btn-primary,
 a.btn-primary
-
-/*button.btn-primary*/
 {
 	--tw-space-y-reverse: 0;
 	margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
@@ -97,12 +95,37 @@ a.btn-primary
 	background: #213a6c !important;	
 }
 
+a.btn-primary {
+	--tw-space-y-reverse: 0;
+	margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
+	margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
+	transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;
+	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+	transition-duration: 150ms;
+	font-weight: 500;
+	font-size: 1rem;
+	--tw-bg-opacity: 1;
+	border-radius: 0.5rem;
+	color:#ffffff;
+	background-color: #0d6efd !important;
+}
+a.btn-primary:hover {
+	background-color: #0b5ed7 !important;
+}
+
+a.btn-primary i {
+	color:#fff;
+}
+
+
+/*
 a.btn-primary-outline {
 	border: 1px solid #213a6c ;
 	color: #213a6c ;
 	font-weight: 600;
 	font-size: 1rem;
-}
+}*/
+
 a.btn-primary-creation {
 	--tw-space-y-reverse: 0;
 	margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
@@ -611,14 +634,14 @@ h2.primary {
     align-items: center;
 }
 .row.expt-list i {
-    color: #8b5cf6;
-    font-size: 1.5rem;
+    color: #6c9add;
+    font-size: 1.2rem;
 }
 .row.expt-list:hover {
 	background: #414960 !important;
 }
 .row.expt-list:hover i {
-	color: #8b5cf6 !important;
+	color: #0d6efd !important;
 }
 
 .expt-head { 
@@ -662,7 +685,7 @@ h2.primary {
 	flex-direction: column;
 }
 .avatar-ring {
-	background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+	background: linear-gradient(135deg, #6c9add 0%, #ffffff 50%, #0d6efd 100%);
 	border-radius: 9999px;
 }
 
@@ -731,7 +754,7 @@ p.user-role {
 
 .stats-number {
 	--tw-text-opacity: 1;
-	color: rgb(129 140 248 / var(--tw-text-opacity, 1));
+	color: #6c9add;
 	font-weight: 700;
 	font-size: 1.5rem;
 	line-height: 2rem;
@@ -743,8 +766,12 @@ p.user-role {
 	color: #fff;
 }
 
-.more-details {
+.more-details a {
 	
+}
+
+.more-details a:hover {
+	color: #ffffff !important;
 }
 
 .details-element {
@@ -775,9 +802,6 @@ p.user-role {
     .profile-card {
       background: linear-gradient(145deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.03) 100%);
       backdrop-filter: blur(10px);
-    }
-    .avatar-ring {
-      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
     }
     .status-dot {
       animation: pulse 2s infinite;

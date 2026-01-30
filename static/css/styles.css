@@ -292,7 +292,7 @@ i.fas.fa-upload:hover { color: #4b7764; }
 
 i.fas.fa-route.white, i.fa.fa-truck, i.fa.fa-warehouse, i.fas.fa-times, i.far.fa-users, i.fas.fa-users.orange, i.fa.fa-medkit.orange, i.fa.fa-phone, i.fa.fa-envelope,
 i.fas.fa-keyboard.orange {
-	color: #fff;
+/*	color: #fff;*/
 }
 i.fas.fa-user.orange,
 i.fas.fa-phone.orange,
@@ -593,8 +593,7 @@ button.btn.btn-success {
 }
 
 .fa, .fas, .far {
-	/*color: rgba(0,0,0,.54);*/
-	color: #8b5cf6;
+	color: #6c9add;
 	font-size: 13px;
 }
 
