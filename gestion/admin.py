@@ -5,6 +5,9 @@ from .models import *
 class BaseDocAdmin(admin.ModelAdmin):
     list_display = ('id', 'uuid', 'vuuid', 'doc')
 
+class ConfigAdmin(admin.ModelAdmin):
+    list_display = ('key', 'value')
+
 class ReportAdmin(admin.ModelAdmin):
     list_display = ('code', 'date', 'employee')
 
@@ -13,6 +16,7 @@ class ReportAudioAdmin(admin.ModelAdmin):
 
 
 admin.site.register(BaseDoc, BaseDocAdmin)
+admin.site.register(Config, ConfigAdmin)
 admin.site.register(Employee)
 admin.site.register(Report, ReportAdmin)
 admin.site.register(ReportAudio, ReportAudioAdmin)

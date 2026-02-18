@@ -8,6 +8,17 @@ import uuid
 import datetime
 
 
+class Config(models.Model):
+    key = models.CharField(max_length=20, verbose_name = _('Key'), default="")
+    value = models.CharField(max_length=255, verbose_name = _('Value'), default="")
+
+    def __str__(self):
+        return self.key
+
+    class Meta:
+        verbose_name = _('Config')
+        verbose_name_plural = _('Config')
+
 '''
     STATION
 '''

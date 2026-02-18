@@ -1,0 +1,98 @@
+body {
+  box-sizing: border-box;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.pulse-ring {
+  animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(0.8);
+    opacity: 0.8;
+  }
+}
+
+.recording-wave {
+  animation: wave 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes wave {
+  from { height: 8px; }
+  to { height: 24px; }
+}
+
+.message-enter {
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.typing-dot {
+  animation: typingBounce 1.4s infinite ease-in-out both;
+}
+
+.typing-dot:nth-child(1) { animation-delay: -0.32s; }
+.typing-dot:nth-child(2) { animation-delay: -0.16s; }
+.typing-dot:nth-child(3) { animation-delay: 0s; }
+
+@keyframes typingBounce {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+.priority-high {
+  border-left: 4px solid #ef4444;
+  background: linear-gradient(90deg, rgba(239, 68, 68, 0.08) 0%, transparent 100%);
+}
+
+.priority-medium {
+  border-left: 4px solid #f59e0b;
+  background: linear-gradient(90deg, rgba(245, 158, 11, 0.08) 0%, transparent 100%);
+}
+
+.priority-low {
+  border-left: 4px solid #22c55e;
+  background: linear-gradient(90deg, rgba(34, 197, 94, 0.08) 0%, transparent 100%);
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 4px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.2);
+  border-radius: 2px;
+}
+.bg-violet-500\/80 {
+    background-color: #0b5ed7 !important;
+}
+.to-fuchsia-500 {
+ --tw-gradient-to: #0b5ed7 var(--tw-gradient-to-position) !important;
+}
+.from-violet-500 {
+     --tw-gradient-from: #0b5ed7 var(--tw-gradient-from-position) !important;
+ }
+

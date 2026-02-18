@@ -12,7 +12,7 @@ from policia.settings import IA_SPEECH_TO_TEXT_URL, IA_SERVICES_URL, IA_LLM_URL
 from .llmendpoints import IA_LLM_ENDPOINTS
 from policia.decorators import group_required
 from policia.commons import user_in_group, get_or_none, get_param, show_exc
-from gestion.models import Employee, Report, ReportAudio
+from gestion.models import Employee, Report, ReportAudio, Config
 
 import subprocess
 import threading
@@ -472,5 +472,17 @@ def health_check(request):
     """Endpoint de salud para verificar que la vista funciona"""
     return JsonResponse({'status': 'ok', 'service': 'audio_stream'})
 
+def get_msg_num(group):
+    try:
+        name = group.name.upper()
+        conf = Config.objects.filter(key=f'MSG_{name}').first()
+        return  get_int(conf.value) if conf != None else 1
+    except:
+        return 0
+
+@group_required("emergency", "operator", "instructor")
 def agents_assistant(request, report_id=None):
-    return render(request, "agents/assistant.html", {"report_id": report_id})
+    group = request.user.groups.first()
+    context = {"report_id": report_id, "group": group.name, "msg_num": get_msg_num(group)}
+    return render(request, "agents/assistant.html", context)
+
