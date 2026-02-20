@@ -1,0 +1,22 @@
+{% load static i18n pwa_tags %}
+
+<div class="row">
+    <div class="col-4">
+        <button class="btn btn-mode text-primary" data-value="urgencia"> Urgencia </button>
+    </div>
+    <div class="col-4">
+        <button class="btn btn-mode text-white" data-value="intervencion"> Intervención </button>
+    </div>
+    <div class="col-4">
+        <button class="btn btn-mode text-white" data-value="consulta"> Consulta </button>
+    </div>
+</div>
+
+<script>
+    $(".btn-mode").click(function(){
+        $(".btn-mode").removeClass("text-primary").addClass("text-white");
+        $(this).addClass("text-primary").removeClass("text-white");
+        $("#text-input").attr("data-mode", $(this).data('value'));
+    });
+</script>
+ 

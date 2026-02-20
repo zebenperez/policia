@@ -20,10 +20,12 @@ from django.urls import path, include
 from django.views.generic.base import RedirectView
 
 urlpatterns = [
-    path('', RedirectView.as_view(pattern_name='index')),
+    #path('', RedirectView.as_view(pattern_name='index')),
+    path('', RedirectView.as_view(pattern_name='assistant')),
     path('gestion/', include('gestion.urls')),
     path('pwa/', include('pwa.urls')),
     path('agents/', include('agents.urls')),
+    path('assistant/', include('assistant.urls')),
     path('training/', include('training.urls')),
     path('chatbot/', include('chatbot.urls')),
     path('admin/', admin.site.urls),

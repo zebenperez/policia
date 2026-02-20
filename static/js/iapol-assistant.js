@@ -216,16 +216,18 @@ function normalizeAssistantResponse(payload) {
   return { priority: "medium", text: String(candidate), advice: "" };
 }
 
-async function postChat(text) {
+async function postChat(text, mode) {
   // Mantiene URL y forma de request similares a las del archivo original
   const session_id = ensureSessionId();
 
-  apiChatUrl = "/agents/chat-with-llm"; // DO NOT CHANGE
+  //apiChatUrl = "/agents/chat-with-llm"; // DO NOT CHANGE
+  apiChatUrl = "/assistant/chat-with-llm"; // DO NOT CHANGE
   form = new FormData();
   const report_id = byId('report-id') ? byId('report-id').value : null;
   // Append report_id, csrfmiddlewaretoken if available, and message
   form.append("report_id", report_id);
   form.append("message", text);
+  form.append("mode", mode);
   // Add csrftoken if available
   const csrftoken = document.cookie.split('; ').find(row => row.startsWith('csrftoken='));
   if (csrftoken) {
@@ -311,7 +313,8 @@ async function toggleVoiceConversation(cfg) {
 
   try {
     voiceSession = await startBackendMode({
-      apiUrl: "/agents/assistant/start-voice-turn", // DO NOT CHANGE
+      //apiUrl: "/agents/assistant/start-voice-turn", // DO NOT CHANGE
+      apiUrl: "/assistant/start-voice-turn", // DO NOT CHANGE
       language: "es",
       onStateChange: (s) => {
         // UI/UX: typing indicator cuando el backend está procesando
@@ -366,7 +369,7 @@ async function sendTextMessage(cfg) {
 
   showTypingIndicator();
   try {
-    const data = await postChat(text);
+    const data = await postChat(text, input.dataset.mode);
 
     // Normaliza y renderiza
     const assistant = normalizeAssistantResponse(data);
@@ -446,7 +449,8 @@ if (window.elementSdk) {
  */
 async function startBackendMode(options = {}) {
   const cfg = {
-    apiUrl: "/agents/assistant/start-voice-turn",
+    //apiUrl: "/agents/assistant/start-voice-turn",
+    apiUrl: "/assistant/start-voice-turn",
     language: "es",
     startThreshold: 0.010,
     stopThreshold: 0.012,
