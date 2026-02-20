@@ -74,6 +74,7 @@ def upload_audio(instance, filename):
 class Report(models.Model):
     uuid = models.CharField(max_length=100, verbose_name = _('UUID'), default="")
     date = models.DateTimeField(default=datetime.datetime.now(), null=True, verbose_name=_('Fecha'), blank=True)
+    last_interaction = models.DateTimeField(default=timezone.now(),null=True,verbose_name=_('Última interacción'),blank=True)
     #text = models.TextField(verbose_name = _('Texto transcrito'), default="")
     #audio = models.FileField(upload_to=upload_audio, blank=True, verbose_name="Audio", help_text="Select file to upload")
     employee = models.ForeignKey(Employee,verbose_name=_('Empleado'),on_delete=models.SET_NULL,null=True,related_name="reports")
@@ -106,6 +107,11 @@ class Report(models.Model):
         while Report.objects.filter(uuid=current).exists():
             current = str(uuid.uuid4())
         return current
+
+    @staticmethod
+    def get_today_by_emp(emp):
+        today = timezone.localdate()
+        return Report.objects.filter(last_interaction__date=today).first()
 
     class Meta:
         verbose_name = _('Report')

@@ -24,7 +24,7 @@ def log2file(msg: str, path: str = "logs/rag_app.log"):
     except Exception as e:
         print(f"Logging error: {e}")
 
-def manage_audios(report):
+def manage_audios(report, headers):
     audios = report.audios.all()
     transcriptions = []
     audios_to_upoload = []
@@ -35,7 +35,6 @@ def manage_audios(report):
             audios_to_upoload.append(audio)
 
     transcriptions = list(reversed(transcriptions))
-    headers = { "Authorization": f"Bearer aaaa-bbbb-cccc-dddd" } # Replace with actual token if needed 
     vector_store_id = report.vector_id
     if transcriptions != []:
         tmp_file_path = f"/tmp/{report.uuid}_{audios.first().id}_transcriptions.txt"
@@ -82,15 +81,16 @@ def chat_with_llm(request):
         report = get_or_none(Report, report_id)
         message = get_param(request.POST, "message")
         mode = get_param(request.POST, "mode")
-        #report.save()
 
         if report is None:
-            return JsonResponse({'error': 'Informe no encontrado'}, status=404)
+            current_report = Report.get_today_by_emp(request.user.employee)
+            report = Report.objects.create(employee=request.user.employee) if current_report == None else current_report
+            #return JsonResponse({'error': 'Informe no encontrado'}, status=404)
 
         log2file(f"Chat with LLM for report {report.uuid} and message: {message}")
 
-        datas = ""
-        msg = manage_audios(report)
+        headers = { "Authorization": f"Bearer aaaa-bbbb-cccc-dddd" } # Replace with actual token if needed 
+        msg = manage_audios(report, headers)
         if msg != "":
             return JsonResponse({'error': msg}, status=response.status_code)
 
