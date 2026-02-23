@@ -9,7 +9,8 @@
 
 <form action="{% url 'auth_login' %}" method="post" class="form login-form space-y-6">
 	{% csrf_token %}
-	<input type="hidden" name="next" value="{% url 'index' %}" />
+    {#<input type="hidden" name="next" value="{% url 'index' %}" />#}
+    <input type="hidden" name="next" value="{% url 'assistant' %}" />
 
 	<div>
 		<label for="email" class="mb-1">Usuario / Correo electrónico</label>
