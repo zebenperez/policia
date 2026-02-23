@@ -10,9 +10,12 @@ var config;
 const defaultConfig = {
   assistant_name: 'IAPol',
   welcome_message: '¡Hola! Soy tu asistente para tomar decisiones. Cuéntame qué situación te preocupa y te ayudaré a evaluarla. Puedes hablarme usando el botón de micrófono. 🎙️',
-  high_priority_label: 'Alta',
-  medium_priority_label: 'Media',
-  low_priority_label: 'Baja',
+  //high_priority_label: 'Alta',
+  //medium_priority_label: 'Media',
+  //low_priority_label: 'Baja',
+  high_priority_label: 'Riesgo crítico',
+  medium_priority_label: 'Revisar',
+  low_priority_label: 'Seguro',
   primary_color: '#8b5cf6',
   secondary_color: '#1a1a2e',
   text_color: '#ffffff',
@@ -126,7 +129,7 @@ function addAssistantMessage(response, cfg) {
         <div class="${priorityClass} px-4 py-3">
           <div class="flex items-center gap-2 mb-2">
             <div class="w-2 h-2 rounded-full ${priorityColor}"></div>
-            <span class="text-xs font-medium text-white/70">Prioridad ${escapeHtml(priorityLabel)}</span>
+            <span class="text-xs font-medium text-white/70">${escapeHtml(priorityLabel)}</span>
           </div>
           <p class="text-white/90 text-sm leading-relaxed">${escapeHtml(response.text || '')}</p>
         </div>
