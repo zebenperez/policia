@@ -380,7 +380,8 @@ async function sendTextMessage(cfg) {
     addAssistantMessage(assistant, liveCfg);
 
     // const spoken = [assistant.text, assistant.advice].filter(Boolean).join(" ");
-    // speakText(spoken, "es-ES");
+    const spoken = assistant.text;
+    speakText(spoken, "es-ES");
   } catch (e) {
     hideTypingIndicator();
     console.error(e);
