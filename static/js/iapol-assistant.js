@@ -116,6 +116,8 @@ function addAssistantMessage(response, cfg) {
   const priorityClass = getPriorityClass(response.priority);
   const priorityColor = getPriorityColor(response.priority);
 
+  const html = marked.parse(response.text);
+  /*${escapeHtml(response.text || '')}*/
   messageDiv.innerHTML = `
     <div class="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-500 flex-shrink-0 flex items-center justify-center">
       <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -131,7 +133,7 @@ function addAssistantMessage(response, cfg) {
             <div class="w-2 h-2 rounded-full ${priorityColor}"></div>
             <span class="text-xs font-medium text-white/70">${escapeHtml(priorityLabel)}</span>
           </div>
-          <p class="text-white/90 text-sm leading-relaxed">${escapeHtml(response.text || '')}</p>
+          <p class="text-white/90 text-sm leading-relaxed">${html} </p>
         </div>
         <div class="px-4 py-3 bg-white/5 border-t border-white/10">
           <p class="text-white/70 text-sm">${escapeHtml(response.advice || '')}</p>
@@ -156,7 +158,7 @@ function hideTypingIndicator() {
   if (ti) ti.classList.add('hidden');
 }
 
-function speakText(text, lang = "es-ES") {
+/*function speakText(text, lang = "es-ES") {
   try {
     if (!text) return;
     speechSynthesis.cancel();
@@ -167,6 +169,34 @@ function speakText(text, lang = "es-ES") {
     // no-op (TTS puede fallar según navegador)
     console.warn("TTS error:", e);
   }
+}*/
+function speakText(text, lang = "es-ES") {
+  if (!text) return;
+
+  speechSynthesis.cancel();
+
+  const utterance = new SpeechSynthesisUtterance(String(text));
+  utterance.lang = lang;
+
+  const voices = speechSynthesis.getVoices();
+
+  // Buscar una voz en español que suene mejor
+  const preferredVoice = voices.find(v =>
+    v.lang.startsWith("es") && v.name.includes("Google")
+  ) || voices.find(v =>
+    v.lang.startsWith("es")
+  );
+
+  if (preferredVoice) {
+    utterance.voice = preferredVoice;
+  }
+
+  // Ajustes de naturalidad
+  utterance.rate = 0.95;   // velocidad (1 es normal)
+  //utterance.pitch = 1;     // tono (1 es normal)
+  utterance.volume = 1;    // volumen
+
+  speechSynthesis.speak(utterance);
 }
 
 // ---- Backend helpers ----
@@ -379,8 +409,10 @@ async function sendTextMessage(cfg) {
     hideTypingIndicator();
     addAssistantMessage(assistant, liveCfg);
 
-    // const spoken = [assistant.text, assistant.advice].filter(Boolean).join(" ");
-    // speakText(spoken, "es-ES");
+    byId("mic-btn").style.display = "none";
+    byId("btn-stop-speak").style.display = "block";
+    const spoken = [assistant.text, assistant.advice].filter(Boolean).join(" ");
+    speakText(spoken, "es-ES");
   } catch (e) {
     hideTypingIndicator();
     console.error(e);
@@ -723,6 +755,13 @@ if (window.jQuery) {
         sendTextMessage(cfg);
       }
     });
+
+    window.jQuery('#btn-stop-speak').on('click', function (e) {
+        byId("btn-stop-speak").style.display = "none";
+        byId("mic-btn").style.display = "block";
+        speechSynthesis.cancel();
+    });
+
   });
 } else {
   // Minimal non-jQuery fallback for environments without jQuery
