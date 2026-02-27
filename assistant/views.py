@@ -124,13 +124,16 @@ def assistant_start_voice_turn(request):
     try:
         log2file("Starting voice turn for assistant")
         if request.method != "POST":
+            log2file("Método no permitido")
             return JsonResponse({'error': 'Método no permitido'}, status=405)
         # Lógica para iniciar el turno de voz del asistente
 
         audio = request.FILES.get("audio", None)
+        log2file(f"Received audio file: {audio.name if audio else 'None'}, size: {audio.size if audio else 'N/A'} bytes")
         if audio is None:
             return JsonResponse({'error': 'No se ha proporcionado audio'}, status=400)
         # Aquí puedes procesar el archivo de audio como desees
+        log2file(f"Sending audio to IA_SPEECH_TO_TEXT_URL: {IA_SPEECH_TO_TEXT_URL}")
         response = requests.post(IA_SPEECH_TO_TEXT_URL, files={'audio': audio}, verify=False)
         if response.status_code == 200:
             data = response.json()

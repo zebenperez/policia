@@ -488,7 +488,7 @@ async function startBackendMode(options = {}) {
     //apiUrl: "/agents/assistant/start-voice-turn",
     apiUrl: "/assistant/start-voice-turn",
     language: "es",
-    startThreshold: 0.010,
+    startThreshold: 0.000,
     stopThreshold: 0.012,
     minSpeechMs: 250,
     silenceMs: 800,
