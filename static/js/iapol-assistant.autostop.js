@@ -191,13 +191,8 @@ function speakText(text, lang = "es-ES") {
     utterance.voice = preferredVoice;
   }
 
-  utterance.onend = () => {
-    byId("btn-stop-speak").style.display = "none";
-    byId("mic-btn").style.display = "block";
-  }
-
   // Ajustes de naturalidad
-  utterance.rate = 1.05;   // velocidad (1 es normal)
+  utterance.rate = 0.95;   // velocidad (1 es normal)
   //utterance.pitch = 1;     // tono (1 es normal)
   utterance.volume = 1;    // volumen
 
@@ -374,10 +369,9 @@ async function toggleVoiceConversation(cfg) {
         const transcript = (data && (data.transcript || data.text || data.user_text)) ? (data.transcript || data.text || data.user_text) : "";
         if (transcript) addUserMessage(`🎙️ "${transcript}"`);
 
-        // // respuesta del asistente
-        // const assistant = normalizeAssistantResponse(data);
-        // addAssistantMessage(assistant, liveCfg);
-        sendTextMessage(liveCfg, transcript);
+        // respuesta del asistente
+        const assistant = normalizeAssistantResponse(data);
+        addAssistantMessage(assistant, liveCfg);
 
         // TTS: pronunciar lo más importante
         // const spoken = [assistant.text, assistant.advice].filter(Boolean).join(" ");
@@ -401,26 +395,18 @@ async function toggleVoiceConversation(cfg) {
 }
 
 // ---- Text messages ----
-async function sendTextMessage(cfg, text = null) {
-  var isSpoken = false;
+async function sendTextMessage(cfg) {
   const input = byId('text-input');
-  if (text === null) {
-    if (!input) return;
-    text = (input.value || "").trim();
-  }
-  else {
-    text = text.trim();
-    isSpoken = true;
-  }
+  if (!input) return;
+
+  const text = (input.value || "").trim();
   if (!text) return;
 
   const liveCfg = window.elementSdk?.config || cfg || defaultConfig;
 
-  if (!isSpoken) {
-    addUserMessage(text);
-    input.value = '';
-    if (window.jQuery) window.jQuery('#send-btn').prop('disabled', true);
-  }
+  addUserMessage(text);
+  input.value = '';
+  if (window.jQuery) window.jQuery('#send-btn').prop('disabled', true);
 
   showTypingIndicator();
   try {
@@ -510,7 +496,7 @@ async function startBackendMode(options = {}) {
     //apiUrl: "/agents/assistant/start-voice-turn",
     apiUrl: "/assistant/start-voice-turn",
     language: "es",
-    startThreshold: 0.0003,
+    startThreshold: 0.000,
     stopThreshold: 0.012,
     minSpeechMs: 250,
     silenceMs: 800,
@@ -604,10 +590,7 @@ async function startBackendMode(options = {}) {
       form.append("csrfmiddlewaretoken", csrftoken.split('=')[1]);
     }
 
-      console.log("--1--");
-      console.log(cfg.apiUrl);
     const resp = await fetch(cfg.apiUrl, { method: "POST", body: form });
-      console.log(resp);
 
     if (!resp.ok) {
       const txt = await resp.text().catch(() => "");

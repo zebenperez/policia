@@ -191,13 +191,8 @@ function speakText(text, lang = "es-ES") {
     utterance.voice = preferredVoice;
   }
 
-  utterance.onend = () => {
-    byId("btn-stop-speak").style.display = "none";
-    byId("mic-btn").style.display = "block";
-  }
-
   // Ajustes de naturalidad
-  utterance.rate = 1.05;   // velocidad (1 es normal)
+  utterance.rate = 0.95;   // velocidad (1 es normal)
   //utterance.pitch = 1;     // tono (1 es normal)
   utterance.volume = 1;    // volumen
 
@@ -354,14 +349,6 @@ async function toggleVoiceConversation(cfg) {
       //apiUrl: "/agents/assistant/start-voice-turn", // DO NOT CHANGE
       apiUrl: "/assistant/start-voice-turn", // DO NOT CHANGE
       language: "es",
-      autoStopAfterTurn: true,
-      onAutoStop: () => {
-        // Se apaga el micro tras un turno; para hablar otra vez hay que volver a pulsar el botón
-        voiceSession = null;
-        hideTypingIndicator();
-        stopUptimeTimer();
-        setMicUiActive(false);
-      },
       onStateChange: (s) => {
         // UI/UX: typing indicator cuando el backend está procesando
         if (s === "PROCESSING") showTypingIndicator();
@@ -374,10 +361,9 @@ async function toggleVoiceConversation(cfg) {
         const transcript = (data && (data.transcript || data.text || data.user_text)) ? (data.transcript || data.text || data.user_text) : "";
         if (transcript) addUserMessage(`🎙️ "${transcript}"`);
 
-        // // respuesta del asistente
-        // const assistant = normalizeAssistantResponse(data);
-        // addAssistantMessage(assistant, liveCfg);
-        sendTextMessage(liveCfg, transcript);
+        // respuesta del asistente
+        const assistant = normalizeAssistantResponse(data);
+        addAssistantMessage(assistant, liveCfg);
 
         // TTS: pronunciar lo más importante
         // const spoken = [assistant.text, assistant.advice].filter(Boolean).join(" ");
@@ -401,26 +387,18 @@ async function toggleVoiceConversation(cfg) {
 }
 
 // ---- Text messages ----
-async function sendTextMessage(cfg, text = null) {
-  var isSpoken = false;
+async function sendTextMessage(cfg) {
   const input = byId('text-input');
-  if (text === null) {
-    if (!input) return;
-    text = (input.value || "").trim();
-  }
-  else {
-    text = text.trim();
-    isSpoken = true;
-  }
+  if (!input) return;
+
+  const text = (input.value || "").trim();
   if (!text) return;
 
   const liveCfg = window.elementSdk?.config || cfg || defaultConfig;
 
-  if (!isSpoken) {
-    addUserMessage(text);
-    input.value = '';
-    if (window.jQuery) window.jQuery('#send-btn').prop('disabled', true);
-  }
+  addUserMessage(text);
+  input.value = '';
+  if (window.jQuery) window.jQuery('#send-btn').prop('disabled', true);
 
   showTypingIndicator();
   try {
@@ -516,8 +494,6 @@ async function startBackendMode(options = {}) {
     silenceMs: 800,
     maxTurnMs: 20000,
     vadFps: 30,
-    autoStopAfterTurn: false,   // si true, apaga el micro tras enviar un turno
-    onAutoStop: () => { },      // callback cuando se apaga automáticamente
     onStateChange: () => { },
     onTurn: () => { },
     onError: (err) => console.error(err),
@@ -604,10 +580,7 @@ async function startBackendMode(options = {}) {
       form.append("csrfmiddlewaretoken", csrftoken.split('=')[1]);
     }
 
-      console.log("--1--");
-      console.log(cfg.apiUrl);
     const resp = await fetch(cfg.apiUrl, { method: "POST", body: form });
-      console.log(resp);
 
     if (!resp.ok) {
       const txt = await resp.text().catch(() => "");
@@ -650,21 +623,9 @@ async function startBackendMode(options = {}) {
       // callback a UI
       try { cfg.onTurn(data || {}); } catch (e) { cfg.onError(e); }
 
-      // Si queremos "push-to-talk": apaga el micro al terminar este turno
-      if (cfg.autoStopAfterTurn) {
-        try { await stop(); } finally { try { cfg.onAutoStop(); } catch (_) { } }
-        return;
-      }
-
       setState(State.LISTENING);
     } catch (e) {
       cfg.onError(e);
-
-      if (cfg.autoStopAfterTurn) {
-        try { await stop(); } finally { try { cfg.onAutoStop(); } catch (_) { } }
-        return;
-      }
-
       setState(State.LISTENING);
     } finally {
       mediaRecorder = null;
@@ -702,15 +663,30 @@ async function startBackendMode(options = {}) {
     const now = performance.now();
 
     if (!voiceActive) {
+
       if (rms >= cfg.startThreshold) {
-        if (!voiceStartAt) voiceStartAt = now;
+        // 1) en cuanto “asoma” voz, empieza a grabar YA (evita recorte inicial)
+        if (!voiceStartAt) {
+          voiceStartAt = now;
+          silenceSince = 0;
+          startTurn(); // <-- se llama inmediatamente
+        }
+
+        // 2) pero no consideres “voz activa” hasta cumplir minSpeechMs
         if (now - voiceStartAt >= cfg.minSpeechMs) {
           voiceActive = true;
-          silenceSince = 0;
-          startTurn();
         }
       } else {
+        // cayó a silencio antes de minSpeechMs: cancela y descarta (falso positivo)
         voiceStartAt = 0;
+        silenceSince = 0;
+
+        if (mediaRecorder && mediaRecorder.state !== "inactive") {
+          try { mediaRecorder.stop(); } catch (_) {}
+          mediaRecorder = null;
+          turnChunks = [];
+          setState(State.LISTENING);
+        }
       }
     } else {
       if (rms <= cfg.stopThreshold) {
