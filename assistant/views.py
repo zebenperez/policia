@@ -15,7 +15,7 @@ ERRORS_ANSWER = ["Lo siento, no puedo ayudarte con eso en este momento.",
                 "Por favor, proporciona más detalles para que pueda asistirte mejor.",
                 "Ha ocurrido un error al procesar tu solicitud. ¿Podrías intentarlo de nuevo?"]
 
-def log2file(msg: str, path: str = "logs/rag_app.log"):
+def log2file(msg: str, path: str = "/var/www/django/policia/logs/rag_app.log"):
     """Log simple a file."""
     try:
         timestamp = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
@@ -122,16 +122,26 @@ def chat_with_llm(request):
  
 def assistant_start_voice_turn(request):
     try:
+        print("--1--")
         log2file("Starting voice turn for assistant")
         if request.method != "POST":
             return JsonResponse({'error': 'Método no permitido'}, status=405)
         # Lógica para iniciar el turno de voz del asistente
 
+        print("--1.1--")
         audio = request.FILES.get("audio", None)
         if audio is None:
             return JsonResponse({'error': 'No se ha proporcionado audio'}, status=400)
+        print("--1.2--")
+        print(IA_SPEECH_TO_TEXT_URL)
+        print(audio)
         # Aquí puedes procesar el archivo de audio como desees
         response = requests.post(IA_SPEECH_TO_TEXT_URL, files={'audio': audio}, verify=False)
+        print("--1.3--")
+        print(response)
+        print(response.text)
+        print(response.status_code)
+        print("--2--")
         if response.status_code == 200:
             data = response.json()
             speakers = data.get('speakers', [])
@@ -146,10 +156,12 @@ def assistant_start_voice_turn(request):
             log2file(f"Transcribed text: {full_text.strip()}")
             
     
+            print("--3--")
             log2file(f"{response.json()}")
             texto = full_text.strip()
             return JsonResponse({'texto': texto, 'status': 'ok', 'conversation_id': '12345', 'transcript': texto, 'answer': f'{texto}'})
         else:
+            print("--4--")
             return JsonResponse({'error': 'Error al transcribir audio'}, status=500)    
     except Exception as e:
         log2file(f"Error: {show_exc(e)}")

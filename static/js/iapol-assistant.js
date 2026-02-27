@@ -580,7 +580,10 @@ async function startBackendMode(options = {}) {
       form.append("csrfmiddlewaretoken", csrftoken.split('=')[1]);
     }
 
+      console.log("--1--");
+      console.log(cfg.apiUrl);
     const resp = await fetch(cfg.apiUrl, { method: "POST", body: form });
+      console.log(resp);
 
     if (!resp.ok) {
       const txt = await resp.text().catch(() => "");
