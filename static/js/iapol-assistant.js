@@ -290,38 +290,40 @@ let voiceUptimeSeconds = 0;
 function setMicUiActive(active) {
   if (active) {
     safeRemoveClass('recording-indicator', 'hidden');
-    safeAddClass('mic-icon', 'hidden');
-    safeRemoveClass('stop-icon', 'hidden');
-    safeRemoveClass('mic-pulse', 'hidden');
+    byId("mic-btn").style.display = "none";
+    //safeAddClass('mic-icon', 'hidden');
+    //safeRemoveClass('stop-icon', 'hidden');
+    //safeRemoveClass('mic-pulse', 'hidden');
 
-    const btn = byId('mic-btn');
+    /*const btn = byId('mic-btn');
     if (btn) {
       btn.classList.add('bg-red-500', 'from-red-500', 'to-red-600');
       btn.classList.remove('from-fuchsia-500', 'to-violet-600');
-    }
-    safeSetText('mic-instruction', 'Escuchando... Toca para detener');
+    }*/
+    //safeSetText('mic-instruction', 'Escuchando... Toca para detener');
   } else {
     safeAddClass('recording-indicator', 'hidden');
-    safeRemoveClass('mic-icon', 'hidden');
-    safeAddClass('stop-icon', 'hidden');
-    safeAddClass('mic-pulse', 'hidden');
+    byId("mic-btn").style.display = "block";
+    //safeRemoveClass('mic-icon', 'hidden');
+    //safeAddClass('stop-icon', 'hidden');
+    //safeAddClass('mic-pulse', 'hidden');
 
-    const btn = byId('mic-btn');
+    /*const btn = byId('mic-btn');
     if (btn) {
       btn.classList.remove('bg-red-500', 'from-red-500', 'to-red-600');
       btn.classList.add('from-fuchsia-500', 'to-violet-600');
-    }
-    safeSetText('mic-instruction', 'Toca el micrófono para comenzar');
+    }*/
+    //safeSetText('mic-instruction', 'Toca el micrófono para comenzar');
     safeSetText('recording-time', '0:00');
   }
 }
 
 function startUptimeTimer() {
   stopUptimeTimer();
-  voiceUptimeSeconds = 0;
+  voiceUptimeSeconds = 20;
   safeSetText('recording-time', formatTime(voiceUptimeSeconds));
   voiceUptimeTimer = setInterval(() => {
-    voiceUptimeSeconds += 1;
+    voiceUptimeSeconds -= 1;
     safeSetText('recording-time', formatTime(voiceUptimeSeconds));
   }, 1000);
 }
@@ -350,6 +352,7 @@ async function toggleVoiceConversation(cfg) {
 
   // Captura config "viva" por si cambia desde elementSdk
   const getLiveConfig = () => window.elementSdk?.config || cfg || defaultConfig;
+  let stopHide = false;
 
   try {
     voiceSession = await startBackendMode({
@@ -360,16 +363,17 @@ async function toggleVoiceConversation(cfg) {
       onAutoStop: () => {
         // Se apaga el micro tras un turno; para hablar otra vez hay que volver a pulsar el botón
         voiceSession = null;
-        hideTypingIndicator();
+        //hideTypingIndicator();
         stopUptimeTimer();
         setMicUiActive(false);
       },
       onStateChange: (s) => {
         // UI/UX: typing indicator cuando el backend está procesando
-        if (s === "PROCESSING") showTypingIndicator();
-        else hideTypingIndicator();
+        if (s === "PROCESSING") {showTypingIndicator();}
+        else {if (!stopHide) {hideTypingIndicator();}}
       },
       onTurn: (data) => {
+        stopHide = true;
         const liveCfg = getLiveConfig();
 
         // transcript -> mensaje de usuario
@@ -606,8 +610,6 @@ async function startBackendMode(options = {}) {
       form.append("csrfmiddlewaretoken", csrftoken.split('=')[1]);
     }
 
-      console.log("--1--");
-      console.log(cfg.apiUrl);
     const resp = await fetch(cfg.apiUrl, { method: "POST", body: form });
       console.log(resp);
 

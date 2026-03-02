@@ -10,9 +10,11 @@
 
 </head>
 
-<div class="flex-shrink-0 px-2 py-2 border-t border-white/10 bg-black/20 backdrop-blur-sm">
+{#<div class="flex-shrink-0 px-2 py-2 border-t border-white/10 bg-black/20 backdrop-blur-sm">#}
+<div class="flex-shrink-0 px-2 py-2">
     <div id="recording-indicator" class="hidden mb-4">
         <div class="flex items-center justify-center gap-3 py-3">
+            {%comment%}
             <div class="flex items-end gap-1 h-8">
                 <div class="recording-wave w-1 bg-red-400 rounded-full" style="animation-delay: 0s;"></div>
                 <div class="recording-wave w-1 bg-red-400 rounded-full" style="animation-delay: 0.1s;"></div>
@@ -20,7 +22,8 @@
                 <div class="recording-wave w-1 bg-red-400 rounded-full" style="animation-delay: 0.3s;"></div>
                 <div class="recording-wave w-1 bg-red-400 rounded-full" style="animation-delay: 0.4s;"></div>
             </div>
-            <span class="text-red-400 text-sm font-medium">Grabando...</span> 
+            {%endcomment%}
+            <span class="text-red-400 text-sm font-medium">Grabando (20 seg)...</span> 
             <span id="recording-time" class="text-white/50 text-sm">0:00</span>
         </div>
     </div>
@@ -47,7 +50,8 @@
 
         {#<p id="mic-instruction" class="text-center text-white/40 text-sm mt-1 font-medium">Toca el micrófono para comenzar</p>#}
  
-	<button id="btn-stop-speak" type="button" class="btn btn-danger btn-voice" style="background-color:#ff0000;display:none"><i class="fa fa-pause"></i>
+	    <button id="btn-stop-speak" type="button" class="btn btn-danger btn-voice" style="background-color:#ff0000;display:none">
+            <i class="fa fa-pause"></i>
         </button>
 
 <!--

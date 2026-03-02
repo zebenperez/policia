@@ -1,5 +1,5 @@
 from django.urls import path, re_path
-from assistant import views, z_views
+from assistant import views
 
 
 urlpatterns = [
