@@ -240,6 +240,8 @@ function normalizeAssistantResponse(payload) {
     payload.assistant ??
     payload;
 
+
+
   if (typeof candidate === "string") {
     return { priority: "medium", text: candidate, advice: "" };
   }
@@ -248,7 +250,7 @@ function normalizeAssistantResponse(payload) {
     const priority = candidate.priority || payload.priority || "medium";
     const text = candidate.text || payload.text || candidate.message || "";
     const advice = candidate.advice || payload.advice || candidate.recommendation || "";
-    return { priority, text, advice };
+    return { priority: priority, text: text, advice: advice };
   }
 
   return { priority: "medium", text: String(candidate), advice: "" };
@@ -434,7 +436,7 @@ async function sendTextMessage(cfg, text = null) {
     byId("mic-btn").style.display = "none";
     byId("btn-stop-speak").style.display = "block";
     //const spoken = [assistant.text, assistant.advice].filter(Boolean).join(" ");
-    const spoken = assistant.text;
+    const spoken = assistant.advice ? assistant.advice : assistant.text;
     speakText(spoken, "es-ES");
   } catch (e) {
     hideTypingIndicator();
