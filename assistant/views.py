@@ -113,10 +113,12 @@ def chat_with_llm(request):
 
         datas = response.json()
         message = datas.get("answer", random.choice(ERRORS_ANSWER))
+        priority = datas.get("priority", "low")
+        summary = datas.get("summary", "")
         report.conversation_id = datas.get("conversation_id", "")
         report.save()
         #priority = ["high", "medium", "low"]
-        return JsonResponse({'message': message, 'priority': 'low', 'status': 'success'})
+        return JsonResponse({'message': message, 'priority': priority, 'advice': summary, 'status': 'success'})
     except Exception as e:
         log2file (show_exc(e))
         return JsonResponse({'error': show_exc(e)}, status=500)
