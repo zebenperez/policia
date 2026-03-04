@@ -28,18 +28,23 @@
 
 
     <body>
+      <div class="main-screen p-4">
+      	<div class="main-container">
+	 <div class="row">
+		<div class="col-lg-12 col-12 app-name py-2 text-center">IAPol</div>
+		<div class="col-lg-12 col-12 py-2">
+			<div class="login-container">
+	               	        <h2>Acceso</h2>
+			</div>
+			<div class="login-form text-center px-4">
+				{% block login-right %}
+					{% include "login_form.html" %}
+				{% endblock %}
+			</div>
+		</div>
 
-	 <div class="main-screen p-4">
-        	<div class="main-container">
-		
-		<!-- Columna informativa (2/3) -->
-		<div class="info-column p-8">
+		<div class="col-12 p-4">
 			<div class="content">
-
-				<!-- Logo with IAPol text -->
-				<div class="mb-10 opacity-0 animate-fade-in delay-1">
-					<div class="mx-auto"><!-- IAPol text --> <span class="font-orbitron text-5xl font-black tracking-wider neon-title" style="color: #ffffff;">IAPol</span>	</div>
-				</div>
 
 				<div class="grid grid-cols-1 md:grid-cols-3 gap-8 justify-center items-start max-w-6xl mx-auto">
 
@@ -51,7 +56,7 @@
 				</svg>
 				</div>
 				</div><span id="text-urgencia" class="font-orbitron text-xl tracking-widest">URGENCIA</span> </span> </button>
-				<div id="desc-urgencia" class="description-box mt-4 px-6 py-5 rounded-2xl backdrop-blur-lg" style="background: rgba(59, 130, 246, 0.15); border: 2px solid rgba(59, 130, 246, 0.3);">
+				<div id="desc-urgencia" class="description-box px-6 py-1 rounded-2xl backdrop-blur-lg" style="background: rgba(59, 130, 246, 0.15); border: 2px solid rgba(59, 130, 246, 0.3);">
 				<p class="font-rajdhani text-base font-medium leading-relaxed" style="color: rgba(255,255,255,0.9);">⚡ Modo para situaciones críticas que requieren atención inmediata y respuesta rápida.</p>
 				</div>
 				</div>
@@ -64,7 +69,7 @@
 				</svg>
 				</div>
 				</div><span id="text-operador" class="font-orbitron text-xl tracking-widest">OPERADOR</span> </span> </button>
-				<div id="desc-operador" class="description-box mt-4 px-6 py-5 rounded-2xl backdrop-blur-lg" style="background: rgba(59, 130, 246, 0.15); border: 2px solid rgba(59, 130, 246, 0.3);">
+				<div id="desc-operador" class="description-box px-6 py-1 rounded-2xl backdrop-blur-lg" style="background: rgba(59, 130, 246, 0.15); border: 2px solid rgba(59, 130, 246, 0.3);">
 				<p class="font-rajdhani text-base font-medium leading-relaxed" style="color: rgba(255,255,255,0.9);">💼 Modo estándar de operación para el trabajo diario y tareas rutinarias del sistema.</p>
 				</div>
 				</div>
@@ -77,41 +82,19 @@
 				</svg>
 				</div>
 				</div><span id="text-instructor" class="font-orbitron text-xl tracking-widest">INSTRUCTOR</span> </span> </button>
-				<div id="desc-instructor" class="description-box mt-4 px-6 py-5 rounded-2xl backdrop-blur-lg" style="background: rgba(59, 130, 246, 0.15); border: 2px solid rgba(59, 130, 246, 0.3);">
+				<div id="desc-instructor" class="description-box px-6 py-1 rounded-2xl backdrop-blur-lg" style="background: rgba(59, 130, 246, 0.15); border: 2px solid rgba(59, 130, 246, 0.3);">
 				<p class="font-rajdhani text-base font-medium leading-relaxed" style="color: rgba(255,255,255,0.9);">🎓 Modo de formación y enseñanza para capacitación de nuevos usuarios del sistema.</p>
 				</div>
 				</div>
 
-
-</div>
-
-
-			</div>
-		    </div>
-		<!-- Fin Columna informativa (2/3) -->
-
-		<!-- Columna de login (1/3) -->
-
-		<div class="login-column p-8">
-			<div class="login-container mb-8">
-				<!--
-				<div class="login-icon mb-4">
-					 <img src="{% static "images/logo_IAPol-1.png" %}" alt="" height="50px" /> 
 				</div>
-				-->
-	               	        <h2>Acceso al sistema</h2>
-               	        	<p>Ingrese sus credenciales para continuar</p>
-			</div>
-			<div class="login-form mt-16">
-				{% block login-right %}
-					{% include "login_form.html" %}
-				{% endblock %}
+
 			</div>
 		</div>
-
-		<!-- Fin Columna de login (1/3) -->
 	</div>
+   </div>
 </div>
+
 
 
     </body>

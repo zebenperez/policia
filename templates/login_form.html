@@ -12,29 +12,26 @@
     {#<input type="hidden" name="next" value="{% url 'index' %}" />#}
     <input type="hidden" name="next" value="{% url 'assistant' %}" />
 
-	<div>
-		<label for="email" class="mb-1">Usuario / Correo electrónico</label>
-		<input type="text" value="" name="username" id="id_username" class="form-control w-100 px-4 py-3" placeholder="{% trans "Username" %}"> 
+    <div class="row">
+	<div class="col-lg-4 col-12 mb-2">
+		{#<label for="email" class="mb-1">Usuario / Correo electrónico</label>#}
+		<input type="text" value="" name="username" id="id_username" class="form-control w-100 px-4 py-3" placeholder="{% trans "Escribe usuario o correo electrónico" %}"> 
 	</div>
 
-	<div>
+	<div class="col-lg-4 col-12 mb-2">
            <div class="login-2-col mb-1">
-		<label for="password" class="block">Contraseña</label>
-		<a href="#">¿Olvidó su contraseña?</a>
+		{#<label for="password" class="block">Contraseña</label>#}
+		<!--<a href="#">¿Olvidó su contraseña?</a>-->
 	   </div>
 	   <div class="password-eye">
-		<input type="password" value="" name="password" class="form-control w-100 px-4 py-3" id="id_password" placeholder="{% trans "Password" %}">
-	        {% comment %}
-		<button type="button" id="togglePassword" class="">
-			<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-			</svg>
-		</button>
-	        {% endcomment %}
+		<input type="password" value="" name="password" class="form-control w-100 px-4 py-3" id="id_password" placeholder="{% trans "Escribe la contraseña" %}">
 	   </div>
 	</div>
 	
+	<div class="col-lg-4 col-12 mb-2">
+		<button type="submit" class="btn-outline-primary w-100 py-3 px-4"> {% trans "Iniciar Sesión" %} </button>
+	</div>
+   </div>
 	{% comment %}
 	<div class="remember">
 		<input type="checkbox" id="remember" name="remember">
@@ -42,5 +39,4 @@
 	</div>
 	{% endcomment %}
 
-	<button type="submit" class="btn-primary w-100 py-3 px-4 mt-5"> {% trans "Iniciar Sesión" %} </button>
 </form>

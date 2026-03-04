@@ -15,6 +15,10 @@ ERRORS_ANSWER = ["Lo siento, no puedo ayudarte con eso en este momento.",
                 "Por favor, proporciona más detalles para que pueda asistirte mejor.",
                 "Ha ocurrido un error al procesar tu solicitud. ¿Podrías intentarlo de nuevo?"]
 
+def get_config(key):
+    cfg = Config.objects.filter(key=key).first()
+    return cfg.value if cfg != None else ""
+
 #def log2file(msg: str, path: str = "logs/rag_app.log"):
 def log2file(msg: str, path: str = None):
     from pathlib import Path
@@ -73,7 +77,7 @@ def manage_audios(report, headers):
 def agents_assistant(request, report_id=None):
     #group = request.user.groups.first()
     #context = {"report_id": report_id, "group": group.name, "msg_num": get_msg_num(group)}
-    return render(request, "assistant/assistant.html", {"report_id": report_id})
+    return render(request, "assistant/assistant.html", {"report_id": report_id, "msg_init": get_config("MSG_INIT")})
 
 @group_required("agents")
 def chat_with_llm(request):

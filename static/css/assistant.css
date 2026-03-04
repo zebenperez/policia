@@ -2,11 +2,11 @@ body {
   box-sizing: border-box;
   font-family: 'DM Sans', sans-serif;
 }
-
+/*
 p {
 	color: #cccccc;
 }
-
+*/
 .pulse-ring {
   animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
 }
@@ -35,9 +35,8 @@ p {
   to { height: 24px; }
 }
 
-.message-enter {
-  animation: slideUp 0.3s ease-out;
-}
+
+
 
 @keyframes slideUp {
   from {
@@ -100,12 +99,224 @@ p {
      --tw-gradient-from: #0b5ed7 var(--tw-gradient-from-position) !important;
  }
 
-  .btn-voice {
-                border-radius: 9999px !important;
-                justify-content: center !important;
-                align-items: center !important;
-                width: 5rem !important;
-                height: 5rem !important;
-                font-size: 2rem !important;
-        }
+.btn-write,
+.btn-voice {
+	border-radius: 9999px !important;
+	justify-content: center !important;
+	align-items: center !important;
+	width: 4.5rem !important;
+	height: 4.5rem !important;
+	font-size: 2rem !important;
+}
 
+/*** ROW 1 ***/
+
+.div-header {
+	background: #000;
+	color: #fff;
+}
+
+/*** ROW 2 ***/
+
+.div-mode {
+	background: #a94444;
+	color: #fff;
+}
+
+/*** ROW 3 ***/
+
+.div-chat {
+	background: #fff;
+}
+
+.div-chat-container {
+	height: 60vh; 
+	overflow-y: scroll;
+	padding-bottom: 50px !important;
+}
+
+.message-enter {
+	animation: slideUp 0.3s ease-out;
+	display: flex;
+}
+
+.message-agent {
+	border-left: 4px solid #666;
+	width: 100% !important;
+}
+
+.message-box {
+	background: #e9ecef;
+}
+.message-box p {
+	color: #000;
+}
+
+p.text-response,
+p.text-advice {
+	color: #000 !important;
+
+}
+
+span.msg-time {
+	/*
+	font-size: 0.75rem;
+	line-height: 1rem;
+	display: block;
+	margin-top: 0.25rem;
+	*/
+	display:none;
+}
+
+
+
+
+/************************ SPINNER TEXT RESPONSE ***********************/
+
+
+  .glass-spinner {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 28px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  }
+
+  .spinner {
+    position:fixed;
+    top: 45%;
+    left: 30%;
+  }
+  .ring {
+    width: 60px;
+    height: 60px;
+    border: 5px solid rgba(25,28,50,0.1);
+    border-top: 5px solid #191c32;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    box-shadow: 0 0 10px #191c32, 0 0 20px rgba(25,28,50,0.3);
+  }
+
+  .ring::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    box-shadow: 0 0 15px #191c32, 0 0 30px rgba(25,28,50,0.2);
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(0.9); opacity: 0.6; }
+    50% { transform: scale(1.1); opacity: 1; }
+  }
+
+/************************ SPINNER ***********************/
+
+/************************ SPINNER RECORDING AUDIO ***********************/
+
+/* Contenedor del spinner compacto */
+.recorder-compact {
+  position: relative;
+  width: 60px;
+  height: 60px;
+}
+
+/* Círculo giratorio */
+.spinner-circle {
+  width: 100%;
+  height: 100%;
+  border: 3px solid rgba(255, 0, 0, 0.3);
+  border-top-color: red;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Punto rojo parpadeante en el centro */
+.record-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  background: red;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: blink 1s infinite;
+}
+
+/* Animaciones */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes blink {
+  0%, 50%, 100% { opacity: 1; }
+  25%, 75% { opacity: 0.3; }
+}
+  
+  
+  
+  
+  
+  
+  
+/************************ SPINNER RECORDING AUDIO ***********************/
+
+
+
+
+
+
+.div-footer {	
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+}
+
+/*** ROW 4 ***/
+
+.div-buttons {
+	background: #191c32;
+	color: #;
+}
+.div-buttons input {
+	background: #fff;
+	color: #191c32;
+	border-radius: 5px;
+	width:100%;
+}
+
+/*** ROW 5 ***/
+
+.div-mode-buttons {
+	background: #191c32;
+
+}
+.btn-urgency {
+	background-color: #7a2e2e;
+	border-radius: 10px;
+}
+.btn-intervenc {
+	background-color: #2e5c46;
+	border-radius: 10px;
+
+}
+.btn-consult {
+	background-color: #234a63;
+	border-radius: 10px;
+
+}

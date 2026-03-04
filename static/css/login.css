@@ -12,6 +12,19 @@ body {
 
 /*** CONTENT ***/
 
+.app-name {
+	--tw-text-opacity: 1;
+	color: #fff;
+	font-weight: 700;
+	font-size: 2rem;
+
+	background: #000;
+background: linear-gradient(180deg, rgba(0, 0, 0, 1) 42%, rgba(6, 14, 40, 1) 77%);
+
+background: #010514;
+background: linear-gradient(180deg, rgba(1, 5, 20, 1) 42%, rgba(6, 14, 40, 1) 77%);
+}
+
 .main-screen {
 	min-height: 100vh;
 	display: flex;
@@ -23,11 +36,12 @@ body {
 	--tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 	--tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
 	box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+        border: 1px solid #2f344a;
 	max-width: 64rem;
 	display: flex;
 	flex-direction: row;
 	overflow: hidden;
-	    border: 1px solid #2f344a;
+	background-color: #060e28;
 }
 
 
@@ -122,7 +136,7 @@ body {
 	--tw-text-opacity: 1;
 	color: white;
 	font-weight: 700;
-	font-size: 1.5rem;
+	font-size: 1.3rem;
 	line-height: 2rem;
 }
 .login-container p {
@@ -162,7 +176,7 @@ input#username.form-control.w-100.px-4.py-3,
 }
 
 .login-2-col {
-	display: flex;
+/*	display: flex;*/
 	justify-content: space-between;
 	align-items: center;
 }
@@ -213,6 +227,11 @@ button.btn-primary {
 	--tw-gradient-to: #7c3aed var(--tw-gradient-to-position);
 	--tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 	color:#ffffff;
+}
+button.btn-outline-primary {
+	border-radius: 0.5rem;
+	border: 1px solid #0d6efd;
+	color: #0d6efd;
 }
 
 .login-form * input { 	display: block; }
