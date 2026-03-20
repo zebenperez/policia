@@ -28,242 +28,26 @@
 
 
     <body>
-      <div class="main-screen p-4">
-      	<div class="main-container">
-	 <div class="row">
-		<div class="col-lg-12 col-12 app-name py-2 text-center">IAPol</div>
-		<div class="col-lg-12 col-12 py-2">
-			<div class="login-container">
-	               	        <h2>Acceso</h2>
-			</div>
-			<div class="login-form text-center px-4">
-				{% block login-right %}
-					{% include "login_form.html" %}
-				{% endblock %}
-			</div>
-		</div>
+        <div class="main-screen p-4">
+            <div class="main-container">
+	            <div class="row">
+		            <div class="col-lg-12 col-12 app-name py-2 text-center">IAPol</div>
+		            <div class="col-lg-12 col-12 py-2">
+			            <div class="login-container">
+				            <h2>Registro</h2><br />
+	               	        <p>Crea una cuenta para IAPol y selecciona el plan que prefieras</p>
+			            </div>
+			            <div class="login-form text-center px-4">
+				            {% block login-right %}
+					            {% include "login_form.html" %}
+				            {% endblock %}
+			            </div>
+		            </div>
 
-		<div class="col-12 p-4">
-			<div class="content">
-
-				<div class="grid grid-cols-1 md:grid-cols-3 gap-8 justify-center items-start max-w-6xl mx-auto">
-
-				<!-- Urgencia Button -->
-				<div class="w-full opacity-0 animate-fade-in delay-4"><button id="btn-urgencia" class="btn-primary btn-mode glow-urgencia w-full px-8 py-8 rounded-3xl font-bold text-lg relative"> <span class="relative z-10 flex flex-col items-center justify-center gap-4">
-				<div class="icon-wrapper">
-				<div class="w-16 h-16 rounded-full flex items-center justify-center" style="background: rgba(255,255,255,0.2);">
-				<svg class="w-10 h-10" fill="none" stroke="currentColor" viewbox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
-				</svg>
-				</div>
-				</div><span id="text-urgencia" class="font-orbitron text-xl tracking-widest">URGENCIA</span> </span> </button>
-				<div id="desc-urgencia" class="description-box px-6 py-1 rounded-2xl backdrop-blur-lg" style="background: rgba(59, 130, 246, 0.15); border: 2px solid rgba(59, 130, 246, 0.3);">
-				<p class="font-rajdhani text-base font-medium leading-relaxed" style="color: rgba(255,255,255,0.9);">⚡ Modo para situaciones críticas que requieren atención inmediata y respuesta rápida.</p>
-				</div>
-				</div>
-
-				<!-- Operador Button -->
-				<div class="w-full opacity-0 animate-fade-in delay-5"><button id="btn-operador" class="btn-primary btn-mode glow-operador w-full px-8 py-8 rounded-3xl font-bold text-lg relative"> <span class="relative z-10 flex flex-col items-center justify-center gap-4">
-				<div class="icon-wrapper">
-				<div class="w-16 h-16 rounded-full flex items-center justify-center" style="background: rgba(255,255,255,0.2);">
-				<svg class="w-10 h-10" fill="none" stroke="currentColor" viewbox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-				</svg>
-				</div>
-				</div><span id="text-operador" class="font-orbitron text-xl tracking-widest">OPERADOR</span> </span> </button>
-				<div id="desc-operador" class="description-box px-6 py-1 rounded-2xl backdrop-blur-lg" style="background: rgba(59, 130, 246, 0.15); border: 2px solid rgba(59, 130, 246, 0.3);">
-				<p class="font-rajdhani text-base font-medium leading-relaxed" style="color: rgba(255,255,255,0.9);">💼 Modo estándar de operación para el trabajo diario y tareas rutinarias del sistema.</p>
-				</div>
-				</div>
-
-				<!-- Instructor Button -->
-				<div class="w-full opacity-0 animate-fade-in delay-6"><button id="btn-instructor" class="btn-primary btn-mode glow-instructor w-full px-8 py-8 rounded-3xl font-bold text-lg relative"> <span class="relative z-10 flex flex-col items-center justify-center gap-4">
-				<div class="icon-wrapper">
-				<div class="w-16 h-16 rounded-full flex items-center justify-center" style="background: rgba(255,255,255,0.2);">
-				<svg class="w-10 h-10" fill="none" stroke="currentColor" viewbox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
-				</svg>
-				</div>
-				</div><span id="text-instructor" class="font-orbitron text-xl tracking-widest">INSTRUCTOR</span> </span> </button>
-				<div id="desc-instructor" class="description-box px-6 py-1 rounded-2xl backdrop-blur-lg" style="background: rgba(59, 130, 246, 0.15); border: 2px solid rgba(59, 130, 246, 0.3);">
-				<p class="font-rajdhani text-base font-medium leading-relaxed" style="color: rgba(255,255,255,0.9);">🎓 Modo de formación y enseñanza para capacitación de nuevos usuarios del sistema.</p>
-				</div>
-				</div>
-
-				</div>
-
-			</div>
-		</div>
-	</div>
-   </div>
-</div>
-
-
-
+		            <div class="col-12 p-4"> {% include "login-plans.html" %} </div>
+		        </div>
+	        </div>
+        </div>
     </body>
 </html>
 
- <script>
-    const defaultConfig = {
-      main_title: 'SELECCIONA TU MODO',
-      subtitle: 'ELIGE CÓMO DESEAS CONTINUAR',
-      button_urgencia: 'URGENCIA',
-      button_operador: 'OPERADOR',
-      button_instructor: 'INSTRUCTOR',
-      desc_urgencia: '⚡ Modo para situaciones críticas que requieren atención inmediata y respuesta rápida.',
-      desc_operador: '💼 Modo estándar de operación para el trabajo diario y tareas rutinarias del sistema.',
-      desc_instructor: '🎓 Modo de formación y enseñanza para capacitación de nuevos usuarios del sistema.',
-      background_color: '#0a0e1a',
-      text_color: '#ffffff',
-      urgencia_color: '#ef4444',
-      operador_color: '#3b82f6',
-      instructor_color: '#10b981'
-    };
-
-    let config = { ...defaultConfig };
-    let activeDescription = null;
-
-    async function onConfigChange(newConfig) {
-      config = { ...defaultConfig, ...newConfig };
-
-      // Update text content
-      document.getElementById('main-title').textContent = config.main_title || defaultConfig.main_title;
-      document.getElementById('subtitle').textContent = config.subtitle || defaultConfig.subtitle;
-      document.getElementById('text-urgencia').textContent = config.button_urgencia || defaultConfig.button_urgencia;
-      document.getElementById('text-operador').textContent = config.button_operador || defaultConfig.button_operador;
-      document.getElementById('text-instructor').textContent = config.button_instructor || defaultConfig.button_instructor;
-
-      // Update descriptions
-      document.querySelector('#desc-urgencia p').textContent = config.desc_urgencia || defaultConfig.desc_urgencia;
-      document.querySelector('#desc-operador p').textContent = config.desc_operador || defaultConfig.desc_operador;
-      document.querySelector('#desc-instructor p').textContent = config.desc_instructor || defaultConfig.desc_instructor;
-
-      // Update colors
-      document.getElementById('main-title').style.color = config.text_color || defaultConfig.text_color;
-      document.getElementById('subtitle').style.color = `${config.text_color || defaultConfig.text_color}b3`;
-    }
-
-    function mapToCapabilities(config) {
-      return {
-        recolorables: [
-          {
-            get: () => config.background_color || defaultConfig.background_color,
-            set: (value) => {
-              config.background_color = value;
-              if (window.elementSdk) window.elementSdk.setConfig({ background_color: value });
-            }
-          },
-          {
-            get: () => config.text_color || defaultConfig.text_color,
-            set: (value) => {
-              config.text_color = value;
-              if (window.elementSdk) window.elementSdk.setConfig({ text_color: value });
-            }
-          },
-          {
-            get: () => config.urgencia_color || defaultConfig.urgencia_color,
-            set: (value) => {
-              config.urgencia_color = value;
-              if (window.elementSdk) window.elementSdk.setConfig({ urgencia_color: value });
-            }
-          },
-          {
-            get: () => config.operador_color || defaultConfig.operador_color,
-            set: (value) => {
-              config.operador_color = value;
-              if (window.elementSdk) window.elementSdk.setConfig({ operador_color: value });
-            }
-          },
-          {
-            get: () => config.instructor_color || defaultConfig.instructor_color,
-            set: (value) => {
-              config.instructor_color = value;
-              if (window.elementSdk) window.elementSdk.setConfig({ instructor_color: value });
-            }
-          }
-        ],
-        borderables: [],
-        fontEditable: undefined,
-        fontSizeable: undefined
-      };
-    }
-
-    function mapToEditPanelValues(config) {
-      return new Map([
-        ['main_title', config.main_title || defaultConfig.main_title],
-        ['subtitle', config.subtitle || defaultConfig.subtitle],
-        ['button_urgencia', config.button_urgencia || defaultConfig.button_urgencia],
-        ['button_operador', config.button_operador || defaultConfig.button_operador],
-        ['button_instructor', config.button_instructor || defaultConfig.button_instructor],
-        ['desc_urgencia', config.desc_urgencia || defaultConfig.desc_urgencia],
-        ['desc_operador', config.desc_operador || defaultConfig.desc_operador],
-        ['desc_instructor', config.desc_instructor || defaultConfig.desc_instructor]
-      ]);
-    }
-
-    function toggleDescription(buttonId, descId) {
-      const descElement = document.getElementById(descId);
-      const button = document.getElementById(buttonId);
-
-      // If clicking the same button, toggle it
-      if (activeDescription === descId) {
-        descElement.classList.remove('show');
-        button.classList.remove('active');
-        activeDescription = null;
-      } else {
-        // Hide previous description
-        if (activeDescription) {
-          document.getElementById(activeDescription).classList.remove('show');
-          const prevButton = document.querySelector(`[data-desc="${activeDescription}"]`);
-          if (prevButton) prevButton.classList.remove('active');
-        }
-
-        // Show new description
-        descElement.classList.add('show');
-        button.classList.add('active');
-        activeDescription = descId;
-      }
-    }
-
-    // Button click handlers with enhanced feedback
-    document.getElementById('btn-urgencia').addEventListener('click', function() {
-      this.setAttribute('data-desc', 'desc-urgencia');
-      toggleDescription('btn-urgencia', 'desc-urgencia');
-
-      // Add pulse effect
-      this.style.animation = 'none';
-      setTimeout(() => {
-        this.style.animation = '';
-      }, 10);
-    });
-
-    document.getElementById('btn-operador').addEventListener('click', function() {
-      this.setAttribute('data-desc', 'desc-operador');
-      toggleDescription('btn-operador', 'desc-operador');
-
-      // Add pulse effect
-      this.style.animation = 'none';
-      setTimeout(() => {
-        this.style.animation = '';
-      }, 10);
-    });
-
-    document.getElementById('btn-instructor').addEventListener('click', function() {
-      this.setAttribute('data-desc', 'desc-instructor');
-      toggleDescription('btn-instructor', 'desc-instructor');
-
-      // Add pulse effect
-      this.style.animation = 'none';
-      setTimeout(() => {
-        this.style.animation = '';
-      }, 10);
-    });
-
-    // Initialize SDK
-    if (window.elementSdk) {
-      window.elementSdk.init({
-        defaultConfig,
-        onConfigChange,
-        mapToCapabilities,
-        mapToEditPanelValues
-      });
-    }
-  </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c0e2bfc77c0f443',t:'MTc2ODkwNzkxMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>

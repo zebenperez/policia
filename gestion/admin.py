@@ -9,7 +9,7 @@ class ConfigAdmin(admin.ModelAdmin):
     list_display = ('key', 'value')
 
 class ReportAdmin(admin.ModelAdmin):
-    list_display = ('code', 'date', 'employee')
+    list_display = ('code', 'conversation_id', 'date', 'employee')
 
 class ReportAudioAdmin(admin.ModelAdmin):
     list_display = ('report', 'text')

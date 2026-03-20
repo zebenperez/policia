@@ -141,7 +141,7 @@ background: linear-gradient(180deg, rgba(1, 5, 20, 1) 42%, rgba(6, 14, 40, 1) 77
 }
 .login-container p {
 	--tw-text-opacity: 1;
-	color: #ccc;
+	color: #7079a2;
 }
 .login-icon {
 	--tw-text-opacity: 1;
@@ -165,6 +165,11 @@ background: linear-gradient(180deg, rgba(1, 5, 20, 1) 42%, rgba(6, 14, 40, 1) 77
 	font-size: 0.875rem;
 	line-height: 1.25rem;
 }
+.login-form small {
+	color: #7079a2;
+	font-weight: normal;
+}
+
 
 input#username.form-control.w-100.px-4.py-3,
 .login-form input {
@@ -495,3 +500,87 @@ button.btn-outline-primary {
     .delay-4 { animation-delay: 0.7s; }
     .delay-5 { animation-delay: 0.9s; }
     .delay-6 { animation-delay: 1.1s; }
+
+
+
+
+
+
+
+/*** LAST VESION ***/
+
+.plan {
+	color: #ffffff;
+	text-align: center;
+	height: 100%;
+}
+.plan-name {
+	font-size: 1.3rem;
+	font-weight: 600;
+	text-transform: uppercase;
+}
+
+.plan-free {
+	border: 2px solid #b7eae1;
+	border-radius: 0.3rem!important;
+	height: 100%!important;
+	background-color: #0d2e35;
+}
+
+.free-price {
+	background-color: #b7eae1;
+	color: #0d2e35;
+	font-weight: 600;
+	font-size: 2rem;
+}
+.plan-pay {
+	border: 2px solid #2267ce;
+	border-radius: 0.3rem!important;
+	height: 100%!important;
+	background-color: #092663;
+}
+
+.pay-price {
+	background-color: #2267ce;
+	color: #ffffff;
+	font-weight: 600;
+	font-size: 2.5rem;
+}
+
+.mini {
+	font-size: 1.2rem;
+	font-weight: normal;
+	position: absolute !important;
+}
+
+i.far.fa-comment-dots,
+i.fas.fa-chart-bar,
+i.fas.fa-infinity
+{
+	font-size: 2.3rem;
+}
+
+.description {
+	color: #ffffff;
+	font-size:0.9rem;
+	min-height: 75px;
+}
+
+.btn.btn-free {
+	--tw-space-y-reverse: 0;
+	margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
+	margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
+	transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;
+	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+	transition-duration: 150ms;
+	font-weight: 500;
+	font-size: 1rem;
+	--tw-bg-opacity: 1;
+	border-radius: 0.5rem;
+	background: #1c8b5a;
+	color: #ffffff;
+}
+.btn.btn-free:hover  {
+	color: #ffffff;
+	background: #087C58;
+}

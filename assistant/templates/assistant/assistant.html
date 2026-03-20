@@ -2,15 +2,27 @@
 {% load static i18n assistant_tags %}
 
 {% block content %}
+	{% include "assistant/templates.html" %}
 
     <input type="hidden" id="report-id" value="{{ report_id }}">
 
     <!-- ROW 1 --> 
+    {% include "assistant/top-bar.html" %}
+    {%comment%}
     <div class="row div-header p-3 m-0">
         <div class="col-4">IAPOL</div>
-        <div class="col-7 text-end">{% trans "AGENTE EN TERRENO" %}</div>
-        <div class="col-1"><i class="fas fa-sign-out-alt"></i></div>
+        <div class="col-6 text-end">{% trans "AGENTE EN TERRENO" %}</div>
+        <div class="col-1 text-end">
+            <a id="new-chat" class="btn" href="{%url "chat-list"%}"><i class="fa fa-list"></i></a>
+        </div>
+        <div class="col-1">
+             <form action="{% url 'auth_logout' %}" method="post" id="frmLogout" class="m-0">
+                {% csrf_token %}
+                <a onclick="$('#frmLogout').submit();" title="Salir"> <i class="fas fa-sign-out-alt"></i></a>
+            </form>
+        </div>
     </div>
+    {%endcomment%}
     
     <!-- ROW 2 --> 
     <div class="row div-mode p-2 m-0"> <div class="col-12" id="bar-mode">MODO URGENTE</div> </div>
@@ -24,22 +36,41 @@
                     <span class="msg-time">Ahora</span>
                 </div>
             </div>
+            {% for msg in msg_list %}
+                {% if msg.type == "system" %}
+                    <script> addAssistantMessage("{{msg.msg}}", true); </script>
+                {% else %}
+                    <div class="message-enter gap-3">
+                        <div class="flex-1">
+                            <div class="message-box px-4 py-3"> <p id="welcome-text" class="">{{msg.msg}}</p> </div>
+                            <span class="msg-time">Ahora</span>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
         </div>
 
-        <div id="typing-indicator" class="spinner hidden px-5 pb-2">
-		<div class="ring"></div>
-	</div>
+        <div id="typing-indicator" class="spinner hidden px-5 pb-2"> <div class="ring"></div> </div>
     </div>
 
     	   
     <div class="row div-footer m-0">
+	    <div class="btn btn-warning btn-close-chat">
+		               <a id="new-chat" type="button" class="pt-2" href="{%url "chat-close" report_id%}"
+                	    onclick="return confirm('{%trans "¿Está seguro/a de terminar esta interacción?"%}');">
+			    <i class="fas fa-comment-slash"></i>
+			</a>
+		</div>
+
+
     	<!-- ROW 4 --> 
-	<div class="row m-0">
-            <div id="record-indicator" class="col-2 offset-5 recorder-compact hidden p-0"> 
+	    <div class="row m-0">
+       	     <div id="record-indicator" class="col-2 offset-5 recorder-compact hidden p-0"> 
 		    <div class="spinner-circle"></div>
 		    <div class="record-dot"></div>
             </div>
-	</div>
+	    </div>
+
 	    <div class="row div-buttons py-3 px-2 m-0">
 		    <div class="col-10 pl-0">
 		        <input type="text" id="text-input" placeholder="O escribe tu situación..." data-mode="urgencia" class="p-4">
@@ -55,7 +86,8 @@
 			    <button id="stop-btn" type="button" class="btn btn-danger btn-voice btn-action" 
                     style="background-color:#ff0000;display:none"> <i class="fa fa-pause"></i>
 		        </button>
-		    </div>
+
+			</div>
 	    </div>
 
 	    <!-- ROW 5 --> 

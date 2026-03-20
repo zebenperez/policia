@@ -1,0 +1,22 @@
+{% extends "base_assistant.html" %}
+{% load static i18n assistant_tags %}
+
+{% block content %}
+    {% include "assistant/top-bar.html" %}
+   
+    <div class="list-group">
+        {% for item in item_list %}
+            <div class="row list-chats" onclick="$('#report-{{item.id}}').toggle()">
+                <div class="col-6"> {% trans "Interacción" %}:</div>
+                <div class="col-4"> {{item.last_interaction|date:"d-m-Y"}} </div>
+                <div class="col-2">{{item.last_interaction|time:"H:i"}}</div>
+            </div>
+            <div id="report-{{item.id}}" class="py-1 px-3" style="display:none">
+                <div class="row">
+                    <div class="col-4"><a href="">{% trans "Informe" %}</a></div>
+                    <div class="col-4"><a href="">{% trans "Minuta" %}</a></div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

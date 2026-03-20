@@ -10,6 +10,7 @@ IA_LLM_ENDPOINTS = {
 
     "openai-upload-expte": "/openai/collection/{uuid:s}/upload",
     "openai-chat": "/openai/chat/{uuid:s}/{vs_id:s}",
+    "openai-chat-conversation": "/openai/chat-conversation/{uuid:s}",
     "openai-interpretation": "/openai/interpretation/{vs_id:s}",
     "openai-personal-data": "/openai/personal-data-recover/{vs_id:s}",
 

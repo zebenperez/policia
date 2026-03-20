@@ -42,7 +42,7 @@ function getPriorityColor(priority) {
     }
 }
 
-function addUserMessage(text) {
+/*function addUserMessage(text) {
     const chatContainer = byId('chat-container');
     if (!chatContainer) return;
 
@@ -58,9 +58,23 @@ function addUserMessage(text) {
     `;
     chatContainer.appendChild(messageDiv);
     chatContainer.scrollTop = chatContainer.scrollHeight;
+}*/
+
+function addUserMessage(text) {
+    const chatContainer = byId('chat-container');
+    if (!chatContainer) return;
+
+    const template = document.getElementById('user-message-template');
+    const clone = template.content.cloneNode(true);
+
+    // Insertar texto de forma segura
+    clone.querySelector('.message-text').textContent = text;
+
+    chatContainer.appendChild(clone);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
 }
 
-function addAssistantMessage(response, cfg) {
+/*function addAssistantMessage(response, cfg) {
     const chatContainer = byId('chat-container');
     if (!chatContainer) return;
 
@@ -92,6 +106,44 @@ function addAssistantMessage(response, cfg) {
     `;
     chatContainer.appendChild(messageDiv);
     chatContainer.scrollTop = chatContainer.scrollHeight;
+}*/
+function addAssistantMessage(response, init=false) {
+    if (init) {
+        //console.log(response);
+        response = JSON.parse(response.replace(/&#x27;/g, '"').replace(/\r?\n/g, '\\n'))
+    }
+
+    const chatContainer = byId('chat-container');
+    if (!chatContainer) return;
+
+    const template = document.getElementById('assistant-message-template');
+    const clone = template.content.cloneNode(true);
+
+    const priorityLabel = getPriorityLabel(response.priority);
+    const priorityClass = getPriorityClass(response.priority);
+    const priorityColor = getPriorityColor(response.priority);
+
+    // Rellenar datos
+    const messageBox = clone.querySelector('.message-box');
+    messageBox.classList.add(priorityClass);
+
+    clone.querySelector('.priority-dot').classList.add(priorityColor);
+
+    clone.querySelector('.priority-label').textContent = priorityLabel;
+
+    clone.querySelector('.message-text').innerHTML = marked.parse(response.message);
+
+    clone.querySelector('.message-advice').textContent = response.advice || '';
+
+    clone.querySelector('.posible-action').innerHTML = response.posible_action;
+    clone.querySelector('.decision').innerHTML = response.decision;
+    clone.querySelector('.basis-for-action').innerHTML = response.basis_for_action;
+    clone.querySelector('.factual-reason').innerHTML = response.factual_reason;
+    clone.querySelector('.critical-state').innerHTML = response.critical_state;
+    clone.querySelector('.structural-framework').innerHTML = response.structural_framework;
+
+    chatContainer.appendChild(clone);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
 }
 
 function showTypingIndicator() {
@@ -121,7 +173,7 @@ function showBtn(show){
     $("#"+show).show();
 }
 
-function normalizeAssistantResponse(payload) {
+/*function normalizeAssistantResponse(payload) {
     // payload puede ser:
     // - string
     // - {answer: "..."} o {answer: {priority,text,advice}}
@@ -148,7 +200,7 @@ function normalizeAssistantResponse(payload) {
     }
 
     return { priority: "medium", text: String(candidate), advice: "" };
-}
+}*/
 
 function speakText(text, lang = "es-ES") {
     if (!text) return;
@@ -187,15 +239,14 @@ function speakText(text, lang = "es-ES") {
 
 async function postChat(text, mode) {
     apiChatUrl = "/assistant/chat-with-llm"; // DO NOT CHANGE
+    //
     form = new FormData();
     const report_id = byId('report-id') ? byId('report-id').value : null;
     form.append("report_id", report_id);
     form.append("message", text);
     form.append("mode", mode);
     const csrftoken = document.cookie.split('; ').find(row => row.startsWith('csrftoken='));
-    if (csrftoken) {
-        form.append("csrfmiddlewaretoken", csrftoken.split('=')[1]);
-    }
+    if (csrftoken) { form.append("csrfmiddlewaretoken", csrftoken.split('=')[1]); }
 
     //console.log("Posting chat message to backend:", { report_id, text });
     const resp = await fetch(apiChatUrl, {
@@ -212,17 +263,21 @@ async function sendTextMessage(text) {
     showTypingIndicator();
     try {
         const data = await postChat(text, input.dataset.mode);
+        console.log("--1--");
+        console.log(data);
 
         // Normaliza y renderiza
-        const assistant = normalizeAssistantResponse(data);
+        //const assistant = normalizeAssistantResponse(data);
         hideTypingIndicator();
-        addAssistantMessage(assistant);
+        //addAssistantMessage(assistant);
+        addAssistantMessage(data);
 
         //byId("mic-btn").style.display = "none";
         //byId("btn-stop-speak").style.display = "block";
         showBtn("stop-btn");
         //const spoken = [assistant.text, assistant.advice].filter(Boolean).join(" ");
-        const spoken = assistant.advice ? assistant.advice : assistant.text;
+        //const spoken = assistant.advice ? assistant.advice : assistant.text;
+        const spoken = data.advice ? data.advice : data.text;
         speakText(spoken, "es-ES");
     } catch (e) {
         hideTypingIndicator();

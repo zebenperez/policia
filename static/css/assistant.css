@@ -109,6 +109,29 @@ p {
 	font-size: 2rem !important;
 }
 
+.btn-close-chat {
+	border-radius: 9999px !important;
+	width: 3.5rem !important;
+	height: 3.5rem !important;
+	font-size: 1.5rem !important;
+	color: #ffffff;
+
+	position: fixed;
+	right: 20px; 
+	bottom: 200px;
+	z-index: 999999999;
+
+}
+
+.row.list-chats {
+	background-color: #e2e3e5;
+	color: #41464b;
+	padding: 0.5rem 1rem;
+	border-top: 1px solid white !important;
+	border-bottom: 1px solid #ccc !important;
+    cursor: pointer;
+}
+
 /*** ROW 1 ***/
 
 .div-header {

@@ -13,30 +13,31 @@
     <input type="hidden" name="next" value="{% url 'assistant' %}" />
 
     <div class="row">
-	<div class="col-lg-4 col-12 mb-2">
-		{#<label for="email" class="mb-1">Usuario / Correo electrónico</label>#}
-		<input type="text" value="" name="username" id="id_username" class="form-control w-100 px-4 py-3" placeholder="{% trans "Escribe usuario o correo electrónico" %}"> 
-	</div>
+	    <div class="col-lg-4 col-12 mb-2">
+		    {#<label for="email" class="mb-1">Usuario / Correo electrónico</label>#}
+		    <input type="text" value="" name="username" id="id_username" class="form-control w-100 px-4 py-3" 
+                placeholder="{% trans "Nombre completo" %}"> 
+	    </div>
 
-	<div class="col-lg-4 col-12 mb-2">
-           <div class="login-2-col mb-1">
-		{#<label for="password" class="block">Contraseña</label>#}
-		<!--<a href="#">¿Olvidó su contraseña?</a>-->
-	   </div>
-	   <div class="password-eye">
-		<input type="password" value="" name="password" class="form-control w-100 px-4 py-3" id="id_password" placeholder="{% trans "Escribe la contraseña" %}">
-	   </div>
-	</div>
+	    <div class="col-lg-4 col-12 mb-2">
+            <div class="login-2-col mb-1">
+		        {#<label for="password" class="block">Contraseña</label>#}
+		        <!--<a href="#">¿Olvidó su contraseña?</a>-->
+	        </div>
+	        <div class="password-eye">
+		        <input type="password" value="" name="password" class="form-control w-100 px-4 py-3" id="id_password" 
+                    placeholder="{% trans "Correo electrónico" %}">
+	        </div>
+	    </div>
 	
-	<div class="col-lg-4 col-12 mb-2">
-		<button type="submit" class="btn-outline-primary w-100 py-3 px-4"> {% trans "Iniciar Sesión" %} </button>
-	</div>
-   </div>
+	    <div class="col-lg-4 col-12 mb-2">
+		    <button type="submit" class="btn-outline-primary w-100 py-3 px-4"> {% trans "Entrar" %} </button>
+	    </div>
+    </div>
 	{% comment %}
 	<div class="remember">
 		<input type="checkbox" id="remember" name="remember">
 		<label for="remember" class="ml-2">Recordar mis datos</label>
 	</div>
 	{% endcomment %}
-
 </form>

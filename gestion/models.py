@@ -72,6 +72,7 @@ def upload_audio(instance, filename):
     return '/'.join(['%s' % (folder), datetime.datetime.now().strftime("%Y%m%d%H%M%S") + ascii_filename])
 
 class Report(models.Model):
+    close = models.BooleanField(verbose_name = _('Cerrado'), default=False)
     uuid = models.CharField(max_length=100, verbose_name = _('UUID'), default="")
     date = models.DateTimeField(default=datetime.datetime.now(), null=True, verbose_name=_('Fecha'), blank=True)
     last_interaction = models.DateTimeField(default=timezone.now(),null=True,verbose_name=_('Última interacción'),blank=True)
@@ -111,7 +112,7 @@ class Report(models.Model):
     @staticmethod
     def get_today_by_emp(emp):
         today = timezone.localdate()
-        return Report.objects.filter(last_interaction__date=today).first()
+        return Report.objects.filter(last_interaction__date=today, close=False).first()
 
     class Meta:
         verbose_name = _('Report')
@@ -130,6 +131,18 @@ class ReportAudio(models.Model):
         verbose_name = _('Report Audio')
         verbose_name_plural = _('Reports Audios')
         ordering = ["-id"]
+
+class ReportMsg(models.Model):
+    #ia = models.BooleanField(verbose_name = _('Recibido por IA'), default=False)
+    date = models.DateTimeField(default=datetime.datetime.now(), null=True, verbose_name=_('Fecha'), blank=True)
+    text = models.TextField(verbose_name = _('Texto'), default="")
+    report = models.ForeignKey(Report, verbose_name=_('Informe'), on_delete=models.CASCADE, null=True, related_name="messages")
+
+    class Meta:
+        verbose_name = _('Report Message')
+        verbose_name_plural = _('Reports Messages')
+        ordering = ["id"]
+
 
 '''
     Knowledge Docs
