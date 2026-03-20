@@ -13,8 +13,10 @@
                     <p class="factual-reason text-sm leading-relaxed"></p>
                     <p class="critical-state text-sm leading-relaxed"></p>
                     <p class="structural-framework text-sm leading-relaxed"></p>
+                    {% if request.user.username == "agente" %}
                     <hr/>
                     <p class="message-text text-sm leading-relaxed"></p>
+                    {% endif %}
                 </div>
                 <div class="px-4">
                     <p class="message-advice text-sm"></p>

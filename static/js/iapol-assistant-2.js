@@ -131,7 +131,9 @@ function addAssistantMessage(response, init=false) {
 
     clone.querySelector('.priority-label').textContent = priorityLabel;
 
-    clone.querySelector('.message-text').innerHTML = marked.parse(response.message);
+    try {
+        clone.querySelector('.message-text').innerHTML = marked.parse(response.message);
+    } catch(e){}
 
     clone.querySelector('.message-advice').textContent = response.advice || '';
 
