@@ -143,6 +143,8 @@ function addAssistantMessage(response, init=false) {
     clone.querySelector('.factual-reason').innerHTML = response.factual_reason;
     clone.querySelector('.critical-state').innerHTML = response.critical_state;
     clone.querySelector('.structural-framework').innerHTML = response.structural_framework;
+    clone.querySelector('.structural-question').innerHTML = response.structural_question;
+    clone.querySelector('.facts-list').innerHTML = response.facts_list;
 
     chatContainer.appendChild(clone);
     chatContainer.scrollTop = chatContainer.scrollHeight;

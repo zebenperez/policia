@@ -2,7 +2,7 @@
 
 <div class="row div-header p-3 m-0">
     <div class="col-2">IAPOL</div>
-    <div class="col-7 text-center">{% trans "AGENTE EN TERRENO" %}</div>
+    <div class="col-7 text-center">{% trans "AGENTE EN TERRENO" %}: {{request.user}}</div>
     <div class="col-1"> <a class="" href="{%url "assistant"%}"><i class="fa fa-comment"></i></a> </div>
     <div class="col-1"> <a class="" href="{%url "chat-list"%}"><i class="fa fa-list"></i></a> </div>
     <div class="col-1">

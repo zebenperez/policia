@@ -112,7 +112,7 @@ class Report(models.Model):
     @staticmethod
     def get_today_by_emp(emp):
         today = timezone.localdate()
-        return Report.objects.filter(last_interaction__date=today, close=False).first()
+        return Report.objects.filter(employee=emp, last_interaction__date=today, close=False).first()
 
     class Meta:
         verbose_name = _('Report')
