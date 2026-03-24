@@ -199,6 +199,8 @@ def chat_with_llm(request):
             "top_k": 5
         }
 
+        #print("--1--")
+        #print(params)
         response = requests.get(chat_url, params=params, headers=headers, verify=False, timeout=1200)
         if response.status_code != 200:
             log2file("Error in LLM chat:" + response.text)

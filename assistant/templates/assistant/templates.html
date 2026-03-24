@@ -2,19 +2,21 @@
     <div class="message-enter flex gap-3">
         <div class="flex-1">
             <div class="overflow-hidden">
-                <div class="message-box px-4 py-3">
-                    <div class="flex items-center gap-2 mb-2">
-                        <div class="priority-dot w-2 h-2"></div>
-                        <span class="priority-label small"></span>
+                <div class="message-box px-3 py-3">
+                    <div class="flex items-center mb-2 px-1 priority-dot">
+			    {# <div class="priority-dot w-2 h-2"></div> #}
+                        <span class="priority-label"></span>
                     </div>
+		    <div class="" style="font-weight: 600;">
                     BASE PARA ACCIÓN: <span class="posible-action text-sm leading-relaxed"></span>
-                    - <span class="basis-for-action text-sm leading-relaxed"></span>
-                    - <span class="decision text-sm leading-relaxed"></span><br/>
-                    <p class="factual-reason text-sm leading-relaxed"></p>
-                    <p class="facts-list text-sm leading-relaxed"></p>
-                    <p class="critical-state text-sm leading-relaxed"></p>
-                    <p class="structural-framework text-sm leading-relaxed"></p>
-                    <p class="structural-question text-sm leading-relaxed"></p>
+	                    - <span class="basis-for-action text-sm leading-relaxed"></span>
+        	            - <span class="decision text-sm leading-relaxed"></span><br/>
+		    </div>
+                    <div class="factual-reason text-sm leading-relaxed"></div>
+                    <div class="facts-list text-sm leading-relaxed"></div>
+                    <div class="critical-state text-sm leading-relaxed"></div>
+                    <div class="structural-framework text-sm leading-relaxed"></div>
+                    <div class="structural-question text-sm leading-relaxed"></div>
                     {% if request.user.username == "agente" %}
                         <hr/>
                         <p class="message-text text-sm leading-relaxed"></p>

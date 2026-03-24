@@ -3,17 +3,18 @@
 <div class="row div-mode-buttons m-0 pb-2 p-0">
     <div class="col-4 px-1">
     	<div class="btn-urgency text-center py-4">
-	    <button class="btn btn-mode text-white px-0" data-value="urgencia"> <strong>URGENCIA</strong> </button>
+	        <button class="btn btn-mode text-white px-0" data-value="urgencia" data-color="#7a2e2e"><strong>URGENCIA</strong></button>
     	</div>
     </div>
     <div class="col-4 px-1">
     	<div class="btn-intervenc text-center py-4">
-            <button class="btn btn-mode text-white px-0" data-value="intervencion"> <strong>INTERVENCIÓN</strong> </button>
+            <button class="btn btn-mode text-white px-0" data-value="intervencion" data-color="#2e5c46">
+                <strong>INTERVENCIÓN</strong></button>
     	</div>
     </div>
     <div class="col-4 px-1">
     	<div class="btn-consult text-center py-4">
-            <button class="btn btn-mode text-white px-0" data-value="consulta"> <strong>CONSULTA</strong></button>
+            <button class="btn btn-mode text-white px-0" data-value="consulta" data-color="#234a63"><strong>CONSULTA</strong></button>
 	    </div>
     </div>
 </div>
@@ -23,6 +24,8 @@
         $(".btn-mode").removeClass("text-primary").addClass("text-white");
         $(this).addClass("text-primary").removeClass("text-white");
         $("#text-input").attr("data-mode", $(this).data('value'));
+        $("#bar-mode").css("background", $(this).data('color'));
+        $("#bar-mode > div").html("MODO "+$(this).data('value'));
     });
 </script>
  

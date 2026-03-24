@@ -42,24 +42,6 @@ function getPriorityColor(priority) {
     }
 }
 
-/*function addUserMessage(text) {
-    const chatContainer = byId('chat-container');
-    if (!chatContainer) return;
-
-    const messageDiv = document.createElement('div');
-    messageDiv.className = 'message-enter flex justify-end';
-    messageDiv.innerHTML = `
-        <div class="message-agent">
-            <div class="message-box px-4 py-3">
-                <p class="">${escapeHtml(text)}</p>
-            </div>
-            <span class="msg-time">Ahora</span>
-        </div>
-    `;
-    chatContainer.appendChild(messageDiv);
-    chatContainer.scrollTop = chatContainer.scrollHeight;
-}*/
-
 function addUserMessage(text) {
     const chatContainer = byId('chat-container');
     if (!chatContainer) return;
@@ -74,39 +56,6 @@ function addUserMessage(text) {
     chatContainer.scrollTop = chatContainer.scrollHeight;
 }
 
-/*function addAssistantMessage(response, cfg) {
-    const chatContainer = byId('chat-container');
-    if (!chatContainer) return;
-
-    const messageDiv = document.createElement('div');
-    messageDiv.className = 'message-enter flex gap-3';
-
-    const priorityLabel = getPriorityLabel(response.priority);
-    const priorityClass = getPriorityClass(response.priority);
-    const priorityColor = getPriorityColor(response.priority);
-
-    const html = marked.parse(response.text);
-    //const html = `${escapeHtml(response.text || '')}`;
-    messageDiv.innerHTML = `
-        <div class="flex-1">
-            <div class="overflow-hidden">
-                <div class="${priorityClass} px-4 py-3">
-                    <div class="flex items-center gap-2 mb-2">
-                        <div class="w-2 h-2 ${priorityColor}"></div>
-                        <span class="small">${escapeHtml(priorityLabel)}</span>
-                    </div>
-                    <p class="text-response">${html} </p>
-                </div>
-                <div class="px-4 pb-2">
-                    <p class="text-advice">${escapeHtml(response.advice || '')}</p>
-                </div>
-            </div>
-            <span class="msg-time">Ahora</span>
-        </div>
-    `;
-    chatContainer.appendChild(messageDiv);
-    chatContainer.scrollTop = chatContainer.scrollHeight;
-}*/
 function addAssistantMessage(response, init=false) {
     if (init) {
         //console.log(response);
@@ -122,6 +71,8 @@ function addAssistantMessage(response, init=false) {
     const priorityLabel = getPriorityLabel(response.priority);
     const priorityClass = getPriorityClass(response.priority);
     const priorityColor = getPriorityColor(response.priority);
+
+    const factsList = `<ul> ${response.facts_list.map(item => `<li>${item}</li>`).join('')} </ul>`;
 
     // Rellenar datos
     const messageBox = clone.querySelector('.message-box');
@@ -144,7 +95,8 @@ function addAssistantMessage(response, init=false) {
     clone.querySelector('.critical-state').innerHTML = response.critical_state;
     clone.querySelector('.structural-framework').innerHTML = response.structural_framework;
     clone.querySelector('.structural-question').innerHTML = response.structural_question;
-    clone.querySelector('.facts-list').innerHTML = response.facts_list;
+    //clone.querySelector('.facts-list').innerHTML = response.facts_list;
+    clone.querySelector('.facts-list').innerHTML = factsList;
 
     chatContainer.appendChild(clone);
     chatContainer.scrollTop = chatContainer.scrollHeight;
@@ -384,5 +336,56 @@ $(document).ready(()=>{
     });
 
 });
+
+/*function addAssistantMessage(response, cfg) {
+    const chatContainer = byId('chat-container');
+    if (!chatContainer) return;
+
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'message-enter flex gap-3';
+
+    const priorityLabel = getPriorityLabel(response.priority);
+    const priorityClass = getPriorityClass(response.priority);
+    const priorityColor = getPriorityColor(response.priority);
+
+    const html = marked.parse(response.text);
+    //const html = `${escapeHtml(response.text || '')}`;
+    messageDiv.innerHTML = `
+        <div class="flex-1">
+            <div class="overflow-hidden">
+                <div class="${priorityClass} px-4 py-3">
+                    <div class="flex items-center gap-2 mb-2">
+                        <div class="w-2 h-2 ${priorityColor}"></div>
+                        <span class="small">${escapeHtml(priorityLabel)}</span>
+                    </div>
+                    <p class="text-response">${html} </p>
+                </div>
+                <div class="px-4 pb-2">
+                    <p class="text-advice">${escapeHtml(response.advice || '')}</p>
+                </div>
+            </div>
+            <span class="msg-time">Ahora</span>
+        </div>
+    `;
+    chatContainer.appendChild(messageDiv);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+}*/
+/*function addUserMessage(text) {
+    const chatContainer = byId('chat-container');
+    if (!chatContainer) return;
+
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'message-enter flex justify-end';
+    messageDiv.innerHTML = `
+        <div class="message-agent">
+            <div class="message-box px-4 py-3">
+                <p class="">${escapeHtml(text)}</p>
+            </div>
+            <span class="msg-time">Ahora</span>
+        </div>
+    `;
+    chatContainer.appendChild(messageDiv);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+}*/
 
 
