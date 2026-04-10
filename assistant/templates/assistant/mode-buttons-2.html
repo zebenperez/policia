@@ -1,0 +1,39 @@
+{% load static i18n pwa_tags %}
+
+<div class="row div-mode-buttons m-0 pb-2 p-0">
+    <div class="col-3 p-0 border-main">
+    	<div class="btn-urgency text-center">
+	     <button class="btn btn-mode text-white px-0" data-value="F1" data-color="#7a2e2e" data-title="Jurídico-Normativa">
+    		<strong>F1</strong><br/><span class="fs-medium">Jurídico-Normativa</span></button>
+    	</div>
+    </div>
+    <div class="col-3 p-0 border-main">
+    	<div class="btn-intervenc text-center">
+            <button class="btn btn-mode text-white px-0" data-value="F2" data-color="#2e5c46" data-title="Supuestos Hipotéticos">
+                <strong>F2</strong><br/><span class="fs-medium">Supuestos hipotéticos</span></button>
+    	</div>
+    </div>
+    <div class="col-3 p-0 border-main">
+    	<div class="btn-consult text-center">
+            <button class="btn btn-mode text-white px-0" data-value="F3" data-color="#234a63" data-title="Comparecencias Hipotéticas">
+                <strong>F3</strong><br/><span class="fs-medium">Comparecencias hipotéticas</span></button>
+	    </div>
+    </div>
+    <div class="col-3 p-0 border-main">
+    	<div class="btn-consult text-center">
+            <button class="btn btn-mode text-white px-0" data-value="F4" data-color="#234a63" data-title="Indicios Racionales">
+                <strong>F4</strong><br/><span class="fs-medium">Indicios racionales</span></button>
+	    </div>
+    </div>
+</div>
+
+<script>
+    $(".btn-mode").click(function(){
+        $(".btn-mode").removeClass("text-primary").addClass("text-white");
+        $(this).addClass("text-primary").removeClass("text-white");
+        $("#text-input").attr("data-submode", $(this).data('value'));
+        $("#bar-mode").css("background", $(this).data('color'));
+        $("#bar-mode > div").html("MODO "+$(this).data('title'));
+    });
+</script>
+ 

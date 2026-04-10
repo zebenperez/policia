@@ -2,22 +2,6 @@
 {% load static i18n assistant_tags %}
 
 {% block content %}
-    {% include "assistant/top-bar.html" %}
-
-    <div class="row my-5 mx-4">
-        <div class="col-12 btn-intervenc text-center py-4">
-		    <a class="btn btn-mode text-white px-0 py-16" href="{%url "assistant-intervention"%}">
-                {% trans "MODO" %}<br /><span class="fs-1">{% trans "INTERVENCIÓN" %}</span></a>
-        </div>
-    </div>
-    <div class="row my-5 mx-4">
-        <div class="col-12 btn-consult text-center py-4">
-		    <a class="btn btn-mode text-white px-0 py-16" href="{%url "assistant-consultation"%}">
-                {% trans "MODO" %}<br /><span class="fs-1">{% trans "CONSULTA" %}</span></a>
-        </div>
-    </div>
-
-    {%comment%}
     {% include "assistant/templates.html" %}
 
     <input type="hidden" id="report-id" value="{{ report_id }}">
@@ -26,7 +10,7 @@
     {% include "assistant/top-bar.html" %}
         
     <!-- ROW 2 --> 
-    <div class="row div-mode p-2 m-0" id="bar-mode"> <div class="col-12">MODO URGENCIA</div> </div>
+    <div class="row div-mode p-2 m-0" id="bar-mode"> <div class="col-12">Jurídico-Normativa</div> </div>
 
     <!-- ROW 3 --> 
     <div id="app" class="div-chat">
@@ -60,7 +44,8 @@
 
 	    <div class="row div-buttons py-3 px-2 m-0">
 		    <div class="col-10 pl-0">
-		        <input type="text" id="text-input" placeholder="O escribe tu situación..." data-mode="urgencia" class="p-4">
+		        <input type="text" id="text-input" placeholder="O escribe tu situación..." data-mode="consulta" data-submode="F1" 
+                    class="p-4">
 		    </div>
 		    <div class="col-2 p-0">
 		        <button id="send-btn" class="btn btn-primary btn-write btn-action" style="display:none"> 
@@ -77,7 +62,6 @@
 	    </div>
 
 	    <!-- ROW 5 --> 
-	    {% include "assistant/mode-buttons.html" %}
+        {% include "assistant/mode-buttons-2.html" %}
     </div>
-    {%endcomment%}
 {% endblock %}

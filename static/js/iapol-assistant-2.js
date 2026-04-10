@@ -42,26 +42,22 @@ function getPriorityColor(priority) {
     }
 }
 
-function addUserMessage(text) {
+function addUserMessage(text, temp="user-message-template") {
+    console.log(temp);
     const chatContainer = byId('chat-container');
     if (!chatContainer) return;
 
-    const template = document.getElementById('user-message-template');
+    const template = document.getElementById(temp);
     const clone = template.content.cloneNode(true);
 
     // Insertar texto de forma segura
-    clone.querySelector('.message-text').textContent = text;
+    clone.querySelector('.message-text').innerHTML = text.replace(/\n/g, "<br>");
 
     chatContainer.appendChild(clone);
     chatContainer.scrollTop = chatContainer.scrollHeight;
 }
 
-function addAssistantMessage(response, init=false) {
-    if (init) {
-        //console.log(response);
-        response = JSON.parse(response.replace(/&#x27;/g, '"').replace(/\r?\n/g, '\\n'))
-    }
-
+function addAssistantMessage(response) {
     const chatContainer = byId('chat-container');
     if (!chatContainer) return;
 
@@ -102,6 +98,21 @@ function addAssistantMessage(response, init=false) {
     chatContainer.scrollTop = chatContainer.scrollHeight;
 }
 
+function addMessage(data, init=false) {
+    if (init) { data = JSON.parse(data.replace(/&#x27;/g, '"').replace(/\r?\n/g, '\\n')).message }
+
+    // MENSAJE DEL USUARIO
+    if (typeof data === "string") {
+        addUserMessage(data);
+    } else {
+        //MENSAJE DEL SISTEMA
+        if (data.mode == "urgencia")
+            addAssistantMessage(data);
+        else
+            addUserMessage(data.message, data.mode+"-message-template");
+    }
+}
+
 function showTypingIndicator() {
     const ti = byId('typing-indicator');
     if (ti) ti.classList.remove('hidden');
@@ -128,35 +139,6 @@ function showBtn(show){
     $(".btn-action").hide();
     $("#"+show).show();
 }
-
-/*function normalizeAssistantResponse(payload) {
-    // payload puede ser:
-    // - string
-    // - {answer: "..."} o {answer: {priority,text,advice}}
-    // - {response: {priority,text,advice}}
-    // - {priority,text,advice}
-    if (payload == null) { return { priority: "medium", text: "", advice: "" }; }
-
-    if (typeof payload === "string") { return { priority: "medium", text: payload, advice: "" }; }
-
-    // Si viene un objeto "respuesta" en campos comunes:
-    const candidate =
-        payload.response ??
-        payload.answer ??
-        payload.assistant ??
-        payload;
-
-    if (typeof candidate === "string") { return { priority: "medium", text: candidate, advice: "" }; }
-
-    if (candidate && typeof candidate === "object") {
-        const priority = candidate.priority || payload.priority || "medium";
-        const text = candidate.text || payload.text || candidate.message || "";
-        const advice = candidate.advice || payload.advice || candidate.recommendation || "";
-        return { priority: priority, text: text, advice: advice };
-    }
-
-    return { priority: "medium", text: String(candidate), advice: "" };
-}*/
 
 function speakText(text, lang = "es-ES") {
     if (!text) return;
@@ -193,7 +175,7 @@ function speakText(text, lang = "es-ES") {
     speechSynthesis.speak(utterance);
 }
 
-async function postChat(text, mode) {
+async function postChat(text, mode, submode) {
     apiChatUrl = "/assistant/chat-with-llm"; // DO NOT CHANGE
     //
     form = new FormData();
@@ -201,6 +183,7 @@ async function postChat(text, mode) {
     form.append("report_id", report_id);
     form.append("message", text);
     form.append("mode", mode);
+    form.append("submode", submode);
     const csrftoken = document.cookie.split('; ').find(row => row.startsWith('csrftoken='));
     if (csrftoken) { form.append("csrfmiddlewaretoken", csrftoken.split('=')[1]); }
 
@@ -218,21 +201,25 @@ async function sendTextMessage(text) {
 
     showTypingIndicator();
     try {
-        const data = await postChat(text, input.dataset.mode);
-        console.log("--1--");
+        const data = await postChat(text, input.dataset.mode, input.dataset.submode);
+        //console.log("--1--");
         console.log(data);
 
-        // Normaliza y renderiza
-        //const assistant = normalizeAssistantResponse(data);
         hideTypingIndicator();
-        //addAssistantMessage(assistant);
-        addAssistantMessage(data);
+        addMessage(data);
+        /*if (data.status == "error") {
+            addUserMessage(data.message);
+        } else {
+            console.log("--1--");
+            console.log(data.mode);
+            if (data.mode == "urgencia") {
+                addAssistantMessage(data);
+            } else{   
+                addUserMessage(data.message, "message-operador");
+            }
+        }*/
 
-        //byId("mic-btn").style.display = "none";
-        //byId("btn-stop-speak").style.display = "block";
         showBtn("stop-btn");
-        //const spoken = [assistant.text, assistant.advice].filter(Boolean).join(" ");
-        //const spoken = assistant.advice ? assistant.advice : assistant.text;
         const spoken = data.advice ? data.advice : data.text;
         speakText(spoken, "es-ES");
     } catch (e) {
@@ -336,6 +323,66 @@ $(document).ready(()=>{
     });
 
 });
+
+/*async function sendTextMessage(text) {
+    const input = byId('text-input');
+    addUserMessage(text);
+
+    showTypingIndicator();
+    try {
+        const data = await postChat(text, input.dataset.mode);
+        //console.log("--1--");
+        console.log(data);
+
+        // Normaliza y renderiza
+        //const assistant = normalizeAssistantResponse(data);
+        hideTypingIndicator();
+        //addAssistantMessage(assistant);
+        addAssistantMessage(data);
+
+        //byId("mic-btn").style.display = "none";
+        //byId("btn-stop-speak").style.display = "block";
+        showBtn("stop-btn");
+        //const spoken = [assistant.text, assistant.advice].filter(Boolean).join(" ");
+        //const spoken = assistant.advice ? assistant.advice : assistant.text;
+        const spoken = data.advice ? data.advice : data.text;
+        speakText(spoken, "es-ES");
+    } catch (e) {
+        hideTypingIndicator();
+        console.error(e);
+        addAssistantMessage({priority:"low",text:"No he podido enviar el mensaje.",advice:"Inténtalo de nuevo en unos segundos."});
+    }
+}*/
+
+/*function normalizeAssistantResponse(payload) {
+    // payload puede ser:
+    // - string
+    // - {answer: "..."} o {answer: {priority,text,advice}}
+    // - {response: {priority,text,advice}}
+    // - {priority,text,advice}
+    if (payload == null) { return { priority: "medium", text: "", advice: "" }; }
+
+    if (typeof payload === "string") { return { priority: "medium", text: payload, advice: "" }; }
+
+    // Si viene un objeto "respuesta" en campos comunes:
+    const candidate =
+        payload.response ??
+        payload.answer ??
+        payload.assistant ??
+        payload;
+
+    if (typeof candidate === "string") { return { priority: "medium", text: candidate, advice: "" }; }
+
+    if (candidate && typeof candidate === "object") {
+        const priority = candidate.priority || payload.priority || "medium";
+        const text = candidate.text || payload.text || candidate.message || "";
+        const advice = candidate.advice || payload.advice || candidate.recommendation || "";
+        return { priority: priority, text: text, advice: advice };
+    }
+
+    return { priority: "medium", text: String(candidate), advice: "" };
+}*/
+
 
 /*function addAssistantMessage(response, cfg) {
     const chatContainer = byId('chat-container');

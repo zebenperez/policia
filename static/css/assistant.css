@@ -182,6 +182,18 @@ p {
 	color: #000;
 }
 
+.message-intervencion {
+	border-left: 4px solid #2e5c46;
+	border-left: 4px solid green;
+	width: 100% !important;
+}
+
+.message-consulta {
+	border-left: 4px solid #2e5c46;
+	border-left: 4px solid blue;
+	width: 100% !important;
+}
+
 p.text-response,
 p.text-advice {
 	color: #000 !important;
@@ -324,7 +336,6 @@ span.msg-time {
 
 .div-buttons {
 	background: #191c32;
-	color: #;
 }
 .div-buttons input {
 	background: #fff;
@@ -352,4 +363,11 @@ span.msg-time {
 	background-color: #234a63;
 	border-radius: 10px;
 
+}
+
+span.fs-medium {
+	font-size: 0.75rem;
+}
+.border-main {
+	border:2px solid #191c32;
 }

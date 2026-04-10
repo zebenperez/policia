@@ -74,6 +74,7 @@ def upload_audio(instance, filename):
 class Report(models.Model):
     close = models.BooleanField(verbose_name = _('Cerrado'), default=False)
     uuid = models.CharField(max_length=100, verbose_name = _('UUID'), default="")
+    mode = models.CharField(max_length=20, verbose_name = _('Mode'), default="")
     date = models.DateTimeField(default=datetime.datetime.now(), null=True, verbose_name=_('Fecha'), blank=True)
     last_interaction = models.DateTimeField(default=timezone.now(),null=True,verbose_name=_('Última interacción'),blank=True)
     #text = models.TextField(verbose_name = _('Texto transcrito'), default="")
@@ -113,6 +114,10 @@ class Report(models.Model):
     def get_today_by_emp(emp):
         today = timezone.localdate()
         return Report.objects.filter(employee=emp, last_interaction__date=today, close=False).first()
+
+    @staticmethod
+    def get_current_by_mode(emp, mode):
+        return Report.objects.filter(employee=emp, mode=mode, close=False).first()
 
     class Meta:
         verbose_name = _('Report')
