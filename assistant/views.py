@@ -37,14 +37,16 @@ def agents_assistant(request):
 def intervention(request):
     report = get_current_report(request.user, "intervention")
     msg_list = get_report_messages(report)
-    context = {"report_id": report.id, "msg_init": get_config("MSG_INIT"), "msg_list": msg_list}
+    submode = msg_list[-1]['submode'] if len(msg_list) > 0 else "urgency"
+    context = {"report_id": report.id, "msg_init": get_config("MSG_INIT"), "msg_list": msg_list, 'submode': submode}
     return render(request, "assistant/intervention.html", context)
 
 @group_required("agents")
 def consultation(request):
     report = get_current_report(request.user, "consultation")
     msg_list = get_report_messages(report)
-    context = {"report_id": report.id, "msg_init": get_config("MSG_INIT"), "msg_list": msg_list}
+    submode = msg_list[-1]['submode'] if len(msg_list) > 0 else "F1"
+    context = {"report_id": report.id, "msg_init": get_config("MSG_INIT"), "msg_list": msg_list, 'submode': submode}
     return render(request, "assistant/consultation.html", context)
 
 @group_required("agents")
@@ -56,6 +58,15 @@ def chat_close(request, obj_id):
     report = get_or_none(Report, obj_id)
     report.close = True
     report.save()
+    return redirect("assistant")
+
+@group_required("agents")
+def chat_open(request, obj_id):
+    report = get_or_none(Report, obj_id)
+    if report != None:
+        Report.objects.filter(employee=report.employee, mode=report.mode, close=False).update(close=True)
+        report.close = False
+        report.save()
     return redirect("assistant")
 
 @group_required("agents")
@@ -81,7 +92,7 @@ def chat_with_llm(request):
             return JsonResponse(err_msg, status=200)
 
         log2file(f"Chat with LLM for report {report.uuid} and message: {message}")
-        ReportMsg.objects.create(report=report, text=message)
+        ReportMsg.objects.create(report=report, text=message, submode=submode)
 
         headers = { "Authorization": f"Bearer aaaa-bbbb-cccc-dddd" } # Replace with actual token if needed 
         msg = manage_audios(report, headers)
@@ -104,14 +115,14 @@ def chat_with_llm(request):
         if response.status_code != 200:
             log2file("Error in LLM chat:" + response.text)
             err_msg = {'message': random.choice(ERRORS_ANSWER), 'mode':'error'}
-            ReportMsg.objects.create(report=report, text=err_msg["message"])
+            ReportMsg.objects.create(report=report, text=err_msg["message"], submode=submode)
             return JsonResponse(err_msg, status=200)
 
         datas = response.json()
         report.conversation_id = datas.get("conversation_id", "")
         report.last_interaction = datetime.now()
         report.save()
-        ReportMsg.objects.create(report=report, text=datas)
+        ReportMsg.objects.create(report=report, text=datas, submode=submode)
         return JsonResponse(response_to_context(datas))
     except Exception as e:
         log2file (show_exc(e))

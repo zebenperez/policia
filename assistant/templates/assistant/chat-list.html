@@ -6,8 +6,9 @@
    
     <div class="list-group">
         {% for item in item_list %}
-            <div class="row list-chats" onclick="$('#report-{{item.id}}').toggle()">
-                <div class="col-6"> {% trans "Interacción" %}:</div>
+            <div class="row list-chats"  {%if not item.close%}style="background:lightgreen;"{%endif%}
+                onclick="$('#report-{{item.id}}').toggle()">
+                <div class="col-6"> {% trans "Interacción" %}: </div>
                 <div class="col-4"> {{item.last_interaction|date:"d-m-Y"}} </div>
                 <div class="col-2">{{item.last_interaction|time:"H:i"}}</div>
             </div>
@@ -15,6 +16,17 @@
                 <div class="row">
                     <div class="col-4"><a href="">{% trans "Informe" %}</a></div>
                     <div class="col-4"><a href="">{% trans "Minuta" %}</a></div>
+                    <div class="col-4">
+                        {% if item.close %}
+		                    <a type="button" class="pt-2" href="{%url "chat-open" item.id%}"
+                                onclick="return confirm('{%trans "¿Está seguro/a de reabrir esta interacción?"%}');">
+                                {%trans "Recuperar"%}</a>
+                        {% else %}
+		                    <a type="button" class="pt-2" href="{%url "chat-close" item.id%}"
+                                onclick="return confirm('{%trans "¿Está seguro/a de cerrar esta interacción?"%}');">
+                                {%trans "Cerrar"%}</a>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         {% endfor %}

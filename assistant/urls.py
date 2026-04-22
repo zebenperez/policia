@@ -12,6 +12,7 @@ urlpatterns = [
 
     path('chat-list/', views.chat_list, name="chat-list"),
     path('chat-close/<int:obj_id>', views.chat_close, name="chat-close"),
+    path('chat-open/<int:obj_id>', views.chat_open, name="chat-open"),
     path('chat-with-llm', views.chat_with_llm, name="chat-with-llm"),
     #path('start-voice-turn', views.assistant_start_voice_turn, name="api-assistant-start-voice-turn"),
 

@@ -10,7 +10,18 @@
     {% include "assistant/top-bar.html" %}
         
     <!-- ROW 2 --> 
-    <div class="row div-mode p-2 m-0" id="bar-mode"> <div class="col-12">Jurídico-Normativa</div> </div>
+    {% if submode == "F1" %}
+        <div class="row div-mode p-2 m-0" id="bar-mode"> <div class="col-12">Supuestos Hipotéticos</div> </div>
+    {% elif submode == "F2" %}
+        <div class="row div-mode p-2 m-0" id="bar-mode" style="background:#2e5c46"> 
+            <div class="col-12">Jurídico-Normativa</div> </div>
+    {% elif submode == "F3" %}
+        <div class="row div-mode p-2 m-0" id="bar-mode" style="background:#234a63"> 
+            <div class="col-12">Comparecencias Hipotéticas</div> </div>
+    {% else %}
+        <div class="row div-mode p-2 m-0" id="bar-mode" style="background:#234a63"> 
+            <div class="col-12">Indicios Racionales</div> </div>
+    {% endif %}
 
     <!-- ROW 3 --> 
     <div id="app" class="div-chat">
@@ -44,8 +55,8 @@
 
 	    <div class="row div-buttons py-3 px-2 m-0">
 		    <div class="col-10 pl-0">
-		        <input type="text" id="text-input" placeholder="O escribe tu situación..." data-mode="consulta" data-submode="F1" 
-                    class="p-4">
+                <input type="text" id="text-input" class="p-4" placeholder="O escribe tu situación..." 
+                    data-mode="consultation" data-submode="{{submode}}">
 		    </div>
 		    <div class="col-2 p-0">
 		        <button id="send-btn" class="btn btn-primary btn-write btn-action" style="display:none"> 

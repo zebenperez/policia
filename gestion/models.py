@@ -140,6 +140,7 @@ class ReportAudio(models.Model):
 class ReportMsg(models.Model):
     #ia = models.BooleanField(verbose_name = _('Recibido por IA'), default=False)
     date = models.DateTimeField(default=datetime.datetime.now(), null=True, verbose_name=_('Fecha'), blank=True)
+    submode = models.CharField(max_length=20, verbose_name = _('Mode'), default="")
     text = models.TextField(verbose_name = _('Texto'), default="")
     report = models.ForeignKey(Report, verbose_name=_('Informe'), on_delete=models.CASCADE, null=True, related_name="messages")
 

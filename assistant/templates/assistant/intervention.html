@@ -10,7 +10,11 @@
     {% include "assistant/top-bar.html" %}
         
     <!-- ROW 2 --> 
-    <div class="row div-mode p-2 m-0" id="bar-mode"> <div class="col-12">MODO URGENCIA</div> </div>
+    {% if submode == "urgency" %}
+        <div class="row div-mode p-2 m-0" id="bar-mode"> <div class="col-12">MODO URGENCIA</div> </div>
+    {% else %}
+        <div class="row div-mode p-2 m-0" id="bar-mode" style="background:#2e5c46"> <div class="col-12">MODO OPERADOR</div> </div>
+    {% endif %}
 
     <!-- ROW 3 --> 
     <div id="app" class="div-chat">
@@ -44,8 +48,8 @@
 
 	    <div class="row div-buttons py-3 px-2 m-0">
 		    <div class="col-10 pl-0">
-		        <input type="text" id="text-input" placeholder="O escribe tu situación..." data-mode="urgencia" data-submode=""
-                    class="p-4">
+		        <input type="text" id="text-input" class="p-4" placeholder="O escribe tu situación..." 
+                    data-mode="intervention" data-submode="{{submode}}">
 		    </div>
 		    <div class="col-2 p-0">
 		        <button id="send-btn" class="btn btn-primary btn-write btn-action" style="display:none"> 

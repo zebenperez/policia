@@ -108,7 +108,6 @@ def get_report_messages_ia(report):
 
 def get_report_messages(report):
     import json 
-    print("--3--")
 
     msg_list = []
     for msg in report.messages.all():
@@ -118,6 +117,6 @@ def get_report_messages(report):
             message = m
         except json.JSONDecodeError as e:
             message = msg.text
-        msg_list.append({'message':message})
+        msg_list.append({'message':message, 'submode': msg.submode})
     return msg_list
  
