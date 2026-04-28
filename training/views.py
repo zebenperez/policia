@@ -11,7 +11,7 @@ from .models import Training, TrainingDoc, TrainingPrompt
 from .claude import procesar_pdf_y_pregunta
 
 
-api_key = "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"
+api_key = ""
 
 '''
     TRAINING

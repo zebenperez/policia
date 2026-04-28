@@ -1,26 +1,15 @@
 {% load static i18n pwa_tags %}
 
-<div class="row div-mode-buttons m-0 pb-2 p-0">
-    <div class="col-6 px-1">
-    	<div class="btn-urgency text-center py-4">
-	        <button class="btn btn-mode text-white px-0" data-value="urgency" data-color="#7a2e2e" data-block="" 
-                {%if submode == "operator"%}disabled{%endif%}> <strong>URGENCIA</strong></button>
-    	</div>
-    </div>
-    <div class="col-6 px-1">
-    	<div class="btn-intervenc text-center py-4">
-            <button class="btn btn-mode text-white px-0" data-value="operator" data-color="#2e5c46" data-title="OPERADOR" 
-                data-block="urgency"> <strong>OPERADOR</strong></button>
-    	</div>
-    </div>
-    {%comment%}
-    <div class="col-4 px-1">
-    	<div class="btn-consult text-center py-4">
-            <button class="btn btn-mode text-white px-0" data-value="consulta" data-color="#234a63" data-title="INSTRUCTOR">
-                <strong>INSTRUCTOR</strong></button>
-	    </div>
-    </div>
-    {%endcomment%}
+<div class="row div-mode-buttons m-0 p-0">
+    {% for sub in submode_list %}
+        <div class="col-3 p-0">
+            <div class="btn btn-mode text-center py-2 px-0 w-100" style="background:{{sub.color}}">
+                <button class="btn btn-mode px-0" 
+                    data-value="{{sub.code}}" data-title="{{sub.title}}" data-color="{{sub.color}}" data-block="{{sub.block}}"
+                       {% if sub.code in submode.block %}disabled{%endif%}>{{sub.name|safe}}</button>
+    	    </div>
+        </div>
+    {% endfor %}
 </div>
 
 <script>

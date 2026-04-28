@@ -149,6 +149,23 @@ class ReportMsg(models.Model):
         verbose_name_plural = _('Reports Messages')
         ordering = ["id"]
 
+class Submode(models.Model):
+    order = models.IntegerField(verbose_name = _('Orden'), default=0)
+    mode = models.CharField(max_length=20, verbose_name = _('Mode'), default="")
+    code = models.CharField(max_length=50, verbose_name = _('Código'), default="", blank=True)
+    name = models.CharField(max_length=100, verbose_name = _('Nombre'), default="", blank=True)
+    title = models.CharField(max_length=255, verbose_name = _('Título'), default="", blank=True)
+    block = models.CharField(max_length=100, verbose_name = _('Bloquea'), default="", blank=True)
+    color = models.CharField(max_length=10, verbose_name = _('Color'), default="", blank=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = _('Submodo')
+        verbose_name_plural = _('Submodos')
+        ordering = ['order']
+
 
 '''
     Knowledge Docs

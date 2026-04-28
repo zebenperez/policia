@@ -5,7 +5,7 @@ from django.http import HttpResponse, JsonResponse
 from policia.settings import IA_SPEECH_TO_TEXT_URL, IA_SERVICES_URL, IA_LLM_URL
 from policia.decorators import group_required
 from policia.commons import get_or_none, get_param, show_exc
-from gestion.models import Employee, Report, ReportAudio, ReportMsg
+from gestion.models import Employee, Report, ReportAudio, ReportMsg, Submode
 from .llmendpoints import IA_LLM_ENDPOINTS
 from .common_lib import *
 from .assistant_lib import *
@@ -34,20 +34,40 @@ def agents_assistant(request):
 
 @group_required("agents")
 ##def agents_assistant(request, report_id=None):
-def intervention(request):
-    report = get_current_report(request.user, "intervention")
+def assistant_chat(request, mode="intervention"):
+    #mode = "intervention"
+    report = get_current_report(request.user, mode)
     msg_list = get_report_messages(report)
-    submode = msg_list[-1]['submode'] if len(msg_list) > 0 else "urgency"
-    context = {"report_id": report.id, "msg_init": get_config("MSG_INIT"), "msg_list": msg_list, 'submode': submode}
-    return render(request, "assistant/intervention.html", context)
+    if len(msg_list) > 0:
+        submode = Submode.objects.filter(code=msg_list[-1]['submode']).first()
+    else:
+        submode = Submode.objects.filter(mode=mode).first()
+    context = {
+        "report_id": report.id, 
+        "msg_init": get_config("MSG_INIT"), 
+        "msg_list": msg_list, 
+        "submode_list": Submode.objects.filter(mode=mode),
+        "submode": submode,
+        "mode": mode
+    }
+    return render(request, "assistant/assistant-chat.html", context)
 
-@group_required("agents")
-def consultation(request):
-    report = get_current_report(request.user, "consultation")
-    msg_list = get_report_messages(report)
-    submode = msg_list[-1]['submode'] if len(msg_list) > 0 else "F1"
-    context = {"report_id": report.id, "msg_init": get_config("MSG_INIT"), "msg_list": msg_list, 'submode': submode}
-    return render(request, "assistant/consultation.html", context)
+#@group_required("agents")
+#def consultation(request):
+#    mode = "consultation"
+#    report = get_current_report(request.user, mode)
+#    msg_list = get_report_messages(report)
+#    code = msg_list[-1]['submode'] if len(msg_list) > 0 else "F1"
+#    submode = Submode.objects.filter(code=code).first()
+#    context = {
+#        "report_id": report.id, 
+#        "msg_init": get_config("MSG_INIT"), 
+#        "msg_list": msg_list, 
+#        "submode_list": Submode.objects.filter(mode=mode),
+#        "submode": submode,
+#        "mode": mode
+#    }
+#    return render(request, "assistant/assistant-chat.html", context)
 
 @group_required("agents")
 def chat_list(request):

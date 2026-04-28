@@ -150,7 +150,7 @@ p {
 	background: #a94444;
 	color: #fff;
     text-transform: uppercase;
-    font-weight: bold;
+    /*font-weight: bold;*/
 }
 
 /*** ROW 3 ***/
@@ -355,7 +355,7 @@ span.msg-time {
 	border-radius: 10px;
 }
 .btn-intervenc {
-	background-color: #2e5c46;
+	background-color: #4a5a63;
 	border-radius: 10px;
 
 }
@@ -363,6 +363,11 @@ span.msg-time {
 	background-color: #234a63;
 	border-radius: 10px;
 
+}
+
+button.btn.btn-mode {
+	color: #ffffff;
+	font-size: 0.8rem;
 }
 
 span.fs-medium {

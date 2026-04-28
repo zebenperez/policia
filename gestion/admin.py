@@ -14,6 +14,8 @@ class ReportAdmin(admin.ModelAdmin):
 class ReportAudioAdmin(admin.ModelAdmin):
     list_display = ('report', 'text')
 
+class SubmodeAdmin(admin.ModelAdmin):
+    list_display = ('mode', 'code', 'name', 'title', 'block', 'color', 'order')
 
 admin.site.register(BaseDoc, BaseDocAdmin)
 admin.site.register(Config, ConfigAdmin)
@@ -21,6 +23,7 @@ admin.site.register(Employee)
 admin.site.register(Report, ReportAdmin)
 admin.site.register(ReportAudio, ReportAudioAdmin)
 admin.site.register(Station)
+admin.site.register(Submode, SubmodeAdmin)
 
 #class FacilityTypeAdmin(admin.ModelAdmin):
 #    list_display = ('code', 'name', 'order', 'operation_time', 'dashboard')
