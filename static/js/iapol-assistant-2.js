@@ -106,7 +106,7 @@ function addMessage(data, init=false) {
         addUserMessage(data);
     } else {
         //MENSAJE DEL SISTEMA
-        if (data.mode == "urgencia")
+        if (data.submode == "U0") //Submodo Urgencia
             addAssistantMessage(data);
         else
             addUserMessage(data.message, data.mode+"-message-template");

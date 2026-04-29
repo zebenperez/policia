@@ -77,6 +77,7 @@ def response_to_context(datas):
         'facts_list': datas.get("facts_list", ""), 
         'code': datas.get("code", ""), 
         'mode': datas.get("mode", ""), 
+        'submode': datas.get("submode", ""), 
         'status': 'success'
     }
     #except Exception as e:
