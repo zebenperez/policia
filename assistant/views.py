@@ -148,43 +148,43 @@ def chat_with_llm(request):
         log2file (show_exc(e))
         return JsonResponse({'error': show_exc(e)}, status=500)
  
-#def assistant_start_voice_turn(request):
-#    try:
-#        log2file("Starting voice turn for assistant")
-#        if request.method != "POST":
-#            log2file("Método no permitido")
-#            return JsonResponse({'error': 'Método no permitido'}, status=405)
-#        # Lógica para iniciar el turno de voz del asistente
-#
-#        audio = request.FILES.get("audio", None)
-#        log2file(f"Received audio file: {audio.name if audio else 'None'}, size: {audio.size if audio else 'N/A'} bytes")
-#        if audio is None:
-#            return JsonResponse({'error': 'No se ha proporcionado audio'}, status=400)
-#
-#        # Aquí puedes procesar el archivo de audio como desees
-#        log2file(f"Sending audio to IA_SPEECH_TO_TEXT_URL: {IA_SPEECH_TO_TEXT_URL}")
-#        response = requests.post(IA_SPEECH_TO_TEXT_URL, files={'audio': audio}, verify=False)
-#        if response.status_code == 200:
-#            data = response.json()
-#            speakers = data.get('speakers', [])
-#            segments = data.get('segments', [])
-#            full_text = ""
-#            for speaker in speakers:
-#                speaker_text = ""
-#                for segment in segments:
-#                    if segment.get('speaker', '') == speaker:
-#                        speaker_text += segment.get('text', '') + " "
-#                full_text += speaker_text.strip() + "\n"
-#            log2file(f"Transcribed text: {full_text.strip()}")
-#            
-#            log2file(f"{response.json()}")
-#            texto = full_text.strip()
-#            return JsonResponse({'texto':texto, 'status':'ok', 'conversation_id':'12345', 'transcript':texto, 'answer':f'{texto}'})
-#        else:
-#            return JsonResponse({'error': 'Error al transcribir audio'}, status=500)    
-#    except Exception as e:
-#        log2file(f"Error: {show_exc(e)}")
-#        return JsonResponse({'error': 'Error al procesar la solicitud'}, status=500)
+def assistant_start_voice_turn(request):
+    try:
+        log2file("Starting voice turn for assistant")
+        if request.method != "POST":
+            log2file("Método no permitido")
+            return JsonResponse({'error': 'Método no permitido'}, status=405)
+        # Lógica para iniciar el turno de voz del asistente
+
+        audio = request.FILES.get("audio", None)
+        log2file(f"Received audio file: {audio.name if audio else 'None'}, size: {audio.size if audio else 'N/A'} bytes")
+        if audio is None:
+            return JsonResponse({'error': 'No se ha proporcionado audio'}, status=400)
+
+        # Aquí puedes procesar el archivo de audio como desees
+        log2file(f"Sending audio to IA_SPEECH_TO_TEXT_URL: {IA_SPEECH_TO_TEXT_URL}")
+        response = requests.post(IA_SPEECH_TO_TEXT_URL, files={'audio': audio}, verify=False)
+        if response.status_code == 200:
+            data = response.json()
+            speakers = data.get('speakers', [])
+            segments = data.get('segments', [])
+            full_text = ""
+            for speaker in speakers:
+                speaker_text = ""
+                for segment in segments:
+                    if segment.get('speaker', '') == speaker:
+                        speaker_text += segment.get('text', '') + " "
+                full_text += speaker_text.strip() + "\n"
+            log2file(f"Transcribed text: {full_text.strip()}")
+            
+            log2file(f"{response.json()}")
+            texto = full_text.strip()
+            return JsonResponse({'texto':texto, 'status':'ok', 'conversation_id':'12345', 'transcript':texto, 'answer':f'{texto}'})
+        else:
+            return JsonResponse({'error': 'Error al transcribir audio'}, status=500)    
+    except Exception as e:
+        log2file(f"Error: {show_exc(e)}")
+        return JsonResponse({'error': 'Error al procesar la solicitud'}, status=500)
  
 def health_check(request):
     """Endpoint de salud para verificar que la vista funciona"""

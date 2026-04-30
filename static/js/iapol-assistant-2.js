@@ -259,7 +259,7 @@ async function startRecording() {
                 if (!response.ok) { throw new Error("Error en el servidor"); }
 
                 const data = await response.json();
-                //console.log("Respuesta del backend:", data);
+                console.log("Respuesta del backend:", data);
 
                 hideTypingIndicator();
                 sendTextMessage(data.texto);
