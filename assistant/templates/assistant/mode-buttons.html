@@ -3,7 +3,7 @@
 <div class="row div-mode-buttons m-0 p-0">
     {% for sub in submode_list %}
         <div class="col-3 p-0">
-            <div class="btn btn-mode text-center py-2 px-0 w-100" style="background:{{sub.color}}">
+            <div class="btn text-center py-2 px-0 w-100" style="background:{{sub.color}}">
                 <button class="btn btn-mode px-0" 
                     data-value="{{sub.code}}" data-title="{{sub.title}}" data-color="{{sub.color}}" data-block="{{sub.block}}"
                        {% if sub.code in submode.block %}disabled{%endif%}>{{sub.name|safe}}</button>
@@ -20,7 +20,7 @@
         $("#bar-mode").css("background", $(this).data('color'));
         $("#bar-mode > div").html("MODO "+$(this).data('title'));
 
-        let block_list = $(this).data("block").split(";");
+        let block_list = $(this).data("block").split(",");
         block_list.forEach(function(value, index) {
             $(`button[data-value="${value}"]`).prop('disabled', true);
         });
