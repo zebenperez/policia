@@ -3,7 +3,13 @@ let audioChunks = [];
 let isRecording = false;
 
 function byId(id) {
-  return document.getElementById(id);
+    return document.getElementById(id);
+}
+
+function decodeHTML(html) {
+    const txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    return txt.value;
 }
 
 function escapeHtml(s) {
@@ -43,7 +49,7 @@ function getPriorityColor(priority) {
 }
 
 function addUserMessage(text, temp="user-message-template") {
-    console.log(temp);
+    //console.log(temp);
     const chatContainer = byId('chat-container');
     if (!chatContainer) return;
 
@@ -51,7 +57,7 @@ function addUserMessage(text, temp="user-message-template") {
     const clone = template.content.cloneNode(true);
 
     // Insertar texto de forma segura
-    clone.querySelector('.message-text').innerHTML = text.replace(/\n/g, "<br>");
+    clone.querySelector('.message-text').innerHTML = decodeHTML(text).replace(/\n/g, "<br>");
 
     chatContainer.appendChild(clone);
     chatContainer.scrollTop = chatContainer.scrollHeight;
