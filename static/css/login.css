@@ -26,6 +26,7 @@ background: linear-gradient(180deg, rgba(1, 5, 20, 1) 42%, rgba(6, 14, 40, 1) 77
 }
 
 .main-screen {
+	background-color: #000000;
 	min-height: 100vh;
 	display: flex;
 	align-items:center; 
@@ -41,7 +42,7 @@ background: linear-gradient(180deg, rgba(1, 5, 20, 1) 42%, rgba(6, 14, 40, 1) 77
 	display: flex;
 	flex-direction: row;
 	overflow: hidden;
-	background-color: #060e28;
+	background-color: #2b3e4f;
 }
 
 
@@ -141,7 +142,7 @@ background: linear-gradient(180deg, rgba(1, 5, 20, 1) 42%, rgba(6, 14, 40, 1) 77
 }
 .login-container p {
 	--tw-text-opacity: 1;
-	color: #7079a2;
+	color: #ccc;
 }
 .login-icon {
 	--tw-text-opacity: 1;
@@ -235,8 +236,14 @@ button.btn-primary {
 }
 button.btn-outline-primary {
 	border-radius: 0.5rem;
-	border: 1px solid #0d6efd;
-	color: #0d6efd;
+	border: 1px solid #f4b315;
+	color: #f4b315;
+}
+
+button.btn-outline-primary:hover {
+	background: #f4b315;
+	border: 1px solid #f4b315;
+	color: #2b3e4f;
 }
 
 .login-form * input { 	display: block; }

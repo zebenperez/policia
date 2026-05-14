@@ -297,7 +297,7 @@ $(document).ready(()=>{
         }
     });
 
-    $("body").on("keyup", "#text-input", function(e){
+    $("body").on("input", "#text-input", function(e){
         let text = $(this).val();
         if (e.key === 'Enter') {
             if (text != "")

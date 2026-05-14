@@ -2,14 +2,40 @@
 
 <div class="row div-mode-buttons m-0 p-0">
     {% for sub in submode_list %}
-        <div class="col-3 p-0">
-            <div class="btn text-center py-2 px-0 w-100" style="background:{{sub.color}}">
-                <button class="btn btn-mode px-0" 
-                    data-value="{{sub.code}}" data-title="{{sub.title}}" data-color="{{sub.color}}" data-block="{{sub.block}}"
-                       {% if sub.code in submode.block %}disabled{%endif%}>{{sub.name|safe}}</button>
-    	    </div>
-        </div>
+        {% if sub.code != "I1" and sub.code != "I2" and sub.code != "I3" %}
+            <div class="col-{{col_span}} p-0">
+                <div class="btn text-center py-2 px-0 w-100" style="background:{{sub.color}}">
+                    <button class="btn btn-mode px-0" 
+                        data-value="{{sub.code}}" data-title="{{sub.title}}" data-color="{{sub.color}}" data-block="{{sub.block}}"
+                           {% if sub.code in submode.block %}disabled{%endif%}>{{sub.name|safe}}</button>
+                </div>
+            </div>
+        {% endif %}
     {% endfor %}
+
+    {% if mode == "intervention" %}
+    <div class="col-6 p-0">
+        <div class="dropdown btn text-center py-2 px-0 w-100" style="background:#1f2d3a;">
+            <button class="btn btn-mode_ px-0 text-white" type="button" data-bs-toggle="dropdown" aria-expanded="false"> 
+                Inspección de Guardia </button>
+
+            <div class="dropdown-menu p-2 shadow">
+                {% for sub in submode_list %}
+                    {% if sub.code == "I1" or sub.code == "I2" or sub.code == "I3" %}
+                        <div class="p-0 my-1">
+                            <div class="btn text-center py-2 px-5 w-100" style="background:{{sub.color}}">
+                                <button class="btn btn-mode px-0" data-value="{{sub.code}}" data-title="{{sub.title}}" 
+                                    data-color="{{sub.color}}" data-block="{{sub.block}}"
+                                    {% if sub.code in submode.block %}disabled{%endif%}>{{sub.name|safe}}</button>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+    {% endif %}
 </div>
 
 <script>

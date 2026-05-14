@@ -42,12 +42,15 @@ def assistant_chat(request, mode="intervention"):
         submode = Submode.objects.filter(code=msg_list[-1]['submode']).first()
     else:
         submode = Submode.objects.filter(mode=mode).first()
+    submode_list = Submode.objects.filter(mode=mode)
+    col_span = 12 // len(submode_list) if mode == "consultation" else 6
     context = {
         "report_id": report.id, 
         "msg_init": get_config("MSG_INIT"), 
         "msg_list": msg_list, 
-        "submode_list": Submode.objects.filter(mode=mode),
+        "submode_list": submode_list,
         "submode": submode,
+        "col_span": col_span,
         "mode": mode
     }
     return render(request, "assistant/assistant-chat.html", context)
@@ -74,11 +77,12 @@ def chat_list(request):
     return render(request, "assistant/chat-list.html", {"item_list": Report.objects.filter(employee=request.user.employee)})
 
 @group_required("agents")
-def chat_close(request, obj_id):
+def chat_close(request, obj_id, mode):
     report = get_or_none(Report, obj_id)
     report.close = True
     report.save()
-    return redirect("assistant")
+    return redirect(reverse('assistant-chat', kwargs={"mode": mode}))
+    #return redirect("assistant")
 
 @group_required("agents")
 def chat_open(request, obj_id):

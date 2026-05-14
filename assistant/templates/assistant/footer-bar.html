@@ -1,0 +1,17 @@
+{% load i18n assistant_tags %}
+
+<div class="row div-footer-bar m-0 py-2">
+	<div class="col-3 text-center px-0"> <a class="" href="{%url "assistant-chat" "intervention"%}"><i class="fas fa-comment-dots"></i> 
+		<br/><small>Intervención</small></a></div>
+	<div class="col-3 text-center px-0"> <a class="" href="{%url "assistant-chat" "consultation"%}"><i class="far fa-comment-dots"></i>
+		<br/><small>Consulta</small></a> </div>
+	<div class="col-3 text-center px-0"> <a class="" href="{%url "chat-list"%}"><i class="fas fa-layer-group"></i>
+		<br/><small>Interacciones</small></a> </div>
+	<div class="col-3 text-center px-0">
+		 <form action="{% url 'auth_logout' %}" method="post" id="frmLogout" class="m-0">
+		    {% csrf_token %}
+		    <a onclick="$('#frmLogout').submit();" title="Salir"> <i class="fas fa-sign-out-alt"></i></a><br/><small>Salir</small>
+		</form>
+	</div>
+</div>
+

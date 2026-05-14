@@ -2,11 +2,8 @@ body {
   box-sizing: border-box;
   font-family: 'DM Sans', sans-serif;
 }
-/*
-p {
-	color: #cccccc;
-}
-*/
+
+
 .pulse-ring {
   animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
 }
@@ -34,8 +31,6 @@ p {
   from { height: 8px; }
   to { height: 24px; }
 }
-
-
 
 
 @keyframes slideUp {
@@ -116,16 +111,14 @@ p {
 
 .btn-close-chat {
 	border-radius: 9999px !important;
-	width: 3.5rem !important;
-	height: 3.5rem !important;
+	width: 3rem !important;
+	height: 3rem !important;
 	font-size: 1.5rem !important;
 	color: #ffffff;
-
 	position: fixed;
-	right: 20px; 
-	bottom: 200px;
+	right: 5%;
+	top: 85px;
 	z-index: 999999999;
-
 }
 
 .row.list-chats {
@@ -140,7 +133,7 @@ p {
 /*** ROW 1 ***/
 
 .div-header {
-	background: #000;
+	background: #2b3e4f;
 	color: #fff;
 }
 
@@ -313,23 +306,23 @@ span.msg-time {
 }
   
   
-  
-  
-  
-  
-  
 /************************ SPINNER RECORDING AUDIO ***********************/
-
-
-
-
-
 
 .div-footer {	
 	position: fixed;
-	bottom: 0;
+	bottom: 50px;
 	left: 0;
 	width: 100%;
+}
+
+.div-footer-bar {
+	background: #000 !important;
+	color: #fff !important;
+	position: fixed !important; 
+	bottom: 0 !important; 
+	width: 100% !important; 
+	height: 50px !important;
+
 }
 
 /*** ROW 4 ***/
@@ -365,9 +358,13 @@ span.msg-time {
 
 }
 
+button.btn.btn-mode_,
 button.btn.btn-mode {
 	color: #ffffff;
 	font-size: 0.8rem;
+}
+button.btn.btn-mode::visited {
+	color: #ffffff;
 }
 
 span.fs-medium {
@@ -376,3 +373,9 @@ span.fs-medium {
 .border-main {
 	border:2px solid #191c32;
 }
+
+
+.dropdown-menu {
+	transform: translate3d(-10px, -42.4375px, 0px) !important; 
+}
+

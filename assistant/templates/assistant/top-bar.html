@@ -1,16 +1,9 @@
 {% load i18n assistant_tags %}
+{% load i18n static %}
 
-<div class="row div-header p-3 m-0">
-    <div class="col-2">IAPOL</div>
-    <div class="col-6 text-center">{% trans "AGENTE EN TERRENO" %}: {{request.user}}</div>
-    <div class="col-1"> <a class="" href="{%url "assistant-chat" "intervention"%}"><i class="fa fa-exclamation-circle"></i></a> </div>
-    <div class="col-1"> <a class="" href="{%url "assistant-chat" "consultation"%}"><i class="fa fa-comment"></i></a> </div>
-    <div class="col-1"> <a class="" href="{%url "chat-list"%}"><i class="fa fa-list"></i></a> </div>
-    <div class="col-1">
-         <form action="{% url 'auth_logout' %}" method="post" id="frmLogout" class="m-0">
-            {% csrf_token %}
-            <a onclick="$('#frmLogout').submit();" title="Salir"> <i class="fas fa-sign-out-alt"></i></a>
-        </form>
-    </div>
+
+<div class="row div-header m-0 py-2">
+    <div class="col-4"><img src="{% static '/images/logo-ares-horiz.png'%}" /></div>
+    <div class="col-8 text-end"><small>{% trans "AGENTE EN TERRENO" %}: <strong>{{request.user}}</strong></small></div>
 </div>
 
