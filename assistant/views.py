@@ -16,6 +16,13 @@ import requests, random
 
 
 '''
+    Landing
+'''
+def landing(request):
+    return render(request, "assistant/landing.html", {})
+
+
+'''
     REGISTER
 '''
 def register(request, plan):
