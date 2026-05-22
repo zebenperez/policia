@@ -20,7 +20,7 @@
         <div id="chat-container" class="div-chat-container px-2 py-4 space-y-4">
 
 	        <div class="btn btn-warning btn-close-chat">
-		        <a id="new-chat" type="button" class="pt-1" href="{%url "chat-close" report_id submode.mode %}"
+		        <a id="new-chat" type="button" class="pt-1" href="{%url "chat-close" report_id %}"
 			        onclick="return confirm('{%trans "¿Está seguro/a de terminar esta interacción?"%}');">
 			        <i class="fas fa-sync-alt"></i>
 		        </a>
@@ -70,6 +70,6 @@
 	    {% include "assistant/mode-buttons.html" %}
 	    
 	    <!-- ROW 6 --> 
-    	    {% include "assistant/footer-bar.html" %}
+    	{% include "assistant/footer-bar.html" %}
     </div>
 {% endblock %}

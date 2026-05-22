@@ -4,17 +4,17 @@
 {% block content %}
     {% include "assistant/top-bar.html" %}
 
-<div class="row my-5 mx-4">
-    <a href="{%url "assistant-chat" "intervention"%}" class="col-12 btn-intervenc text-center py-4 text-decoration-none">
-        <span class="btn btn-mode text-white px-0 py-16">{% trans "MODO" %}<br /><span class="fs-1">{% trans "INTERVENCIÓN" %}</span></span>
-    </a>
-</div>
+    <div class="row my-5 mx-4">
+        <a href="{%url "assistant-chat" "intervention"%}" class="col-12 btn-intervenc text-center py-4 text-decoration-none">
+            <span class="btn btn-mode text-white px-0 py-16">{% trans "MODO" %}<br /><span class="fs-1">{% trans "INTERVENCIÓN" %}</span></span>
+        </a>
+    </div>
 
-<div class="row my-5 mx-4">
-    <a href="{%url "assistant-chat" "consultation"%}" class="col-12 btn-consult text-center py-4 text-decoration-none">
-        <span class="btn btn-mode text-white px-0 py-16">{% trans "MODO" %}<br /><span class="fs-1">{% trans "CONSULTA" %}</span></span>
-    </a>
-</div>
+    <div class="row my-5 mx-4">
+        <a href="{%url "assistant-chat" "consultation"%}" class="col-12 btn-consult text-center py-4 text-decoration-none">
+            <span class="btn btn-mode text-white px-0 py-16">{% trans "MODO" %}<br /><span class="fs-1">{% trans "CONSULTA" %}</span></span>
+        </a>
+    </div>
 
     {% include "assistant/footer-bar.html" %}
 

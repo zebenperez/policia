@@ -3,6 +3,10 @@ body {
   font-family: 'DM Sans', sans-serif;
 }
 
+h1 {
+	color: #2b3e4f;
+	font-weight: 600 !important;
+}
 
 .pulse-ring {
   animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
@@ -122,12 +126,20 @@ body {
 }
 
 .row.list-chats {
-	background-color: #e2e3e5;
+	font-size: 0.9rem !important;
+	background-color: #eef7ff;
 	color: #41464b;
 	padding: 0.5rem 1rem;
 	border-top: 1px solid white !important;
-	border-bottom: 1px solid #ccc !important;
+	border-bottom: 1px solid #c0d8ed !important;
     cursor: pointer;
+}
+
+.content-list {
+height: 100%;
+padding-bottom: 150px;
+	overflow-y: scroll;
+
 }
 
 /*** ROW 1 ***/
@@ -135,6 +147,9 @@ body {
 .div-header {
 	background: #2b3e4f;
 	color: #fff;
+position:fixed;
+top:0;
+width: 100%;
 }
 
 /*** ROW 2 ***/
@@ -322,7 +337,7 @@ span.msg-time {
 	bottom: 0 !important; 
 	width: 100% !important; 
 	height: 50px !important;
-
+/*border:1px solid blue !important;*/
 }
 
 /*** ROW 4 ***/

@@ -84,11 +84,11 @@ def chat_list(request):
     return render(request, "assistant/chat-list.html", {"item_list": Report.objects.filter(employee=request.user.employee)})
 
 @group_required("agents")
-def chat_close(request, obj_id, mode):
+def chat_close(request, obj_id):
     report = get_or_none(Report, obj_id)
     report.close = True
     report.save()
-    return redirect(reverse('assistant-chat', kwargs={"mode": mode}))
+    return redirect(reverse('assistant-chat', kwargs={"mode": report.mode}))
     #return redirect("assistant")
 
 @group_required("agents")
@@ -99,6 +99,15 @@ def chat_open(request, obj_id):
         report.close = False
         report.save()
     return redirect("assistant")
+
+@group_required("agents")
+def chat_report_count(request):
+    mode = get_param(request.GET, "mode")
+    kwargs = {"employee": request.user.employee}
+    if mode != "":
+        kwargs["mode"] = mode
+    count = Report.objects.filter(**kwargs).count()
+    return HttpResponse(count)
 
 @group_required("agents")
 def chat_with_llm(request):
@@ -197,6 +206,59 @@ def assistant_start_voice_turn(request):
         log2file(f"Error: {show_exc(e)}")
         return JsonResponse({'error': 'Error al procesar la solicitud'}, status=500)
  
+'''
+    ADMIN
+'''
+@group_required("admins")
+def stats(request):
+    from datetime import date
+    import calendar
+    from django.db.models import Count, Q
+
+
+    search = request.GET.get("searchInput", "")
+    start_date = request.GET.get("startDate", "")
+    end_date = request.GET.get("endDate", "")
+
+    if not start_date or not end_date:
+        today = date.today()
+        start_default = today.replace(day=1)
+
+        last_day = calendar.monthrange(today.year, today.month)[1]
+        end_default = today.replace(day=last_day)
+
+        if not start_date:
+            start_date = start_default
+        if not end_date:
+            end_date = end_default
+
+    employees = Employee.objects.filter(user__groups__name="agents")
+    if search:
+        employees = employees.filter(name__icontains=search)
+
+    report_filter = Q( reports__date__date__gte=start_date, reports__date__date__lte=end_date)
+
+    employees = employees.annotate(
+        total_expedientes=Count( 'reports', filter=report_filter, distinct=True),
+        total_interacciones=Count( 'reports__messages', filter=report_filter, distinct=True)
+    )
+
+    total_expedientes = Report.objects.filter( date__date__gte=start_date, date__date__lte=end_date).count()
+    total_interacciones = ReportMsg.objects.filter( date__date__gte=start_date, date__date__lte=end_date).count()
+
+    context = {
+        "employees": employees,
+        "total_expedientes": total_expedientes,
+        "total_interacciones": total_interacciones,
+        "search": search,
+        "startDate": start_date,
+        "endDate": end_date,
+    }
+    return render(request, "assistant/stats.html", context)
+
+'''
+    AUX
+'''
 def health_check(request):
     """Endpoint de salud para verificar que la vista funciona"""
     return JsonResponse({'status': 'ok', 'service': 'audio_stream'})

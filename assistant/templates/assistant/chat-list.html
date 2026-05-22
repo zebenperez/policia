@@ -4,8 +4,29 @@
 {% block content %}
     {% include "assistant/top-bar.html" %}
    
-    <div class="list-group">
+    <div class="row m-0 mt-5 py-2">
+    	<div class="col-12"><h1 class="py-2"><i class="far fa-file-alt"></i>&nbsp; {% trans "Expedientes" %}</h1></div>
+    </div>
+    <div class="row list-chats my-0 mx-0">
+        <div class="col-5 px-0"><strong>{% trans "Fecha" %}</strong> </div>
+        <div class="col-3"><strong>{% trans "Hora" %}</strong> </div>
+        <div class="col-4"><strong>{% trans "Interacciones" %}</strong> </div>
+    </div>
+
+    <div class="list-group content-list">
         {% for item in item_list %}
+            <div class="row list-chats"  {%if not item.close%}style="background:#d2ffd2;"{%endif%}>
+                <div class="col-5"> {{item.last_interaction|date:"d-m-Y"}} </div>
+                <div class="col-3"> {{item.last_interaction|time:"H:i"}} </div>
+                <div class="col-4 text-center"> {{item.msg_count}} </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% include "assistant/footer-bar.html" %}
+{% endblock %}
+
+        {%comment%}
             <div class="row list-chats"  {%if not item.close%}style="background:lightgreen;"{%endif%}
                 onclick="$('#report-{{item.id}}').toggle()">
                 <div class="col-6"> {% trans "Interacción" %}: </div>
@@ -29,6 +50,5 @@
                     </div>
                 </div>
             </div>
-        {% endfor %}
-    </div>
-{% endblock %}
+        {%endcomment%}
+

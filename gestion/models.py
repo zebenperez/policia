@@ -97,6 +97,10 @@ class Report(models.Model):
             text += f"{t.text}\r"
         return text 
     
+    @property
+    def msg_count(self):
+        return self.messages.all().count()
+
     def save(self, *args, **kwargs):
         # Check if it is new item
         if self.uuid == None or self.uuid == "" or len(self.uuid) < 5:
