@@ -2,7 +2,7 @@
 {% load static i18n assistant_tags %}
 
 {% block content %}
-    {% include "assistant/top-bar.html" %}
+    {% include "assistant/top-bar-admin.html" %}
 
     <div class="container mt-4">
 
@@ -65,8 +65,30 @@
                     {% for e in employees %}
                         <tr>
                             <td>{{ e.name }}</td>
-                            <td>{{ e.total_expedientes }}</td>
-                            <td>{{ e.total_interacciones }}</td>
+                            <td>
+                                <table class="table table-striped table-bordered">
+                                    <thead class="table-primary">
+                                        <tr> <th>Intervenciones</th> <th>Consultas</th> </tr> </thead>
+                                    <tbody id="dataTable">
+                                        <tr> 
+                                            <td>{{ e.total_expedientes_int }}</td> 
+                                            <td>{{ e.total_expedientes_con }}</td> 
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td>{{ e.total_interacciones }}
+                                <table class="table table-striped table-bordered">
+                                    <thead class="table-info">
+                                        <tr> <th>Intervenciones</th> <th>Consultas</th> </tr> </thead>
+                                    <tbody id="dataTable">
+                                        <tr> 
+                                            <td>{{ e.total_interacciones_int }}</td> 
+                                            <td>{{ e.total_interacciones_con }}</td> 
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>

@@ -16,9 +16,8 @@
         </a> 
     </div>
 	<div class="col-3 text-center px-0">
-		 <form action="{% url 'auth_logout' %}" method="post" id="frmLogout" class="m-0">
-		    {% csrf_token %}
-		    <a onclick="$('#frmLogout').submit();" title="Salir"> <i class="fas fa-sign-out-alt"></i></a><br/><small>Salir</small>
+		<form action="{% url 'auth_logout' %}" method="post" id="frmLogout" class="m-0"> {% csrf_token %}
+            <button type="submit" title="Salir"> <i class="fas fa-sign-out-alt"></i></a><br/><small>Salir</small></button>
 		</form>
 	</div>
 </div>

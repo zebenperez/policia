@@ -1,0 +1,15 @@
+{% load i18n assistant_tags %}
+{% load i18n static %}
+
+
+<div class="row div-header m-0 py-2">
+    <div class="col-4"><img src="{% static '/images/logo-ares-horiz.png'%}" /></div>
+    <div class="col-6 text-end pt-1"><small>{% trans "AGENTE EN TERRENO" %}: <strong>{{request.user}}</strong></small></div>
+	<div class="col-2 text-end pr-4">
+		<form action="{% url 'auth_logout' %}" method="post" id="frmLogout" class="m-0"> {% csrf_token %}
+		    <button type="submit" title="Salir"> <i class="fas fa-sign-out-alt"></i></a><br/><small>Salir</small></button>
+		</form>
+	</div>
+
+</div>
+

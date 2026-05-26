@@ -4,7 +4,7 @@ from django.http import HttpResponse, JsonResponse
 
 from policia.settings import IA_SPEECH_TO_TEXT_URL, IA_SERVICES_URL, IA_LLM_URL
 from policia.decorators import group_required
-from policia.commons import get_or_none, get_param, show_exc
+from policia.commons import get_or_none, get_param, show_exc, user_in_group
 from gestion.models import Employee, Report, ReportAudio, ReportMsg, Submode
 from .llmendpoints import IA_LLM_ENDPOINTS
 from .common_lib import *
@@ -14,6 +14,9 @@ from datetime import datetime
 
 import requests, random
 
+
+MODE_INTERVENTION = 'intervention'
+MODE_CONSULTATION = 'consultation'
 
 '''
     Landing
@@ -28,6 +31,12 @@ def landing(request):
 def register(request, plan):
     return render(request, "assistant/register.html", {"plan": plan,})
 
+
+@group_required("admins", "agents")
+def assistant(request):
+    if user_in_group(request.user, "admins"):
+         return redirect("stats")
+    return redirect("agents-assistant")
 
 '''
     ASSISTANT
@@ -209,6 +218,50 @@ def assistant_start_voice_turn(request):
 '''
     ADMIN
 '''
+def stats_employees(start_date, end_date, search):
+    from django.db.models import Count, Q
+
+    employees = Employee.objects.filter(user__groups__name="agents")
+    if search:
+        employees = employees.filter(name__icontains=search)
+
+    employees = employees.annotate(
+        # --- EXPEDIENTES ---
+        total_expedientes_int=Count(
+            'reports',
+            filter=Q( reports__date__date__gte=start_date, reports__date__date__lte=end_date, reports__mode=MODE_INTERVENTION),
+            distinct=True
+        ),
+
+        total_expedientes_con=Count(
+            'reports',
+            filter=Q( reports__date__date__gte=start_date, reports__date__date__lte=end_date, reports__mode=MODE_CONSULTATION),
+            distinct=True
+        ),
+
+        # --- INTERACCIONES ---
+        total_interacciones_int=Count(
+            'reports__messages',
+            filter=Q(
+                reports__messages__date__date__gte=start_date,
+                reports__messages__date__date__lte=end_date,
+                reports__mode=MODE_INTERVENTION
+            ),
+            distinct=True
+        ),
+
+        total_interacciones_con=Count(
+            'reports__messages',
+            filter=Q(
+                reports__messages__date__date__gte=start_date,
+                reports__messages__date__date__lte=end_date,
+                reports__mode=MODE_CONSULTATION
+            ),
+            distinct=True
+        ),
+    )
+    return employees
+
 @group_required("admins")
 def stats(request):
     from datetime import date
@@ -232,27 +285,24 @@ def stats(request):
         if not end_date:
             end_date = end_default
 
-    employees = Employee.objects.filter(user__groups__name="agents")
-    if search:
-        employees = employees.filter(name__icontains=search)
 
-    report_filter = Q( reports__date__date__gte=start_date, reports__date__date__lte=end_date)
+#    report_filter = Q( reports__date__date__gte=start_date, reports__date__date__lte=end_date)
 
-    employees = employees.annotate(
-        total_expedientes=Count( 'reports', filter=report_filter, distinct=True),
-        total_interacciones=Count( 'reports__messages', filter=report_filter, distinct=True)
-    )
+#    employees = employees.annotate(
+#        total_expedientes=Count( 'reports', filter=report_filter, distinct=True),
+#        total_interacciones=Count( 'reports__messages', filter=report_filter, distinct=True)
+#    )
 
-    total_expedientes = Report.objects.filter( date__date__gte=start_date, date__date__lte=end_date).count()
-    total_interacciones = ReportMsg.objects.filter( date__date__gte=start_date, date__date__lte=end_date).count()
+    total_expedientes = Report.objects.filter(date__date__gte=start_date, date__date__lte=end_date).count()
+    total_interacciones = ReportMsg.objects.filter(date__date__gte=start_date, date__date__lte=end_date).count()
 
     context = {
-        "employees": employees,
+        "employees": stats_employees(start_date, end_date, search),
         "total_expedientes": total_expedientes,
         "total_interacciones": total_interacciones,
         "search": search,
-        "startDate": start_date,
-        "endDate": end_date,
+        "startDate": start_date.strftime("%Y-%m-%d"),
+        "endDate": end_date.strftime("%Y-%m-%d"),
     }
     return render(request, "assistant/stats.html", context)
 

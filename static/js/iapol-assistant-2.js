@@ -108,6 +108,8 @@ function addMessage(data, init=false) {
     if (init) { data = JSON.parse(data.replace(/&#x27;/g, '"').replace(/\r?\n/g, '\\n')).message }
 
     // MENSAJE DEL USUARIO
+    console.log("--1--");
+    console.log(data.mode+"-message-template");
     if (typeof data === "string") {
         addUserMessage(data);
     } else {
@@ -308,9 +310,11 @@ $(document).ready(()=>{
             }
         }
         else {
-            if (text != "")
+            if (text != ""){
+                let tp = $("<div>").html(text).text();
+                $(this).val(tp);
                 showBtn("send-btn");
-            else
+            }else
                 showBtn("mic-btn");
         }
     });
@@ -326,6 +330,12 @@ $(document).ready(()=>{
         //byId("mic-btn").style.display = "block";
         showBtn("mic-btn");
         speechSynthesis.cancel();
+    });
+
+    $("body").on("click", ".message-box #copy-btn", function(e){
+        var text = $(this).next('.message-text').html();
+        navigator.clipboard.writeText(text).then(function() { alert('¡Texto copiado con éxito!'); })
+        .catch(function(err) { console.error('No se pudo copiar el texto: ', err); });
     });
 
 });

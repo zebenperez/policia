@@ -3,7 +3,8 @@ from assistant import views
 
 
 urlpatterns = [
-    path('', views.agents_assistant, name="assistant"),
+    path('', views.assistant, name="assistant"),
+    path('agents', views.agents_assistant, name="agents-assistant"),
     path('landing', views.landing, name="landing"),
     path('stats', views.stats, name="stats"),
     path('assistant/chat/<slug:mode>', views.assistant_chat, name="assistant-chat"),
