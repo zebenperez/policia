@@ -190,6 +190,10 @@ width: 100%;
 	color: #000;
 }
 
+.btn-copy-text {
+	float: right;
+}
+
 .message-intervencion {
 	border-left: 4px solid #2e5c46;
 	border-left: 4px solid green;

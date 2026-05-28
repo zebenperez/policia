@@ -14,6 +14,9 @@ class ReportAdmin(admin.ModelAdmin):
 class ReportAudioAdmin(admin.ModelAdmin):
     list_display = ('report', 'text')
 
+class ReportTokensAdmin(admin.ModelAdmin):
+    list_display = ('report', 'conversation_id', 'input_tokens', 'output_tokens')
+
 class SubmodeAdmin(admin.ModelAdmin):
     list_display = ('mode', 'code', 'name', 'title', 'block', 'color', 'order')
 
@@ -22,6 +25,7 @@ admin.site.register(Config, ConfigAdmin)
 admin.site.register(Employee)
 admin.site.register(Report, ReportAdmin)
 admin.site.register(ReportAudio, ReportAudioAdmin)
+admin.site.register(ReportTokens, ReportTokensAdmin)
 admin.site.register(Station)
 admin.site.register(Submode, SubmodeAdmin)
 

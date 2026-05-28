@@ -153,6 +153,21 @@ class ReportMsg(models.Model):
         verbose_name_plural = _('Reports Messages')
         ordering = ["id"]
 
+class ReportTokens(models.Model):
+    input_tokens = models.CharField(max_length=100, verbose_name = _('Input tokens'), default="")
+    output_tokens = models.CharField(max_length=100, verbose_name = _('Output tokens'), default="")
+    total_tokens = models.CharField(max_length=100, verbose_name = _('Total tokens'), default="")
+    cached_tokens = models.CharField(max_length=100, verbose_name = _('Cached tokens'), default="")
+    reasoning_tokens = models.CharField(max_length=100, verbose_name = _('Reasoning tokens'), default="")
+    conversation_id = models.CharField(max_length=200, verbose_name = _('Conversation id'), default="")
+    report = models.ForeignKey(Report, verbose_name=_('Informe'), on_delete=models.SET_NULL, null=True, related_name="tokens")
+
+    class Meta:
+        verbose_name = _('Report Token')
+        verbose_name_plural = _('Reports Tokens')
+        ordering = ["-id"]
+
+
 class Submode(models.Model):
     order = models.IntegerField(verbose_name = _('Orden'), default=0)
     mode = models.CharField(max_length=20, verbose_name = _('Mode'), default="")

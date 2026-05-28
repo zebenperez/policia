@@ -21,6 +21,8 @@ urlpatterns = [
     path('chat-with-llm', views.chat_with_llm, name="chat-with-llm"),
     path('start-voice-turn', views.assistant_start_voice_turn, name="api-assistant-start-voice-turn"),
 
+    path('set-tokens-info', views.set_tokens_info, name="set-tokens-info"),
+
     path('api/health/', views.health_check, name='health_check'),
 ]
 

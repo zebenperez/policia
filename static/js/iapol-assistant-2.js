@@ -63,6 +63,21 @@ function addUserMessage(text, temp="user-message-template") {
     chatContainer.scrollTop = chatContainer.scrollHeight;
 }
 
+function addFileMessage(text, url, temp="file-message-template") {
+    //console.log(temp);
+    const chatContainer = byId('chat-container');
+    if (!chatContainer) return;
+
+    const template = document.getElementById(temp);
+    const clone = template.content.cloneNode(true);
+
+    // Insertar texto de forma segura
+    clone.querySelector('.message-text').innerHTML = `<a href="${url}" target="_blank"> ${text} </a>`;
+
+    chatContainer.appendChild(clone);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+}
+
 function addAssistantMessage(response) {
     const chatContainer = byId('chat-container');
     if (!chatContainer) return;
@@ -108,8 +123,6 @@ function addMessage(data, init=false) {
     if (init) { data = JSON.parse(data.replace(/&#x27;/g, '"').replace(/\r?\n/g, '\\n')).message }
 
     // MENSAJE DEL USUARIO
-    console.log("--1--");
-    console.log(data.mode+"-message-template");
     if (typeof data === "string") {
         addUserMessage(data);
     } else {
@@ -301,6 +314,17 @@ $(document).ready(()=>{
 
     $("body").on("input", "#text-input", function(e){
         let text = $(this).val();
+        if (text != "") {
+            let tp = $("<div>").html(text).text();
+            $(this).val(tp);
+            showBtn("send-btn");
+        } else {
+            showBtn("mic-btn");
+        }
+    });
+
+    $("body").on("keydown", "#text-input", function(e){
+        let text = $(this).val();
         if (e.key === 'Enter') {
             if (text != "")
             {
@@ -308,14 +332,6 @@ $(document).ready(()=>{
                 $(this).val("");
                 showBtn("mic-btn");
             }
-        }
-        else {
-            if (text != ""){
-                let tp = $("<div>").html(text).text();
-                $(this).val(tp);
-                showBtn("send-btn");
-            }else
-                showBtn("mic-btn");
         }
     });
 
@@ -338,7 +354,80 @@ $(document).ready(()=>{
         .catch(function(err) { console.error('No se pudo copiar el texto: ', err); });
     });
 
+    $("body").on("change", "#file-btn", function(e){
+        let file = this.files[0];
+
+        if (!file) { return; }
+
+        // 1. Validar tamaño (2MB)
+        let maxSize = 2 * 1024 * 1024;
+        if (file.size > maxSize) {
+            alert("El PDF no puede superar 2MB");
+            $(this).val("");
+            return;
+        }
+
+        // 2. Validar PDF
+        let allowedType = "application/pdf";
+        if (file.type !== allowedType) {
+            alert("Solo se permiten archivos PDF");
+            $(this).val("");
+            return;
+        }
+
+        // 3. Mostrar preview PDF
+        addFileMessage(file.name, URL.createObjectURL(file));
+        /*$("#chat-container").append(`
+            <div class="chat-pdf-preview">
+                <i class="fas fa-file-pdf"></i>
+                <span>${file.name}</span>
+            </div>
+        `);*/
+
+        // 4. Enviar a Django
+        /*let formData = new FormData();
+        formData.append("file", file);
+        $.ajax({
+            url: "/chat/upload-pdf/",
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            headers: { "X-CSRFToken": getCookie("csrftoken") },
+            success: function (response) {
+                console.log("PDF subido correctamente");
+                console.log(response);
+            },
+            error: function (xhr) {
+                console.log("Error subida");
+                console.log(xhr.responseText);
+            }
+        });*/
+
+        // if(file){ console.log(file.name); }
+    });
 });
+
+/*    $("body").on("input", "#text-input", function(e){
+        let text = $(this).val();
+        if (e.key === 'Enter') {
+            if (text != "")
+            {
+                sendTextMessage($(this).val());
+                $(this).val("");
+                showBtn("mic-btn");
+            }
+        }
+        else {
+            if (text != ""){
+                let tp = $("<div>").html(text).text();
+                $(this).val(tp);
+                showBtn("send-btn");
+            }else
+                showBtn("mic-btn");
+        }
+    });
+*/
 
 /*async function sendTextMessage(text) {
     const input = byId('text-input');

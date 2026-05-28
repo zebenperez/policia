@@ -2,10 +2,10 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import HttpResponse, JsonResponse
 
-from policia.settings import IA_SPEECH_TO_TEXT_URL, IA_SERVICES_URL, IA_LLM_URL
+from policia.settings import IA_SPEECH_TO_TEXT_URL, IA_SERVICES_URL, IA_LLM_URL, API_TOKEN
 from policia.decorators import group_required
 from policia.commons import get_or_none, get_param, show_exc, user_in_group
-from gestion.models import Employee, Report, ReportAudio, ReportMsg, Submode
+from gestion.models import Employee, Report, ReportAudio, ReportMsg, ReportTokens, Submode
 from .llmendpoints import IA_LLM_ENDPOINTS
 from .common_lib import *
 from .assistant_lib import *
@@ -305,6 +305,46 @@ def stats(request):
         "endDate": end_date.strftime("%Y-%m-%d"),
     }
     return render(request, "assistant/stats.html", context)
+
+'''
+    ENDPOINTS
+'''
+from django.views.decorators.csrf import csrf_exempt
+import json
+
+@csrf_exempt
+def set_tokens_info(request):
+    # Solo permitir POST
+    if request.method != "POST":
+        return JsonResponse({"error": "Método no permitido"}, status=405)
+
+    # Validar token
+    token = request.headers.get("Authorization")
+
+    if token != f"Bearer {API_TOKEN}":
+        return JsonResponse( {"error": "Unauthorized"}, status=401)
+
+    # Leer JSON
+    try:
+        data = json.loads(request.body)
+    except json.JSONDecodeError:
+        return JsonResponse({"error": "JSON inválido"}, status=400)
+
+    #print(data)
+    conversation_id = get_param(data, "conversation_id")
+    if conversation_id != "":
+        report = Report.objects.filter(conversation_id = conversation_id).first()
+        if report != None:
+            rt = ReportTokens.objects.create(
+                report = report,
+                input_tokens = get_param(data, "input_tokens"),
+                output_tokens = get_param(data, "output_tokens"),
+                total_tokens = get_param(data, "total_tokens"),
+                cached_tokens = get_param(data, "cached_tokens"),
+                reasoning_tokens = get_param(data, "reasoning_tokens"),
+                conversation_id = get_param(data, "conversation_id")
+            )
+    return JsonResponse({ "success": True, "received": data })
 
 '''
     AUX

@@ -70,8 +70,20 @@
     <div class="message-enter flex justify-end">
         <div class="message-consulta">
             <div class="message-box px-4 py-3">
-                <button id="copy-btn"><i class="far fa-copy"></i></button>
+                <button id="copy-btn" class="btn-copy-text"><i class="far fa-copy"></i></button>
                 <p class="message-text"></p>
+            </div>
+            <span class="msg-time">Ahora</span>
+        </div>
+    </div>
+</template>
+
+<template id="file-message-template">
+    <div class="message-enter flex justify-end">
+        <div class="message-consulta">
+            <div class="message-box px-4 py-3">
+                <button id="copy-btn" class="btn-copy-text"><i class="far fa-copy"></i></button>
+                <div class="chat-pdf-preview"> <i class="fas fa-file-pdf"></i> <span> <p class="message-text"></p> </span> </div>
             </div>
             <span class="msg-time">Ahora</span>
         </div>
