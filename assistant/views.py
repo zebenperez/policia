@@ -344,6 +344,10 @@ def set_tokens_info(request):
                 reasoning_tokens = get_param(data, "reasoning_tokens"),
                 conversation_id = get_param(data, "conversation_id")
             )
+        else:
+            return JsonResponse({"error": "Informe no encontrado para conversation_id dado"}, status=404)
+    else:
+        return JsonResponse({"error": "Falta conversation_id en el JSON"}, status=400)
     return JsonResponse({ "success": True, "received": data })
 
 '''
