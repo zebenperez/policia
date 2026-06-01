@@ -75,8 +75,8 @@ class Report(models.Model):
     close = models.BooleanField(verbose_name = _('Cerrado'), default=False)
     uuid = models.CharField(max_length=100, verbose_name = _('UUID'), default="")
     mode = models.CharField(max_length=20, verbose_name = _('Mode'), default="")
-    date = models.DateTimeField(default=datetime.datetime.now(), null=True, verbose_name=_('Fecha'), blank=True)
-    last_interaction = models.DateTimeField(default=timezone.now(),null=True,verbose_name=_('Última interacción'),blank=True)
+    date = models.DateTimeField(default=timezone.now, null=True, verbose_name=_('Fecha'), blank=True)
+    last_interaction = models.DateTimeField(default=timezone.now,null=True,verbose_name=_('Última interacción'),blank=True)
     #text = models.TextField(verbose_name = _('Texto transcrito'), default="")
     #audio = models.FileField(upload_to=upload_audio, blank=True, verbose_name="Audio", help_text="Select file to upload")
     employee = models.ForeignKey(Employee,verbose_name=_('Empleado'),on_delete=models.SET_NULL,null=True,related_name="reports")
@@ -143,7 +143,7 @@ class ReportAudio(models.Model):
 
 class ReportMsg(models.Model):
     #ia = models.BooleanField(verbose_name = _('Recibido por IA'), default=False)
-    date = models.DateTimeField(default=datetime.datetime.now(), null=True, verbose_name=_('Fecha'), blank=True)
+    date = models.DateTimeField(default=timezone.now, null=True, verbose_name=_('Fecha'), blank=True)
     submode = models.CharField(max_length=20, verbose_name = _('Mode'), default="")
     text = models.TextField(verbose_name = _('Texto'), default="")
     report = models.ForeignKey(Report, verbose_name=_('Informe'), on_delete=models.CASCADE, null=True, related_name="messages")
@@ -154,6 +154,7 @@ class ReportMsg(models.Model):
         ordering = ["id"]
 
 class ReportTokens(models.Model):
+    date = models.DateTimeField(default=timezone.now, null=True, verbose_name=_('Fecha'), blank=True)
     input_tokens = models.CharField(max_length=100, verbose_name = _('Input tokens'), default="")
     output_tokens = models.CharField(max_length=100, verbose_name = _('Output tokens'), default="")
     total_tokens = models.CharField(max_length=100, verbose_name = _('Total tokens'), default="")

@@ -8,20 +8,21 @@
 
         <h3 class="mb-4">Buscador de usuarios</h3>
 
-        <form method="GET" class="row g-3 mb-4">
+        <form method="POST" class="row g-3 mb-4" action="{% url "stats" %}">
+            {% csrf_token %}
             <!-- Filtros -->
             <div class="row g-3 mb-3">
                 <div class="col-md-4">
                     <label class="form-label">Buscar usuario</label>
-                    <input type="text" class="form-control" id="searchInput" placeholder="Nombre de usuario">
+                    <input type="text" class="form-control" id="searchInput" name="searchInput" placeholder="Nombre de usuario">
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">Fecha inicio</label>
-                    <input type="date" class="form-control" id="startDate" value="{{startDate}}">
+                    <input type="date" class="form-control" id="startDate" name="startDate" value="{{startDate}}">
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">Fecha fin</label>
-                    <input type="date" class="form-control" id="endDate" value="{{endDate}}">
+                    <input type="date" class="form-control" id="endDate" name="endDate" value="{{endDate}}">
                 </div>
                 <div class="col-md-2 d-flex align-items-end">
                     <button class="btn btn-primary w-100" type="submit">Buscar</button>
@@ -31,7 +32,7 @@
 
         <!-- TOTALES -->
         <div class="row mb-4">
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <div class="card text-bg-primary">
                     <div class="card-body">
                         <h5 class="card-title">Expedientes totales</h5>
@@ -40,7 +41,7 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <div class="card text-bg-success">
                     <div class="card-body">
                         <h5 class="card-title">Interacciones totales</h5>
@@ -48,9 +49,73 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-md-3">
+                <div class="card text-bg-success">
+                    <div class="card-body">
+                        <h5 class="card-title">Token input totales</h5>
+                        <h2 id="totalInteracciones">{{total_tokens_inp}}</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card text-bg-success">
+                    <div class="card-body">
+                        <h5 class="card-title">Token ouput totales</h5>
+                        <h2 id="totalInteracciones">{{total_tokens_out}}</h2>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Tabla -->
+        <h1>TOKENS</h1><br/>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Nombre de usuario</th>
+                        <th>Tokens input</th>
+                        <th>Tokens output</th>
+                    </tr>
+                </thead>
+                <tbody id="dataTable">
+                    {% for e in employees2 %}
+                        <tr>
+                            <td>{{ e.name }}</td>
+                            <td>
+                                <table class="table table-striped table-bordered">
+                                    <thead class="table-info">
+                                        <tr> <th>Intervenciones</th> <th>Consultas</th> </tr> </thead>
+                                    <tbody id="dataTable">
+                                        <tr> 
+                                            <td>{{ e.input_tokens_int|default:0 }}</td> 
+                                            <td>{{ e.input_tokens_con|default:0 }}</td> 
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td>
+                                <table class="table table-striped table-bordered">
+                                    <thead class="table-info">
+                                        <tr> <th>Intervenciones</th> <th>Consultas</th> </tr> </thead>
+                                    <tbody id="dataTable">
+                                        <tr> 
+                                            <td>{{ e.output_tokens_int|default:0 }}</td> 
+                                            <td>{{ e.output_tokens_con|default:0 }}</td> 
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Tabla -->
+        <h1>EXPEDIENTES E INTERACCIONES</h1><br/>
         <div class="table-responsive">
             <table class="table table-striped table-bordered">
                 <thead class="table-dark">
@@ -58,7 +123,6 @@
                         <th>Nombre de usuario</th>
                         <th>Número de expedientes</th>
                         <th>Número de interacciones</th>
-                        <th>Fecha</th>
                     </tr>
                 </thead>
                 <tbody id="dataTable">
@@ -77,7 +141,7 @@
                                     </tbody>
                                 </table>
                             </td>
-                            <td>{{ e.total_interacciones }}
+                            <td>
                                 <table class="table table-striped table-bordered">
                                     <thead class="table-info">
                                         <tr> <th>Intervenciones</th> <th>Consultas</th> </tr> </thead>

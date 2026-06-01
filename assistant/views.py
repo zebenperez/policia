@@ -177,6 +177,44 @@ def chat_with_llm(request):
         log2file (show_exc(e))
         return JsonResponse({'error': show_exc(e)}, status=500)
  
+@group_required("agents")
+def chat_upload_file(request):
+    if request.method != "POST":
+        return JsonResponse({"error": "Método inválido"}, status=405)
+
+    file = request.FILES.get("file")
+    report = get_or_none(Report, get_param(request.POST, "report"))
+
+    if report == None:
+        return JsonResponse({"error": "No report"}, status=400)
+
+    if not file:
+        return JsonResponse({"error": "No file"}, status=400)
+
+    # Validar PDF
+    if file.content_type != "application/pdf":
+        return JsonResponse({"error": "Solo PDF"}, status=400)
+
+    # Validar tamaño
+    if file.size > 2 * 1024 * 1024:
+        return JsonResponse({"error": "Máximo 2MB"}, status=400)
+
+    with open(f"/tmp/{file.name}", "wb+") as f:
+        upload_url = IA_LLM_URL + IA_LLM_ENDPOINTS["openai-upload-expte"].format(uuid=report.uuid)
+        #print(upload_url)
+
+        headers = { "Authorization": f"Bearer aaaa-bbbb-cccc-dddd" } 
+        response = requests.post(upload_url,files={'file':f},data={'name':report.uuid},headers=headers,verify=False,timeout=120)
+        vector_store_id = response.json().get("vector_store_id", None)
+        #print(vector_store_id)
+
+        if response.status_code != 200:
+            err = response.json().get("detail", "")
+            return JsonResponse({"error": f"Error uploading data to microservicio: {err}"}, status=400)
+
+    return JsonResponse({ "success": True, "filename": file.name })
+
+
 def assistant_start_voice_turn(request):
     try:
         log2file("Starting voice turn for assistant")
@@ -218,9 +256,10 @@ def assistant_start_voice_turn(request):
 '''
     ADMIN
 '''
-def stats_employees(start_date, end_date, search):
-    from django.db.models import Count, Q
+from django.db.models import Count, Q, Sum, IntegerField
+from django.db.models.functions import Cast
 
+def stats_employees(start_date, end_date, search):
     employees = Employee.objects.filter(user__groups__name="agents")
     if search:
         employees = employees.filter(name__icontains=search)
@@ -232,7 +271,6 @@ def stats_employees(start_date, end_date, search):
             filter=Q( reports__date__date__gte=start_date, reports__date__date__lte=end_date, reports__mode=MODE_INTERVENTION),
             distinct=True
         ),
-
         total_expedientes_con=Count(
             'reports',
             filter=Q( reports__date__date__gte=start_date, reports__date__date__lte=end_date, reports__mode=MODE_CONSULTATION),
@@ -249,7 +287,6 @@ def stats_employees(start_date, end_date, search):
             ),
             distinct=True
         ),
-
         total_interacciones_con=Count(
             'reports__messages',
             filter=Q(
@@ -259,19 +296,66 @@ def stats_employees(start_date, end_date, search):
             ),
             distinct=True
         ),
+            
+        # INPUT TOKENS
+        input_tokens_int=Sum(
+            Cast('reports__tokens__input_tokens', IntegerField()),
+            filter=Q( reports__date__date__gte=start_date, reports__date__date__lte=end_date, reports__mode=MODE_INTERVENTION)
+        ),
+        input_tokens_con=Sum(
+            Cast('reports__tokens__input_tokens', IntegerField()),
+            filter=Q( reports__date__date__gte=start_date, reports__date__date__lte=end_date, reports__mode=MODE_CONSULTATION)
+        ),
+
+        # OUTPUT TOKENS
+        output_tokens_int=Sum(
+            Cast('reports__tokens__output_tokens', IntegerField()),
+            filter=Q( reports__date__date__gte=start_date, reports__date__date__lte=end_date, reports__mode=MODE_INTERVENTION)
+        ),
+        output_tokens_con=Sum(
+            Cast('reports__tokens__output_tokens', IntegerField()),
+            filter=Q( reports__date__date__gte=start_date, reports__date__date__lte=end_date, reports__mode=MODE_CONSULTATION)
+        ),
     )
     return employees
+
+def stats_employees_tokens(start_date, end_date, search):
+    employees = Employee.objects.filter(user__groups__name="agents")
+    if search:
+        employees = employees.filter(name__icontains=search)
+
+    employees = employees.annotate(
+        # INPUT TOKENS
+        input_tokens_int=Sum(
+            Cast('reports__tokens__input_tokens', IntegerField()),
+            filter=Q( reports__date__date__gte=start_date, reports__date__date__lte=end_date, reports__mode=MODE_INTERVENTION)
+        ),
+        input_tokens_con=Sum(
+            Cast('reports__tokens__input_tokens', IntegerField()),
+            filter=Q( reports__date__date__gte=start_date, reports__date__date__lte=end_date, reports__mode=MODE_CONSULTATION)
+        ),
+
+        # OUTPUT TOKENS
+        output_tokens_int=Sum(
+            Cast('reports__tokens__output_tokens', IntegerField()),
+            filter=Q( reports__date__date__gte=start_date, reports__date__date__lte=end_date, reports__mode=MODE_INTERVENTION)
+        ),
+        output_tokens_con=Sum(
+            Cast('reports__tokens__output_tokens', IntegerField()),
+            filter=Q( reports__date__date__gte=start_date, reports__date__date__lte=end_date, reports__mode=MODE_CONSULTATION)
+        ),
+    )
+    return employees
+
 
 @group_required("admins")
 def stats(request):
     from datetime import date
     import calendar
-    from django.db.models import Count, Q
 
-
-    search = request.GET.get("searchInput", "")
-    start_date = request.GET.get("startDate", "")
-    end_date = request.GET.get("endDate", "")
+    search = request.POST.get("searchInput", "")
+    start_date = request.POST.get("startDate", "")
+    end_date = request.POST.get("endDate", "")
 
     if not start_date or not end_date:
         today = date.today()
@@ -281,28 +365,30 @@ def stats(request):
         end_default = today.replace(day=last_day)
 
         if not start_date:
-            start_date = start_default
+            start_date = start_default.strftime("%Y-%m-%d")
         if not end_date:
-            end_date = end_default
+            end_date = end_default.strftime("%Y-%m-%d")
 
-
-#    report_filter = Q( reports__date__date__gte=start_date, reports__date__date__lte=end_date)
-
-#    employees = employees.annotate(
-#        total_expedientes=Count( 'reports', filter=report_filter, distinct=True),
-#        total_interacciones=Count( 'reports__messages', filter=report_filter, distinct=True)
-#    )
 
     total_expedientes = Report.objects.filter(date__date__gte=start_date, date__date__lte=end_date).count()
     total_interacciones = ReportMsg.objects.filter(date__date__gte=start_date, date__date__lte=end_date).count()
 
+    qs = ReportTokens.objects.filter( date__date__gte=start_date, date__date__lte=end_date)
+    total_tokens = qs.aggregate(total_in=Sum(Cast('input_tokens',IntegerField())),total_out=Sum(Cast('output_tokens',IntegerField())))
+    
+    employees = stats_employees(start_date, end_date, search)
+    employees2 = stats_employees_tokens(start_date, end_date, search)
+
     context = {
-        "employees": stats_employees(start_date, end_date, search),
+        "employees": employees,
+        "employees2": employees2,
         "total_expedientes": total_expedientes,
         "total_interacciones": total_interacciones,
+        "total_tokens_inp": total_tokens['total_in'] or 0,
+        "total_tokens_out": total_tokens['total_out'] or 0,
         "search": search,
-        "startDate": start_date.strftime("%Y-%m-%d"),
-        "endDate": end_date.strftime("%Y-%m-%d"),
+        "startDate": start_date,
+        "endDate": end_date,
     }
     return render(request, "assistant/stats.html", context)
 
