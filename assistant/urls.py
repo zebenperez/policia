@@ -19,6 +19,7 @@ urlpatterns = [
     path('chat-open/<int:obj_id>', views.chat_open, name="chat-open"),
     path('chat-report-count/', views.chat_report_count, name="chat-report-count"),
     path('chat-with-llm', views.chat_with_llm, name="chat-with-llm"),
+    path('chat-upload-file', views.chat_upload_file, name="chat-upload-file"),
     path('start-voice-turn', views.assistant_start_voice_turn, name="api-assistant-start-voice-turn"),
 
     path('set-tokens-info', views.set_tokens_info, name="set-tokens-info"),

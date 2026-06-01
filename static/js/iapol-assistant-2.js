@@ -296,6 +296,31 @@ async function startRecording() {
     }
 }
 
+async function uploadPDF(formData, token) {
+    showTypingIndicator();
+    try {
+        const response = await fetch("/assistant/chat-upload-file", {
+            method: "POST",
+            headers: { "X-CSRFToken": token },
+            body: formData
+        });
+
+        if (!response.ok) { throw new Error(`HTTP error ${response.status}`); }
+
+        const data = await response.json();
+        console.log("PDF subido correctamente");
+        console.log(data);
+        hideTypingIndicator();
+        addMessage("PDF subido correctamente")
+        return data;
+    } catch (error) {
+        console.log("Error subida");
+        console.error(error);
+        hideTypingIndicator();
+        addMessage("Error en la subida del fichero!")
+    }
+}
+
 $(document).ready(()=>{
 
     $("body").on("click", "#mic-btn", async function(e){
@@ -377,32 +402,13 @@ $(document).ready(()=>{
 
         // 3. Mostrar preview PDF
         addFileMessage(file.name, URL.createObjectURL(file));
-        /*$("#chat-container").append(`
-            <div class="chat-pdf-preview">
-                <i class="fas fa-file-pdf"></i>
-                <span>${file.name}</span>
-            </div>
-        `);*/
 
         // 4. Enviar a Django
-        /*let formData = new FormData();
+        let formData = new FormData();
+        console.log($(this).data('report'));
+        formData.append("report", $(this).data('report'));
         formData.append("file", file);
-        $.ajax({
-            url: "/chat/upload-pdf/",
-            type: "POST",
-            data: formData,
-            processData: false,
-            contentType: false,
-            headers: { "X-CSRFToken": getCookie("csrftoken") },
-            success: function (response) {
-                console.log("PDF subido correctamente");
-                console.log(response);
-            },
-            error: function (xhr) {
-                console.log("Error subida");
-                console.log(xhr.responseText);
-            }
-        });*/
+        uploadPDF(formData, $(this).data('token'));
 
         // if(file){ console.log(file.name); }
     });
