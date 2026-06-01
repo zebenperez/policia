@@ -373,7 +373,7 @@ def stats(request):
     total_expedientes = Report.objects.filter(date__date__gte=start_date, date__date__lte=end_date).count()
     total_interacciones = ReportMsg.objects.filter(date__date__gte=start_date, date__date__lte=end_date).count()
 
-    qs = ReportTokens.objects.filter( date__date__gte=start_date, date__date__lte=end_date)
+    qs = ReportTokens.objects.filter(report__date__gte=start_date, report__date__lte=end_date)
     total_tokens = qs.aggregate(total_in=Sum(Cast('input_tokens',IntegerField())),total_out=Sum(Cast('output_tokens',IntegerField())))
     
     employees = stats_employees(start_date, end_date, search)
