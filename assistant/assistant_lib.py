@@ -61,7 +61,7 @@ def get_current_report(user, mode):
 
 def response_to_context(datas): 
     #try:
-    return {
+    result = {
         'message': datas.get("answer", random.choice(ERRORS_ANSWER)), 
         'priority': datas.get("priority", "low"), 
         'advice': datas.get("summary", ""), 
@@ -78,8 +78,10 @@ def response_to_context(datas):
         'code': datas.get("code", ""), 
         'mode': datas.get("mode", ""), 
         'submode': datas.get("submode", ""), 
+        'template': datas.get("template", ""),
         'status': 'success'
     }
+    return result
     #except Exception as e:
     #    log2file(f"Error in response_to_context: {show_exc(e)}")
     #    return {'message': random.choice(ERRORS_ANSWER), 'status': 'success'}

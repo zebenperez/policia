@@ -15,7 +15,7 @@ class ReportAudioAdmin(admin.ModelAdmin):
     list_display = ('report', 'text')
 
 class ReportTokensAdmin(admin.ModelAdmin):
-    list_display = ('report', 'conversation_id', 'input_tokens', 'output_tokens')
+    list_display = ('report', 'conversation_id', 'input_tokens', 'output_tokens', 'cached_tokens', 'total_tokens')
 
 class SubmodeAdmin(admin.ModelAdmin):
     list_display = ('mode', 'code', 'name', 'title', 'block', 'color', 'order')
