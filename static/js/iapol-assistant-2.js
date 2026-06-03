@@ -80,8 +80,11 @@ function addCompMessage(response, temp="comp-message-template") {
 
     // Insertar texto de forma segura
     clone.querySelector('.message-text').innerHTML = marked.parse(response.message);
-    clone.querySelector('.template').innerHTML = marked.parse(response.template);
-    clone.querySelector('.questions').innerHTML = marked.parse(response.questions.join('<br/>'));
+    clone.querySelector('.questions').innerHTML = response.questions.join('<br/>');
+    if (response.questions.length == 0) {
+        let comp = `<br/><strong>Modelo</strong><br/><br/>${response.template}`;
+        clone.querySelector('.template').innerHTML = comp;
+    }
 
     chatContainer.appendChild(clone);
     chatContainer.scrollTop = chatContainer.scrollHeight;
