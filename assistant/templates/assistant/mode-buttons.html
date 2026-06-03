@@ -40,9 +40,10 @@
 
 <script>
     $(".btn-mode").click(function(){
+        let submode = $(this).data('value');
         $(".btn-mode").removeClass("text-primary").addClass("text-white");
         $(this).addClass("text-primary").removeClass("text-white");
-        $("#text-input").attr("data-submode", $(this).data('value'));
+        $("#text-input").attr("data-submode", submode);
         $("#bar-mode").css("background", $(this).data('color'));
         $("#bar-mode > div").html("MODO "+$(this).data('title'));
 
@@ -50,6 +51,11 @@
         block_list.forEach(function(value, index) {
             $(`button[data-value="${value}"]`).prop('disabled', true);
         });
+
+        if (submode == "F3")
+            $("#span-file").show();
+        else
+            $("#span-file").hide();
     });
 </script>
  
