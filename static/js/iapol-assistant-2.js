@@ -259,7 +259,7 @@ async function sendTextMessage(text) {
         hideTypingIndicator();
         addMessage(data);
 
-        if (data.submode == "U0") { //Submodo Urgencia
+        if (data.submode == "U0") //Submodo Urgencia
         {
             showBtn("stop-btn");
             //const spoken = data.advice ? data.advice : data.text;
