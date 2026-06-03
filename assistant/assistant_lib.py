@@ -78,7 +78,8 @@ def response_to_context(datas):
         'code': datas.get("code", ""), 
         'mode': datas.get("mode", ""), 
         'submode': datas.get("submode", ""), 
-        'template': datas.get("template", ""),
+        'template': datas.get("template", ""), 
+        'questions': datas.get("questions", ""), 
         'status': 'success'
     }
     return result
@@ -114,11 +115,15 @@ def get_report_messages(report):
 
     msg_list = []
     for msg in report.messages.all():
+        print("------------------------")
+        print(msg.text)
         try:
             parsed = json.loads(msg.text.replace("'", "\""))
             m = response_to_context(parsed)
+            print("--2--")
             message = m
         except json.JSONDecodeError as e:
+            print("--3--")
             message = msg.text
         msg_list.append({'message':message, 'submode': msg.submode})
     return msg_list

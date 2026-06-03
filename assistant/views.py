@@ -201,10 +201,11 @@ def chat_upload_file(request):
 
     with open(f"/tmp/{file.name}", "wb+") as f:
         upload_url = IA_LLM_URL + IA_LLM_ENDPOINTS["openai-upload-expte"].format(uuid=report.uuid)
-        #print(upload_url)
+        print(upload_url)
 
         headers = { "Authorization": f"Bearer aaaa-bbbb-cccc-dddd" } 
         response = requests.post(upload_url,files={'file':f},data={'name':report.uuid},headers=headers,verify=False,timeout=120)
+        print(response.text)
         vector_store_id = response.json().get("vector_store_id", None)
         #print(vector_store_id)
 

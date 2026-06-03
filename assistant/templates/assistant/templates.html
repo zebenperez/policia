@@ -4,14 +4,17 @@
             <div class="overflow-hidden">
                 <div class="message-box px-3 py-3">
                     <div class="flex items-center mb-2 px-1 priority-dot">
-			    {# <div class="priority-dot w-2 h-2"></div> #}
+			            {# <div class="priority-dot w-2 h-2"></div> #}
                         <span class="priority-label"></span>
                     </div>
-		    <div class="" style="font-weight: 600;">
-                    BASE PARA ACCIÓN: <span class="posible-action text-sm leading-relaxed"></span>
+                    <div class="px-4">
+                        <p class="message-advice text-sm"></p>
+                    </div>
+		            <div class="" style="font-weight: 600;">
+                        BASE PARA ACCIÓN: <span class="posible-action text-sm leading-relaxed"></span>
 	                    - <span class="basis-for-action text-sm leading-relaxed"></span>
         	            - <span class="decision text-sm leading-relaxed"></span><br/>
-		    </div>
+		            </div>
                     <div class="factual-reason text-sm leading-relaxed"></div>
                     <div class="facts-list text-sm leading-relaxed"></div>
                     <div class="critical-state text-sm leading-relaxed"></div>
@@ -22,21 +25,32 @@
                         <p class="message-text text-sm leading-relaxed"></p>
                     {% endif %}
                 </div>
-                <div class="px-4">
-                    <p class="message-advice text-sm"></p>
-                </div>
             </div>
             <span class="msg-time">Ahora</span>
         </div>
     </div>
 </template>
 
-
 <template id="user-message-template">
     <div class="message-enter flex justify-end">
         <div class="message-agent">
             <div class="message-box px-4 py-3">
                 <p class="message-text"></p>
+            </div>
+            <span class="msg-time">Ahora</span>
+        </div>
+    </div>
+</template>
+
+<template id="comp-message-template">
+    <div class="message-enter flex justify-end">
+        <div class="message-agent">
+            <div class="message-box px-4 py-3">
+                <p class="message-text"></p>
+                <br/><br/><strong>Modelo</strong><br/><br/>
+                <p class="template"></p>
+                <br/><br/><strong>Por favor, responda a las siguientes preguntas</strong><br/><br/><br/>
+                <p class="questions"></p>
             </div>
             <span class="msg-time">Ahora</span>
         </div>

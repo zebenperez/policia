@@ -12,6 +12,13 @@ function decodeHTML(html) {
     return txt.value;
 }
 
+function removeHtmlTags(html){
+    const div = document.createElement("div");
+    div.innerHTML = html;
+    const text = div.textContent || div.innerText;
+    return text
+}
+
 function escapeHtml(s) {
   return String(s ?? '')
     .replaceAll('&', '&amp;')
@@ -58,6 +65,23 @@ function addUserMessage(text, temp="user-message-template") {
 
     // Insertar texto de forma segura
     clone.querySelector('.message-text').innerHTML = decodeHTML(text).replace(/\n/g, "<br>");
+
+    chatContainer.appendChild(clone);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+}
+
+function addCompMessage(response, temp="comp-message-template") {
+    //console.log(temp);
+    const chatContainer = byId('chat-container');
+    if (!chatContainer) return;
+
+    const template = document.getElementById(temp);
+    const clone = template.content.cloneNode(true);
+
+    // Insertar texto de forma segura
+    clone.querySelector('.message-text').innerHTML = marked.parse(response.message);
+    clone.querySelector('.template').innerHTML = marked.parse(response.template);
+    clone.querySelector('.questions').innerHTML = marked.parse(response.questions.join('<br/>'));
 
     chatContainer.appendChild(clone);
     chatContainer.scrollTop = chatContainer.scrollHeight;
@@ -122,15 +146,19 @@ function addAssistantMessage(response) {
 function addMessage(data, init=false) {
     if (init) { data = JSON.parse(data.replace(/&#x27;/g, '"').replace(/\r?\n/g, '\\n')).message }
 
+    //console.log(data.submode);
     // MENSAJE DEL USUARIO
     if (typeof data === "string") {
         addUserMessage(data);
     } else {
         //MENSAJE DEL SISTEMA
-        if (data.submode == "U0") //Submodo Urgencia
+        if (data.submode == "U0") { //Submodo Urgencia
             addAssistantMessage(data);
-        else
+        } else if (data.submode.toUpperCase() == "I1") {
+            addCompMessage(data);
+        } else {
             addUserMessage(data.message, data.mode+"-message-template");
+        }
     }
 }
 
@@ -164,8 +192,10 @@ function showBtn(show){
 function speakText(text, lang = "es-ES") {
     if (!text) return;
 
+
     speechSynthesis.cancel();
 
+    text = text.substring(0, 2500);
     const utterance = new SpeechSynthesisUtterance(String(text));
     utterance.lang = lang;
 
@@ -228,21 +258,14 @@ async function sendTextMessage(text) {
 
         hideTypingIndicator();
         addMessage(data);
-        /*if (data.status == "error") {
-            addUserMessage(data.message);
-        } else {
-            console.log("--1--");
-            console.log(data.mode);
-            if (data.mode == "urgencia") {
-                addAssistantMessage(data);
-            } else{   
-                addUserMessage(data.message, "message-operador");
-            }
-        }*/
 
-        showBtn("stop-btn");
-        const spoken = data.advice ? data.advice : data.text;
-        speakText(spoken, "es-ES");
+        if (data.submode == "U0") { //Submodo Urgencia
+        {
+            showBtn("stop-btn");
+            //const spoken = data.advice ? data.advice : data.text;
+            const spoken = data.advice;
+            speakText(removeHtmlTags(spoken), "es-ES");
+        }
     } catch (e) {
         hideTypingIndicator();
         console.error(e);
@@ -413,137 +436,4 @@ $(document).ready(()=>{
         // if(file){ console.log(file.name); }
     });
 });
-
-/*    $("body").on("input", "#text-input", function(e){
-        let text = $(this).val();
-        if (e.key === 'Enter') {
-            if (text != "")
-            {
-                sendTextMessage($(this).val());
-                $(this).val("");
-                showBtn("mic-btn");
-            }
-        }
-        else {
-            if (text != ""){
-                let tp = $("<div>").html(text).text();
-                $(this).val(tp);
-                showBtn("send-btn");
-            }else
-                showBtn("mic-btn");
-        }
-    });
-*/
-
-/*async function sendTextMessage(text) {
-    const input = byId('text-input');
-    addUserMessage(text);
-
-    showTypingIndicator();
-    try {
-        const data = await postChat(text, input.dataset.mode);
-        //console.log("--1--");
-        console.log(data);
-
-        // Normaliza y renderiza
-        //const assistant = normalizeAssistantResponse(data);
-        hideTypingIndicator();
-        //addAssistantMessage(assistant);
-        addAssistantMessage(data);
-
-        //byId("mic-btn").style.display = "none";
-        //byId("btn-stop-speak").style.display = "block";
-        showBtn("stop-btn");
-        //const spoken = [assistant.text, assistant.advice].filter(Boolean).join(" ");
-        //const spoken = assistant.advice ? assistant.advice : assistant.text;
-        const spoken = data.advice ? data.advice : data.text;
-        speakText(spoken, "es-ES");
-    } catch (e) {
-        hideTypingIndicator();
-        console.error(e);
-        addAssistantMessage({priority:"low",text:"No he podido enviar el mensaje.",advice:"Inténtalo de nuevo en unos segundos."});
-    }
-}*/
-
-/*function normalizeAssistantResponse(payload) {
-    // payload puede ser:
-    // - string
-    // - {answer: "..."} o {answer: {priority,text,advice}}
-    // - {response: {priority,text,advice}}
-    // - {priority,text,advice}
-    if (payload == null) { return { priority: "medium", text: "", advice: "" }; }
-
-    if (typeof payload === "string") { return { priority: "medium", text: payload, advice: "" }; }
-
-    // Si viene un objeto "respuesta" en campos comunes:
-    const candidate =
-        payload.response ??
-        payload.answer ??
-        payload.assistant ??
-        payload;
-
-    if (typeof candidate === "string") { return { priority: "medium", text: candidate, advice: "" }; }
-
-    if (candidate && typeof candidate === "object") {
-        const priority = candidate.priority || payload.priority || "medium";
-        const text = candidate.text || payload.text || candidate.message || "";
-        const advice = candidate.advice || payload.advice || candidate.recommendation || "";
-        return { priority: priority, text: text, advice: advice };
-    }
-
-    return { priority: "medium", text: String(candidate), advice: "" };
-}*/
-
-
-/*function addAssistantMessage(response, cfg) {
-    const chatContainer = byId('chat-container');
-    if (!chatContainer) return;
-
-    const messageDiv = document.createElement('div');
-    messageDiv.className = 'message-enter flex gap-3';
-
-    const priorityLabel = getPriorityLabel(response.priority);
-    const priorityClass = getPriorityClass(response.priority);
-    const priorityColor = getPriorityColor(response.priority);
-
-    const html = marked.parse(response.text);
-    //const html = `${escapeHtml(response.text || '')}`;
-    messageDiv.innerHTML = `
-        <div class="flex-1">
-            <div class="overflow-hidden">
-                <div class="${priorityClass} px-4 py-3">
-                    <div class="flex items-center gap-2 mb-2">
-                        <div class="w-2 h-2 ${priorityColor}"></div>
-                        <span class="small">${escapeHtml(priorityLabel)}</span>
-                    </div>
-                    <p class="text-response">${html} </p>
-                </div>
-                <div class="px-4 pb-2">
-                    <p class="text-advice">${escapeHtml(response.advice || '')}</p>
-                </div>
-            </div>
-            <span class="msg-time">Ahora</span>
-        </div>
-    `;
-    chatContainer.appendChild(messageDiv);
-    chatContainer.scrollTop = chatContainer.scrollHeight;
-}*/
-/*function addUserMessage(text) {
-    const chatContainer = byId('chat-container');
-    if (!chatContainer) return;
-
-    const messageDiv = document.createElement('div');
-    messageDiv.className = 'message-enter flex justify-end';
-    messageDiv.innerHTML = `
-        <div class="message-agent">
-            <div class="message-box px-4 py-3">
-                <p class="">${escapeHtml(text)}</p>
-            </div>
-            <span class="msg-time">Ahora</span>
-        </div>
-    `;
-    chatContainer.appendChild(messageDiv);
-    chatContainer.scrollTop = chatContainer.scrollHeight;
-}*/
-
 

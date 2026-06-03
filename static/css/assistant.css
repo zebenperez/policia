@@ -103,6 +103,7 @@ h1 {
      --tw-gradient-from: #0b5ed7 var(--tw-gradient-from-position) !important;
  }
 
+.btn-attach,
 .btn-write,
 .btn-voice {
 	border-radius: 9999px !important;
@@ -345,10 +346,11 @@ span.msg-time {
 }
 
 /*** ROW 4 ***/
-
+/*
 .div-buttons {
 	background: #191c32;
 }
+
 .div-buttons input {
 	background: #fff;
 	color: #191c32;
@@ -398,3 +400,98 @@ span.fs-medium {
 	transform: translate3d(-10px, -42.4375px, 0px) !important; 
 }
 
+
+/**********************************************/
+/**********************************************/
+/**********************************************/
+
+.div-buttons,
+.top-bar{
+	background: #191c32;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:16px;
+}
+
+/* Input */
+.input-wrapper{
+    flex:1;
+    transition:all .3s ease;
+}
+
+.input-wrapper input{
+    width:100%;
+    height:70px;
+    border:none;
+    border-radius:6px;
+    padding:0 20px;
+    font-size:18px;
+    outline:none;
+}
+
+/* Botón adjuntar */
+.attach-btn{
+    width:50px;
+    height:50px;
+    border:none;
+    border-radius:6px;
+    background:#3f5566;
+    color:#fff;
+    cursor:pointer;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    opacity:0;
+    width:0;
+    overflow:hidden;
+    padding:0;
+    transition:all .3s ease;
+}
+
+/* Visible cuando F3 está activo */
+.attach-btn.show{
+    width:50px;
+    opacity:1;
+}
+
+/* Botón micrófono */
+.mic-btn{
+    width:80px;
+    height:80px;
+    border:none;
+    border-radius:50%;
+    background:#0066ff;
+    color:white;
+    font-size:34px;
+    cursor:pointer;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+/* Botones F1-F4 */
+.bottom-buttons{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+}
+
+.bottom-buttons button{
+    height:40px;
+    border:none;
+    color:white;
+    cursor:pointer;
+    font-size:16px;
+}
+
+.f1{ background:#8d2d2d; }
+.f2{ background:#2f6846; }
+.f3{ background:#24597c; }
+.f4{ background:#4b5c69; }
+
+.bottom-buttons button.active{
+    box-shadow: inset 0 -3px 0 rgba(255,255,255,.7);
+}
