@@ -60,32 +60,32 @@ def get_current_report(user, mode):
     return report
 
 def response_to_context(datas): 
-    #try:
-    result = {
-        'message': datas.get("answer", random.choice(ERRORS_ANSWER)), 
-        'priority': datas.get("priority", "low"), 
-        'advice': datas.get("summary", ""), 
-        'citations': datas.get("citations", ""), 
-        'intensity': datas.get("intensity", ""), 
-        'critical_state': datas.get("critical_state", ""), 
-        'structural_framework': datas.get("structural_framework", ""), 
-        'structural_question': datas.get("structural_question", ""), 
-        'decision': datas.get("decision", ""), 
-        'posible_action': datas.get("posible_action", ""), 
-        'basis_for_action': datas.get("basis_for_action", ""), 
-        'factual_reason': datas.get("factual_reason", ""), 
-        'facts_list': datas.get("facts_list", ""), 
-        'code': datas.get("code", ""), 
-        'mode': datas.get("mode", ""), 
-        'submode': datas.get("submode", ""), 
-        'template': datas.get("template", ""), 
-        'questions': datas.get("questions", ""), 
-        'status': 'success'
-    }
-    return result
-    #except Exception as e:
-    #    log2file(f"Error in response_to_context: {show_exc(e)}")
-    #    return {'message': random.choice(ERRORS_ANSWER), 'status': 'success'}
+    try:
+        result = {
+            'message': datas.get("answer", random.choice(ERRORS_ANSWER)), 
+            'priority': datas.get("priority", "low"), 
+            'advice': datas.get("summary", ""), 
+            'citations': datas.get("citations", ""), 
+            'intensity': datas.get("intensity", ""), 
+            'critical_state': datas.get("critical_state", ""), 
+            'structural_framework': datas.get("structural_framework", ""), 
+            'structural_question': datas.get("structural_question", ""), 
+            'decision': datas.get("decision", ""), 
+            'posible_action': datas.get("posible_action", ""), 
+            'basis_for_action': datas.get("basis_for_action", ""), 
+            'factual_reason': datas.get("factual_reason", ""), 
+            'facts_list': datas.get("facts_list", ""), 
+            'code': datas.get("code", ""), 
+            'mode': datas.get("mode", ""), 
+            'submode': datas.get("submode", ""), 
+            'template': datas.get("template", ""), 
+            'questions': datas.get("questions", ""), 
+            'status': 'success'
+        }
+        return result
+    except Exception as e:
+       log2file(f"Error in response_to_context: {show_exc(e)}")
+       return {'message': random.choice(ERRORS_ANSWER), 'status': 'success'}
 
 def get_report_messages_ia(report):
     import json 
