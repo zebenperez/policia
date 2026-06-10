@@ -34,6 +34,7 @@
 <template id="user-message-template">
     <div class="message-enter flex justify-end">
         <div class="message-agent">
+            <div class="px-4"> <strong>{{request.user.username}}:</strong> </div>
             <div class="message-box px-4 py-3">
                 <p class="message-text"></p>
             </div>
@@ -45,6 +46,7 @@
 <template id="comp-message-template">
     <div class="message-enter flex justify-end">
         <div class="message-agent">
+            <div class="px-4"> <strong>Ares:</strong> </div>
             <div class="message-box px-4 py-3">
                 <p class="message-text"></p>
                 <br/><strong>Por favor, responda a las siguientes preguntas</strong><br/><br/>
@@ -72,6 +74,7 @@
     <div class="message-enter flex justify-end">
         <button id="btnCopiar">Copiar Texto</button>
         <div class="message-intervencion">
+            <div class="px-4"> <strong>Ares:</strong> </div>
             <div class="message-box px-4 py-3">
                 <p class="message-text"></p>
             </div>
@@ -83,6 +86,7 @@
 <template id="consultation-message-template">
     <div class="message-enter flex justify-end">
         <div class="message-consulta">
+            <div class="px-4"> <strong>Ares:</strong> </div>
             <div class="message-box px-4 py-3">
                 <button id="copy-btn" class="btn-copy-text"><i class="far fa-copy"></i></button>
                 <p class="message-text"></p>

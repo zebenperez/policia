@@ -149,7 +149,9 @@ function addAssistantMessage(response) {
 function addMessage(data, init=false) {
     if (init) { data = JSON.parse(data.replace(/&#x27;/g, '"').replace(/\r?\n/g, '\\n')).message }
 
+    //console.log(data);
     //console.log(data.submode);
+    //console.log(data.mode);
     // MENSAJE DEL USUARIO
     if (typeof data === "string") {
         addUserMessage(data);

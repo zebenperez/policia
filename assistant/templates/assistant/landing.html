@@ -10,7 +10,8 @@
         <meta name="description" content="{% trans "IA Denuncias"%}">
         <meta name="author" content="{% trans "" %}">
 
-        <link rel="stylesheet" href="{% static "css/login.css"%}" type="text/css"/>
+<!--        <link rel="stylesheet" href="{% static "css/login.css"%}" type="text/css"/> -->
+        <link rel="stylesheet" href="{% static "css/landing.css"%}" type="text/css"/>
 
         <!-- Bootstrap core CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" 
@@ -26,8 +27,779 @@
         <script src="https://code.jquery.com/jquery-3.5.1.js" ></script>
 	    <script src="https://cdn.tailwindcss.com"></script>
 
-        <title>{% trans "IAPol"%}</title>
+        <title>{% trans "ARES"%}</title>
     </head>
+
+
+<body style="height: 100%;">
+
+  <!--loader-->
+  <div class="loader" style="display: none;">
+    <div class="loadercontent"></div>
+  </div>
+  <!--fin de loader-->
+
+  <!--alerta cookies-->
+  <div class="cookiesalert container-fluid">
+    <div class="row d-flex align-items-center">
+      <div class="col-12 col-lg-9">
+        <h6>Tu privacidad es importante</h6>
+        <p>Usamos cookies para mejorar tu experiencia, analizar el tráfico y ofrecer contenido personalizado. Haz clic
+          en 'Aceptar todas' para dar tu consentimiento según nuestras políticas de <a href="#">Cookies</a> y <a href="#">Privacidad</a>.</p>
+        <p class="preferences"><a href="#">Administrar preferencias <i class="bi bi-chevron-right"></i></a></p>
+      </div>
+      <div class="col-12 col-lg-3 cookiesbut">
+        <a class="closecookies" href="#">Aceptar Todas</a>
+        <a href="#">Administrar preferencias <i class="bi bi-chevron-right"></i></a>
+        <a class="closecookies" href="#">Rechazar todas</a>
+      </div>
+    </div>
+  </div>
+  <!-- fin de alerta cookies-->
+
+
+
+  <div class="pagecontainer">
+    <header class="d-flex align-items-center" id="header">
+      <div class="container">
+        <div class="row d-flex align-items-center">
+          <div class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-4 text-start">
+            <div class="logo"><a href="#"><img src="{% static '/images/ares-logo.png'%}" class="img-fluid" alt=""></a>
+            </div>
+          </div>
+
+          <div class="d-none d-xl-block col-xl-4 text-end">
+            <div class="menudesk p-3">
+              <ul class="list-inline">
+                <li class="list-inline-item"><a href="#faq">FAQ</a></li>
+                <li class="list-inline-item"><a href="#pricing">Planes</a></li>
+                <li class="list-inline-item"><a href="">Link 3</a></li>
+
+              </ul>
+            </div>
+          </div>
+          <div class="d-none d-xl-block col-xl-4 text-end">
+            <div class="headerbuttons">
+              <ul class="list-inline">
+                <li class="list-inline-item"><a class="access" href="login.html">Acceso</a></li>
+                <li class="list-inline-item"><a class="register" href="">Registrate</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-6 col-sm-8 col-md-9 col-lg-10 d-xl-none menumobile d-flex flex-row-reverse p-2">
+            <div class="hamburguer">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </header>
+    <div class="mobileboxmenu">
+      <ul>
+        <li><a href="/">Inicio</a></li>
+        <li><a class="tuguel" href="#pricing">Planes</a></li>
+        <li><a class="tuguel" href="#faq">FAQ</a></li>
+      </ul>
+    </div>
+    <section class="main d-flex align-items-center">
+
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <h1>Asesoramiento Jurídico <br><span id="cambiante" class="desva oculto">Especializado.</span></h1>
+            <h2>En el momento de máxima necesidad - sin esperas.</h2>
+            <p class="cta rev" data-sr-id="1" style="visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); transition: opacity 0.8s cubic-bezier(0.5, 0, 0, 1) 0.2s, transform 0.8s cubic-bezier(0.5, 0, 0, 1) 0.2s;">
+              <a href="#pricing" class="butmain">Elige tu plan</a>
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+    <!-- highlights-->
+    <section class="highlights sep">
+      <div class="container ">
+        <div class="row d-flex align-items-center">
+          <div class="col-12 revl" data-sr-id="12">
+            <h3 class="mb-4">¿Por qué Ares?</h3>
+          </div>
+          <div class="w-100 py-4"></div>
+          <div class="col-lg-1 fs-3">01</div>
+          <div class="col-lg-5 fs-3"> Conecta actuación y validación</div>
+          <div class="col-lg-6"><b>Conecta la decisión operativa con su validación judicial</b>, eliminando la
+            dependencia de reconstrucciones posteriores o interpretaciones externas.</div>
+          <div class="w-100 py-3"></div>
+          <div class="col-lg-1 fs-3">02</div>
+          <div class="col-lg-5 fs-3">Estructura el relato</div>
+          <div class="col-lg-6"><b>Ordena, fija y completa los hechos</b> desde el momento de la intervención, evitando
+            que el relato se degrade o pierda consistencia con el tiempo.</div>
+          <div class="w-100 py-3"></div>
+          <div class="col-lg-1 fs-3">03</div>
+          <div class="col-lg-5 fs-3">Detecta y corrije</div>
+          <div class="col-lg-6"><b>Detecta omisiones, inconsistencias o puntos débiles</b> en el relato fáctico antes de
+            que comprometan la seguridad jurídica de la actuación.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- fin de highlights-->
+
+    <!--features-->
+    <section class="features sep">
+      <div class="container">
+        <div class="row d-flex align-items-center">
+          <div class="col-12 rev text-center" data-sr-id="3">
+            <h3 class="mb-5">¿Qué es Ares?</h3>
+            <p>Ares es un sistema de <strong>asistencia jurídica especializada</strong> que conecta la decisión
+              operativa con su validación judicial. Interviene desde el origen: ordena los hechos, realiza preguntas
+              dirigidas y <strong>detecta omisiones o debilidades en el relato fáctico</strong> antes de que comprometan
+              la seguridad jurídica de la actuación.</p><br/>
+            <p>No actúa sobre el resultado final, sino sobre la <strong>construcción del relato</strong>. Su
+              arquitectura jurídica predefinida restringe y valida cada paso, <strong>reduciendo</strong> la
+              variabilidad y el<strong> margen de error</strong>. El agente no depende de la memoria ni de
+              reconstrucciones posteriores: lo que Ares estructura nace preparado para sostenerse en un entorno
+              jurídico. Su prioridad no es la rapidez, sino la <strong>solidez y el control estructural de toda la
+                intervención.</strong></p><br/>
+            <p class="pt-4 botongo"><a href="#pricing" class="butmain">Elige tu plan</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--fin de features-->
+
+    <!--section blanca-->
+    <section class="white sep numbers">
+      <div class="container">
+        <div class="row d-flex align-items-center justify-content-center text-center">
+          <div class="col-12 rev" data-sr-id="4">
+            <h4>Nuestros Números: Tu Éxito</h4>
+            <p class="mb-4">Echa un vistazo a nuestros porcentajes de exito para intervenciones usando ARES como soporte
+              jurídico</p>
+
+          </div>
+          
+	  <div class="col-12 col-lg-6 revl contenedor-ejemplo" data-sr-id="13">
+		<div class="number counter"
+		     data-target="8420"
+		     data-duration="2500">0</div>
+		<div class="label">Resoluciones penales</div>
+          </div>
+          <div class="col-12 col-lg-6 revr" data-sr-id="17">
+		<div class="number counter"
+		     data-target="99.7"
+		     data-duration="2500"
+		     data-decimals="1"
+		     data-suffix="%">0%</div>
+		<div class="label">Intervenciones satisfactorias</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- fin de sectioon blanca -->
+    <!--faq-->
+    <section class="faq sep" id="faq">
+      <div class="container">
+        <div class="row align-items-center d-flex">
+          <div class="col-12 col-lg-5 faqtxt">
+            <h4 class="mb-5 revl" data-sr-id="14">Preguntas Frecuentes</h4>
+            <p class="mb-5 small revl" data-sr-id="15">Ares, como <b>sistema de asistencia juridica,</b> comprende que pueden
+              surgir muchas dudas tento en la adquisicion del producto como en aquellas parcelas en las que Ares puede
+              marcar realmente la diferencia entre una intervención engorrosa a nivel jurídico, a una bien ejecutada.
+              Por lo tanto aqui planteamos las dudas mas frecuentes. </p>
+            <div class="w-100"></div>
+          </div>
+          <div class="col-lg-1"></div>
+
+          <div class="col-12 col-lg-6 revr" data-sr-id="18" tyle="visibility: visible; opacity: 0; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 990, 0, 0, 1);">
+            <div class="accordion accordion-flush " id="accordionFlushExample">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                    01. ¿Qué es exactamente Ares?
+                  </button>
+                </h2>
+                <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">Ares es un <strong>sistema de asistencia jurídica especializada</strong>
+                    que
+                    conecta la decisión operativa del agente con su validación judicial. Orienta la actuación <strong>en
+                      tiempo real</strong> y estructura el relato desde el origen, para que lo ocurrido no dependa de
+                    reconstrucciones posteriores ni de interpretaciones externas.</div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                    02. ¿En qué se diferencia de otros sistemas de redacción o asistencia?
+                  </button>
+                </h2>
+                <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">Mientras otros sistemas actúan sobre el texto final, Ares interviene
+                    antes:
+                    en la <strong>construcción jurídica del relato</strong>. No mejora la forma del documento, sino que
+                    ordena los hechos, detecta omisiones y condiciona el proceso para que la actuación pueda sostenerse
+                    después en sede judicial.</div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                    03. ¿Cómo ayuda Ares al agente durante una intervención?
+                  </button>
+                </h2>
+                <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">Ares aporta criterio antes de actuar. A través de sus capacidades –como
+                    Inspección de guardia– <strong>permite estructurar denuncias</strong>, partes de intervención y
+                    comparecencias desde una lógica jurídico-operativa, reduciendo la incertidumbre y ayudando a fijar
+                    lo
+                    ocurrido de forma ordenada y completa.</div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                    04. ¿Qué problema resuelve realmente Ares?
+                  </button>
+                </h2>
+                <div id="flush-collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">Resuelve la distancia entre actuar correctamente en el terreno y poder
+                    probarlo después en un entorno judicial. El riesgo no está solo en una mala redacción, sino en un
+                    relato incompleto, desordenado o reconstruido tarde. <strong>Ares actúa sobre la estructura del
+                      hecho
+                      desde el origen.</strong></div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
+                    05. ¿Para qué perfiles de agente está diseñado Ares?
+                  </button>
+                </h2>
+                <div id="flush-collapseFive" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">Para agentes de experiencia inicial (que necesitan orientación), de
+                    experiencia media (conscientes del riesgo jurídico y receptivos al apoyo) y de alta experiencia (que
+                    valoran un sistema de contraste y auditoría en casos complejos, <strong>sin que sustituya su
+                      criterio).</strong></div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSix" aria-expanded="false" aria-controls="flush-collapseSix">
+                    06. ¿Ares sustituye el criterio del agente?
+                  </button>
+                </h2>
+                <div id="flush-collapseSix" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body"><strong>No. Ares refuerza la construcción del hecho desde el origen, pero
+                      no
+                      sustituye al agente.</strong> En perfiles de alta experiencia se percibe como un sistema de
+                    contraste y auditoría del relato, que aporta seguridad y control sin interferir en la decisión
+                    operativa</div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSeven" aria-expanded="false" aria-controls="flush-collapseSeven">
+                    07. ¿Qué significa que Ares “no actúa sobre el resultado”?
+                  </button>
+                </h2>
+                <div id="flush-collapseSeven" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">Significa que <strong>Ares interviene antes de que el error pueda
+                      producirse</strong>: en la forma en que se recogen, ordenan y fijan los hechos. Actuar sobre el
+                    resultado final implicaría aceptar que el relato ya podría estar mal construido. Ares trabaja desde
+                    el
+                    origen para que lo ocurrido quede sólidamente sostenido.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- fin de faq-->
+    <!--afiliados-->
+    <section class="afiliates py-5">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col text-center rev" data-sr-id="5" style="visibility: visible; opacity: 0; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1009.09, 0, 1);">
+            <h4>Ya trabajan con nosotros</h4>
+            <p class="text-center">Ares siempre contigo</p>
+            <div class="w-100"></div>
+            <div class="container-fluid ">
+              <div class="row d-flex align-items-center justify-content-center">
+                <div class="owl-carousel d-flex align-items-center justify-content-center owl-loaded owl-drag">
+                  
+                  
+                  
+                  
+
+
+                <div class="owl-stage-outer"><div class="owl-stage" style="transform: translate3d(-1693px, 0px, 0px); transition: all 0.25s ease 0s; width: 4235px;"><div class="owl-item cloned" style="width: 423.413px;"><div class="item testimonial d-flex align-items-center justify-content-center">
+                    <div>
+                      <img class="testimage" src="images/user-2.jpg" alt="">
+                      <div class="w-100"></div>
+                      <div class="testi-title">El procedimiento correcto</div>
+                      <div class="comment">Con ARES puedo acceder rapidamente a la manera correcta de proceder en
+                        cualquier intervención sin lagunas o posibles fallos, cerciorandome de que todos los puntos
+                        esten correctos y en orden en la toma de decisiones. </div>
+                      <div class="namereviwer">Sheila Hernández - Guardia Civil - España</div>
+                      <div class="rating">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                      </div>
+                    </div>
+                  </div></div><div class="owl-item cloned" style="width: 423.413px;"><div class="item testimonial d-flex align-items-center justify-content-center">
+                    <div>
+                      <img class="testimage" src="images/user-3.jpg" alt="">
+                      <div class="w-100"></div>
+                      <div class="testi-title">Rebaja mi tensión durante la intervención.</div>
+                      <div class="comment">En la mayoria de nuestras intervenciones trabajamos bajo la presión del
+                        momento. ARES me permite hacer foco en la intervención en sí, cubriendo e informando de todos
+                        aquellos aspectos que debido a la tensión pudiera pasar por alto.</div>
+                      <div class="namereviwer">Agustín Crespo - Policia Nacional - España</div>
+                      <div class="rating">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star"></i>
+                      </div>
+                    </div>
+                  </div></div><div class="owl-item cloned" style="width: 423.413px;"><div class="item testimonial d-flex align-items-center justify-content-center">
+                    <div>
+                      <img class="testimage" src="images/user-4.jpg" alt="">
+                      <div class="w-100"></div>
+                      <div class="testi-title">Con ARES el relato esta completo</div>
+                      <div class="comment">A diferencia de otras soluciones más genéricas, ARES no especula. Construye
+                        sobre una base legal solida y especializada.</div>
+                      <div class="namereviwer">Alicia Torres - Guardia Civil - España</div>
+                      <div class="rating">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star"></i>
+                      </div>
+                    </div>
+                  </div></div><div class="owl-item" style="width: 423.413px;"><div class="item testimonial d-flex align-items-center justify-content-center">
+                    <div>
+                      <img class="testimage" src="images/user-1.jpg" alt="">
+                      <div class="w-100"></div>
+                      <div class="testi-title">Sin miedo a intervenir</div>
+                      <div class="comment">Muchas veces, en nuestro trabajo, cualquier minimo error en nuestra
+                        intervención puede suponer un quebradero de cabeza a la hora de gestionar diligencias de manera
+                        correcta a nivel Juridico. Con ARES, consigo un procedimiento limpio y sin fisuras.</div>
+                      <div class="namereviwer">Luis Martinez - Policia Nacional - España</div>
+                      <div class="rating">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                      </div>
+                    </div>
+                  </div></div><div class="owl-item active" style="width: 423.413px;"><div class="item testimonial d-flex align-items-center justify-content-center">
+                    <div>
+                      <img class="testimage" src="images/user-2.jpg" alt="">
+                      <div class="w-100"></div>
+                      <div class="testi-title">El procedimiento correcto</div>
+                      <div class="comment">Con ARES puedo acceder rapidamente a la manera correcta de proceder en
+                        cualquier intervención sin lagunas o posibles fallos, cerciorandome de que todos los puntos
+                        esten correctos y en orden en la toma de decisiones. </div>
+                      <div class="namereviwer">Sheila Hernández - Guardia Civil - España</div>
+                      <div class="rating">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                      </div>
+                    </div>
+                  </div></div><div class="owl-item active" style="width: 423.413px;"><div class="item testimonial d-flex align-items-center justify-content-center">
+                    <div>
+                      <img class="testimage" src="images/user-3.jpg" alt="">
+                      <div class="w-100"></div>
+                      <div class="testi-title">Rebaja mi tensión durante la intervención.</div>
+                      <div class="comment">En la mayoria de nuestras intervenciones trabajamos bajo la presión del
+                        momento. ARES me permite hacer foco en la intervención en sí, cubriendo e informando de todos
+                        aquellos aspectos que debido a la tensión pudiera pasar por alto.</div>
+                      <div class="namereviwer">Agustín Crespo - Policia Nacional - España</div>
+                      <div class="rating">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star"></i>
+                      </div>
+                    </div>
+                  </div></div><div class="owl-item active" style="width: 423.413px;"><div class="item testimonial d-flex align-items-center justify-content-center">
+                    <div>
+                      <img class="testimage" src="images/user-4.jpg" alt="">
+                      <div class="w-100"></div>
+                      <div class="testi-title">Con ARES el relato esta completo</div>
+                      <div class="comment">A diferencia de otras soluciones más genéricas, ARES no especula. Construye
+                        sobre una base legal solida y especializada.</div>
+                      <div class="namereviwer">Alicia Torres - Guardia Civil - España</div>
+                      <div class="rating">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star"></i>
+                      </div>
+                    </div>
+                  </div></div><div class="owl-item cloned" style="width: 423.413px;"><div class="item testimonial d-flex align-items-center justify-content-center">
+                    <div>
+                      <img class="testimage" src="images/user-1.jpg" alt="">
+                      <div class="w-100"></div>
+                      <div class="testi-title">Sin miedo a intervenir</div>
+                      <div class="comment">Muchas veces, en nuestro trabajo, cualquier minimo error en nuestra
+                        intervención puede suponer un quebradero de cabeza a la hora de gestionar diligencias de manera
+                        correcta a nivel Juridico. Con ARES, consigo un procedimiento limpio y sin fisuras.</div>
+                      <div class="namereviwer">Luis Martinez - Policia Nacional - España</div>
+                      <div class="rating">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                      </div>
+                    </div>
+                  </div></div><div class="owl-item cloned" style="width: 423.413px;"><div class="item testimonial d-flex align-items-center justify-content-center">
+                    <div>
+                      <img class="testimage" src="images/user-2.jpg" alt="">
+                      <div class="w-100"></div>
+                      <div class="testi-title">El procedimiento correcto</div>
+                      <div class="comment">Con ARES puedo acceder rapidamente a la manera correcta de proceder en
+                        cualquier intervención sin lagunas o posibles fallos, cerciorandome de que todos los puntos
+                        esten correctos y en orden en la toma de decisiones. </div>
+                      <div class="namereviwer">Sheila Hernández - Guardia Civil - España</div>
+                      <div class="rating">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                      </div>
+                    </div>
+                  </div></div><div class="owl-item cloned" style="width: 423.413px;"><div class="item testimonial d-flex align-items-center justify-content-center">
+                    <div>
+                      <img class="testimage" src="images/user-3.jpg" alt="">
+                      <div class="w-100"></div>
+                      <div class="testi-title">Rebaja mi tensión durante la intervención.</div>
+                      <div class="comment">En la mayoria de nuestras intervenciones trabajamos bajo la presión del
+                        momento. ARES me permite hacer foco en la intervención en sí, cubriendo e informando de todos
+                        aquellos aspectos que debido a la tensión pudiera pasar por alto.</div>
+                      <div class="namereviwer">Agustín Crespo - Policia Nacional - España</div>
+                      <div class="rating">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star"></i>
+                      </div>
+                    </div>
+                  </div></div></div></div><div class="owl-nav disabled"><button type="button" role="presentation" class="owl-prev"><span aria-label="Previous">‹</span></button><button type="button" role="presentation" class="owl-next"><span aria-label="Next">›</span></button></div><div class="owl-dots disabled"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- fin de afiliados-->
+    <!-- pricing plans -->
+
+    <section id="pricing" class="pt-5 pricingplans">
+      <div class="container">
+        <div class="row text-center mb-5">
+          <h2>Planes de Suscripción</h2>
+          <p class="text-muted">Elige la modalidad que mejor se adapte a tus necesidades</p>
+        </div>
+        <div class="row g-4">
+
+          <!-- Plan 1 -->
+          <div class="col-12 col-md-6 col-lg-3 text-center rev mb-4" data-sr-id="6" style="visibility: visible; opacity: 0; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 510.938, 0, 1);">
+            <div class="card border-normal h-100 shadow-sm">
+              <div class="planstandard mb-4"><span>Plan Básico</span></div>
+              <div class="card-body text-center d-flex flex-column">
+
+                <p class="display-6 fw-bold">€XX</p>
+                <ul class="list-unstyled mt-3 mb-4">
+                  <li>Característica 1</li>
+                  <li>Característica 2</li>
+                  <li>Característica 3</li>
+                </ul>
+                <a href="#" class="but but-white w-100 mt-auto">Seleccionar</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Plan 2 (Destacado) -->
+          <div class="col-12 col-md-6 col-lg-3 text-center rev mb-4" data-sr-id="7" style="visibility: visible; opacity: 0; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 510.938, 0, 1);">
+            <div class="card h-100 shadow-lg cardfeatured">
+              <div class="planstandard d-flex justify-content-center mb-2 "><span class="deg-yellow">Plan
+                  Standard</span>
+              </div>
+              <div class="card-body text-center">
+                <span class="badge mb-2">Más Popular</span>
+                <h5 class="card-title fw-bold">Plan Destacado</h5>
+                <p class="display-6 fw-bold ">€XX</p>
+                <ul class="list-unstyled mt-3 mb-4">
+                  <li>Característica Premium 1</li>
+                  <li>Característica Premium 2</li>
+                  <li>Característica Premium 3</li>
+                </ul>
+                <a href="#" class="align-items-end deg-yellow suscribeplan">Seleccionar</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Plan 3 -->
+          <div class="col-12 col-md-6 col-lg-3 text-center rev mb-4" data-sr-id="8" style="visibility: visible; opacity: 0; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 510.938, 0, 1);">
+            <div class="card border-normal h-100 shadow-sm">
+              <div class="planstandard mb-4"><span>Plan Profesional</span></div>
+              <div class="card-body text-center d-flex flex-column">
+
+                <p class="display-6 fw-bold">€XX</p>
+                <ul class="list-unstyled mt-3 mb-4">
+                  <li>Característica 1</li>
+                  <li>Característica 2</li>
+                  <li>Característica 3</li>
+                </ul>
+                <a href="#" class="but but-white w-100 mt-auto">Seleccionar</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Plan 4 -->
+          <div class="col-12 col-md-6 col-lg-3 text-center rev mb-4" data-sr-id="9" style="visibility: visible; opacity: 0; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 510.938, 0, 1);">
+            <div class="card border-normal h-100 shadow-sm">
+              <div class="planstandard mb-4"><span>Plan Empresarial</span></div>
+              <div class="card-body text-center d-flex flex-column">
+
+                <p class="display-6 fw-bold">€XX</p>
+                <ul class="list-unstyled mt-3 mb-4">
+                  <li>Característica 1</li>
+                  <li>Característica 2</li>
+                  <li>Característica 3</li>
+                </ul>
+                <a href="#" class="but but-white w-100 mt-auto">Seleccionar</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+    <!-- find epricing plans -->
+
+    <!--mensaje final -->
+    <section class="last sep">
+      <div class="container-fluid">
+        <div class="row rev" data-sr-id="10" style="visibility: visible; opacity: 0; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 158.385, 0, 1);">
+          <div class="col text-center">
+            <h4>¿A que esperas?</h4>
+            <p> Con Ares deja de preocuparte por la calidad de tus intervenciones</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer>
+      <div class="container">
+        <div class="row d-flex align-items-start ">
+          <div class="col-12 col-lg-4 logofoot"><a href="#"><img class="mb-4" src="images/ares-logo.png" alt=""></a>
+          </div>
+          <div class="col-12 col-lg-2"></div>
+          <div class="col-12 col-lg-2 footerlinks">
+            <h5 class="mb-4">Legal</h5>
+            <ul class="">
+              <li><a href="#">Aviso Legal</a></li>
+              <li><a href="#">Política de privacidad</a></li>
+              <li><a href="#">politica de Cookies</a></li>
+              <li><a href="#">Administrar Cookies</a></li>
+            </ul>
+          </div>
+          <div class=" col-12 col-lg-2 footerlinks">
+            <h5 class="mb-4">Legal</h5>
+            <ul class="">
+              <li><a href="#">Aviso Legal</a></li>
+              <li><a href="#">Política de privacidad</a></li>
+              <li><a href="#">politica de Cookies</a></li>
+              <li><a href="#">Administrar Cookies</a></li>
+            </ul>
+          </div>
+          <div class="col-12 col-lg-2 footerlinks">
+            <h5 class="mb-4">Legal</h5>
+            <ul class="">
+              <li><a href="#">Aviso Legal</a></li>
+              <li><a href="#">Política de privacidad</a></li>
+              <li><a href="#">politica de Cookies</a></li>
+              <li><a href="#">Administrar Cookies</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footerlegal text-center footerlinks">
+        <div class="container">
+          <div class="row d-flex align-items-center ">
+            <div class="col-12 col-lg-6 copyrightdiv">
+              <p class="p-0 m-0">Ares. © <span id="year">2026</span> Todos los derechos reservados</p>
+            </div>
+            <div class="col-12 col-lg-6 socialdiv">
+              <div class="social">
+                <ul class="list-inline">
+                  <li class="list-inline-item">
+                    <a href=""><i class="bi bi-instagram"></i></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href=""><i class="bi bi-x"></i></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href=""><i class="bi bi-facebook"></i></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </footer>
+  </div>
+
+  <div class="go-up" style="display: none;"><i class="bi bi-chevron-up"></i></div>
+
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/carousel.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+  <script type="text/javascript" src="js/common.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('.loader').fadeOut();
+      $('.owl-carousel').owlCarousel({
+        loop: true,
+        margin: 0,
+        nav: false,
+        dots: false,
+        autoplay: true,
+        autoplayTimeout: 3000,
+        autoplayHoverPause: true,
+        responsiveClass: true,
+        responsive: {
+          0: {
+            items: 1
+          },
+          1024: {
+            items: 3
+          }
+        }
+      });
+    });  
+  </script>
+  <script>
+    const anoActual = new Date().getFullYear();
+    document.getElementById("year").textContent = anoActual;    
+  </script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    const counters = document.querySelectorAll('.counter');
+
+    counters.forEach(counter => {
+
+        const target = parseFloat(counter.dataset.target);
+        const duration = parseInt(counter.dataset.duration) || 2000;
+        const decimals = parseInt(counter.dataset.decimals || 0);
+        const suffix = counter.dataset.suffix || '';
+
+        let startTime = null;
+
+        function animate(currentTime) {
+
+            if (!startTime) startTime = currentTime;
+
+            const progress = Math.min(
+                (currentTime - startTime) / duration,
+                1
+            );
+
+            const value = target * progress;
+
+            counter.textContent =
+                value.toFixed(decimals) + suffix;
+
+            if (progress < 1) {
+                requestAnimationFrame(animate);
+            } else {
+                counter.textContent =
+                    target.toFixed(decimals) + suffix;
+            }
+        }
+
+        requestAnimationFrame(animate);
+    });
+
+});
+</script>
+
+
+<div id="Reverso_extension__quick_control_panel" style="z-index: 2147483647; position: relative;"><re-quick-control-panel ng-version="14.2.12"></re-quick-control-panel></div><script src="chrome-extension://onhiacboedfinnofagfgoaanfedhmfab/dist/quick-control-panel/runtime.js" defer=""></script><script src="chrome-extension://onhiacboedfinnofagfgoaanfedhmfab/dist/quick-control-panel/main.js" defer=""></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %}
+    <body>
+	<header>
+		<div class="container nav">
+			<div class="logo"><span><img src="{% static '/images/ares-logo.png'%}" class="img-fluid" /></span></div>
+			<div class="menu">
+				<a href="#">FAQ</a>
+				<a href="#">Planes</a>
+				<a href="#">Login</a>
+				<a href="#" class="register">Regístrate</a>
+			</div>
+		</div>
+	</header> 
+    </body>
+
 
     <body>
         <div class="main-screen p-4">
@@ -39,7 +811,7 @@
 			            <div class="login-container">
 				          <!--  <h2>Registro</h2> -->
 				            <br />
-	               	        <p>Crea una cuenta para IAPol y selecciona el plan que prefieras</p>
+	               	        <p>Crea una cuenta para ARES y selecciona el plan que prefieras</p>
 			            </div>
 			            <div class="login-form text-center px-4">
 				            {% block login-right %} {% include "login_form.html" %} {% endblock %}
@@ -50,5 +822,8 @@
 	        </div>
         </div>
     </body>
+{% endcomment %}
+
+
 </html>
 
